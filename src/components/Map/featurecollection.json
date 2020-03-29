@@ -1,0 +1,141 @@
+{
+  "crs": {
+    "properties": {
+      "name": "EPSG:4326"
+    },
+    "type": "name"
+  },
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          9.010076,
+          54.144092,
+          0
+        ],
+        "type": "Point"
+      },
+      "id": 3093,
+      "properties": {},
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          9.301864,
+          54.051955,
+          0
+        ],
+        "type": "Point"
+      },
+      "id": 3092,
+      "properties": {},
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          9.267870,
+          54.006127,
+          0
+        ],
+        "type": "Point"
+      },
+      "id": 3091,
+      "properties": {},
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          9.140065,
+          53.948425,
+          0
+        ],
+        "type": "Point"
+      },
+      "id": 3090,
+      "properties": {},
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          9.168022,
+          54.103823,
+          0
+        ],
+        "type": "Point"
+      },
+      "id": 3089,
+      "properties": {},
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          9.310249,
+          54.035923,
+          0
+        ],
+        "type": "Point"
+      },
+      "id": 3088,
+      "properties": {},
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          9.041581,
+          53.926445,
+          0
+        ],
+        "type": "Point"
+      },
+      "id": 3087,
+      "properties": {},
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          9.013977,
+          54.113866,
+          0
+        ],
+        "type": "Point"
+      },
+      "id": 3086,
+      "properties": {},
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          9.002436,
+          53.912535,
+          0
+        ],
+        "type": "Point"
+      },
+      "id": 3085,
+      "properties": {},
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          9.255936,
+          54.003762,
+          0
+        ],
+        "type": "Point"
+      },
+      "id": 3084,
+      "properties": {},
+      "type": "Feature"
+    }
+  ],
+  "type": "FeatureCollection"
+}
