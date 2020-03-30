@@ -1,5 +1,5 @@
 import React from "react";
-import Storage from "../../lib/storage";
+import Storage from "~/lib/storage";
 
 const Banner = () => {
   return (
