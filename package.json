@@ -8,6 +8,7 @@
     "start:css": "yarn run generate:css -w",
     "prebuild": "yarn run generate:css --env production",
     "build": "react-scripts build",
+    "precommit":"lint-staged",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build:staging": "cp ./.env.staging ./.env && yarn run build",
