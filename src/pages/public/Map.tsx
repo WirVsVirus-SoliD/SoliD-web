@@ -1,8 +1,8 @@
-import React from 'react';
-import {Map as MapBoxMap} from '../../components/Map';
+import React from "react";
+import { Map as MapBoxMap } from "../../components/Map";
 
 const Map = () => {
-  return (<MapBoxMap/>);
+  return <MapBoxMap />;
 };
 
 export default Map;

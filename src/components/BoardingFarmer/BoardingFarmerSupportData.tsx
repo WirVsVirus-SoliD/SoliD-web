@@ -1,14 +1,19 @@
-import React, {Fragment, useState} from 'react';
-import {Award, ChevronRight, MapPin, Star, Users} from 'react-feather';
-import {NextStepProps} from '.';
+import React, { Fragment, useState } from "react";
+import { Award, ChevronRight, MapPin, Star, Users } from "react-feather";
+import { NextStepProps } from ".";
 
-import {Maybe, ValueOf} from '../../types';
-import {PrimaryButton} from '../Button';
-import BaseButton from '../Button/BaseButton';
-import {FadingPillList} from '../Pill';
-import {BoardingTitle, Title} from '../Title';
-import {BoardingFarmerStepsHeader} from './steps';
-import {BoardingFarmerHelpers, BoardingFarmerLocation, BoardingFarmerSkills, BoardingFarmerSupport} from './subpages';
+import { Maybe, ValueOf } from "../../types";
+import { PrimaryButton } from "../Button";
+import BaseButton from "../Button/BaseButton";
+import { FadingPillList } from "../Pill";
+import { BoardingTitle, Title } from "../Title";
+import { BoardingFarmerStepsHeader } from "./steps";
+import {
+  BoardingFarmerHelpers,
+  BoardingFarmerLocation,
+  BoardingFarmerSkills,
+  BoardingFarmerSupport
+} from "./subpages";
 
 type Props = {} & NextStepProps;
 type RenderProps = {
@@ -18,25 +23,25 @@ type RenderProps = {
 const menuItems = [
   {
     index: 0,
-    key: 'location',
-    stateKey: 'location' as 'location',
-    title: 'Standort eingeben',
+    key: "location",
+    stateKey: "location" as "location",
+    title: "Standort eingeben",
     Icon: MapPin,
     Component: BoardingFarmerLocation,
-    Render: ({value}: RenderProps) => <Fragment>{value}</Fragment>
+    Render: ({ value }: RenderProps) => <Fragment>{value}</Fragment>
   },
   {
     index: 1,
-    key: 'support',
-    stateKey: 'supportTypeIds' as 'supportTypeIds',
-    title: 'Art der Unterstützung',
+    key: "support",
+    stateKey: "supportTypeIds" as "supportTypeIds",
+    title: "Art der Unterstützung",
     Icon: Star,
     Component: BoardingFarmerSupport,
-    Render: ({value}: RenderProps) => (
+    Render: ({ value }: RenderProps) => (
       <FadingPillList>
-        {Pill => (
+        {(Pill) => (
           <Fragment>
-            {value.map(v => (
+            {value.map((v) => (
               <Pill key={v} className="mr-1">
                 {v}
               </Pill>
@@ -48,25 +53,25 @@ const menuItems = [
   },
   {
     index: 2,
-    key: 'helpers',
-    stateKey: 'helpersNeededCount' as 'helpersNeededCount',
-    title: 'Benötigte Helfer',
+    key: "helpers",
+    stateKey: "helpersNeededCount" as "helpersNeededCount",
+    title: "Benötigte Helfer",
     Icon: Users,
     Component: BoardingFarmerHelpers,
-    Render: ({value}: RenderProps) => <Fragment>{value}</Fragment>
+    Render: ({ value }: RenderProps) => <Fragment>{value}</Fragment>
   },
   {
     index: 3,
-    key: 'skills',
-    stateKey: 'requiredSkillsIds' as 'requiredSkillsIds',
-    title: 'Qualifikationen (optional)',
+    key: "skills",
+    stateKey: "requiredSkillsIds" as "requiredSkillsIds",
+    title: "Qualifikationen (optional)",
     Icon: Award,
     Component: BoardingFarmerSkills,
-    Render: ({value}: RenderProps) => (
+    Render: ({ value }: RenderProps) => (
       <FadingPillList>
-        {Pill => (
+        {(Pill) => (
           <Fragment>
-            {value.map(v => (
+            {value.map((v) => (
               <Pill key={v} className="mr-1">
                 {v}
               </Pill>
@@ -108,7 +113,7 @@ function useBoardingFarmerState() {
 
   const [state, setState] = useState<State>(initialState);
   const updateState = (key: keyof State) => (value: ValueOf<typeof key>) =>
-    setState({...state, [key]: value});
+    setState({ ...state, [key]: value });
 
   return [state, updateState] as [typeof state, typeof updateState];
 }
@@ -130,12 +135,12 @@ const BoardingFarmerSupportData = (props: Props) => {
       {activeItem === null ? (
         <div className="pt-4">
           {/* Header */}
-          <BoardingFarmerStepsHeader handleGoBack={() => setActiveItem(null)}/>
+          <BoardingFarmerStepsHeader handleGoBack={() => setActiveItem(null)} />
           <BoardingTitle>Wobei benötigst Du Unterstützung?</BoardingTitle>
 
           {/* Overview */}
           <ul>
-            {menuItems.map(item => {
+            {menuItems.map((item) => {
               const stateValue = state[item.stateKey];
               const showValue = hasValue(stateValue);
 
@@ -147,14 +152,14 @@ const BoardingFarmerSupportData = (props: Props) => {
                 >
                   <Fragment>
                     <div className="flex items-center w-full">
-                      <item.Icon size={16} className="inline-block mr-2"/>
+                      <item.Icon size={16} className="inline-block mr-2" />
                       {showValue ? (
-                        <item.Render value={stateValue}/>
+                        <item.Render value={stateValue} />
                       ) : (
                         item.title
                       )}
                     </div>
-                    <ChevronRight className="absolute right-0"/>
+                    <ChevronRight className="absolute right-0" />
                   </Fragment>
                 </li>
               );

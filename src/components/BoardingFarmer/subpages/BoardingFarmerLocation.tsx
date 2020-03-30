@@ -1,10 +1,10 @@
-import React from 'react';
-import {BoardingFarmerProps} from '.';
-import {Input} from '../../Form/components';
+import React from "react";
+import { BoardingFarmerProps } from ".";
+import { Input } from "../../Form/components";
 
 type Props = BoardingFarmerProps;
 
-const BoardingFarmerLocation = ({state, handleUpdate}: Props) => {
+const BoardingFarmerLocation = ({ state, handleUpdate }: Props) => {
   return (
     <div>
       <p className="mb-2">
@@ -13,7 +13,7 @@ const BoardingFarmerLocation = ({state, handleUpdate}: Props) => {
       </p>
       <Input
         value={state.location}
-        onChange={e => handleUpdate(e.currentTarget.value)}
+        onChange={(e) => handleUpdate(e.currentTarget.value)}
         placeholder="z. B. Frankfurt am Main"
         autoFocus
         block

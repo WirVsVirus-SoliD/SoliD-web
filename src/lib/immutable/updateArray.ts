@@ -1,5 +1,5 @@
-import {appendElement} from './appendElement';
-import {removeFromArray} from './removeFromArray';
+import { appendElement } from "./appendElement";
+import { removeFromArray } from "./removeFromArray";
 
 /**
  * Removes the element from the array, if it already exists.

@@ -6,7 +6,7 @@
  * @returns A new array without the element.
  */
 export const removeFromArray = <T>(element: T, array: T[], index?: number) => {
-  const i = typeof index === 'undefined' ? array.indexOf(element) : index;
+  const i = typeof index === "undefined" ? array.indexOf(element) : index;
 
   if (i === -1) {
     return array;

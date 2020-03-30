@@ -1,21 +1,21 @@
-import React from 'react';
-import {BoardingFarmerProps} from '.';
-import {updateArray} from '../../../lib/immutable';
-import {Checkbox} from '../../Form/components';
+import React from "react";
+import { BoardingFarmerProps } from ".";
+import { updateArray } from "../../../lib/immutable";
+import { Checkbox } from "../../Form/components";
 
 type Props = BoardingFarmerProps;
 
 const supportTypes = [
-  {id: '1', title: 'Ernte'},
-  {id: '2', title: 'Verkauf'},
-  {id: '3', title: 'Sortieren'},
-  {id: '4', title: 'Pflanzarbeiten'},
-  {id: '5', title: 'Schlepper fahren'},
-  {id: '6', title: 'Melken'},
-  {id: '7', title: 'Sonstige'}
+  { id: "1", title: "Ernte" },
+  { id: "2", title: "Verkauf" },
+  { id: "3", title: "Sortieren" },
+  { id: "4", title: "Pflanzarbeiten" },
+  { id: "5", title: "Schlepper fahren" },
+  { id: "6", title: "Melken" },
+  { id: "7", title: "Sonstige" }
 ];
 
-const BoardingFarmerSupport = ({state, handleUpdate}: Props) => {
+const BoardingFarmerSupport = ({ state, handleUpdate }: Props) => {
   return (
     <div>
       <p className="mb-2">
@@ -23,7 +23,7 @@ const BoardingFarmerSupport = ({state, handleUpdate}: Props) => {
         getroffen werden.
       </p>
       <ul>
-        {supportTypes.map(({id, title}) => {
+        {supportTypes.map(({ id, title }) => {
           return (
             <li key={id}>
               <Checkbox

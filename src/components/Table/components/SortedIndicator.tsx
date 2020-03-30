@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type Props = {
   isSorted: boolean;
@@ -9,7 +9,7 @@ type Props = {
  * We want to show a small indicator, whenever a user sorts a column inside a table.
  * This component handles the different states.
  */
-const SortedIndicator = ({isSorted, isSortedDesc}: Props) => {
+const SortedIndicator = ({ isSorted, isSortedDesc }: Props) => {
   if (!isSorted) {
     return null;
   }

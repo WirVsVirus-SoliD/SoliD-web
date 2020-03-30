@@ -8,11 +8,7 @@
   "features": [
     {
       "geometry": {
-        "coordinates": [
-          9.010076,
-          54.144092,
-          0
-        ],
+        "coordinates": [9.010076, 54.144092, 0],
         "type": "Point"
       },
       "id": 3093,
@@ -21,11 +17,7 @@
     },
     {
       "geometry": {
-        "coordinates": [
-          9.301864,
-          54.051955,
-          0
-        ],
+        "coordinates": [9.301864, 54.051955, 0],
         "type": "Point"
       },
       "id": 3092,
@@ -34,11 +26,7 @@
     },
     {
       "geometry": {
-        "coordinates": [
-          9.267870,
-          54.006127,
-          0
-        ],
+        "coordinates": [9.26787, 54.006127, 0],
         "type": "Point"
       },
       "id": 3091,
@@ -47,11 +35,7 @@
     },
     {
       "geometry": {
-        "coordinates": [
-          9.140065,
-          53.948425,
-          0
-        ],
+        "coordinates": [9.140065, 53.948425, 0],
         "type": "Point"
       },
       "id": 3090,
@@ -60,11 +44,7 @@
     },
     {
       "geometry": {
-        "coordinates": [
-          9.168022,
-          54.103823,
-          0
-        ],
+        "coordinates": [9.168022, 54.103823, 0],
         "type": "Point"
       },
       "id": 3089,
@@ -73,11 +53,7 @@
     },
     {
       "geometry": {
-        "coordinates": [
-          9.310249,
-          54.035923,
-          0
-        ],
+        "coordinates": [9.310249, 54.035923, 0],
         "type": "Point"
       },
       "id": 3088,
@@ -86,11 +62,7 @@
     },
     {
       "geometry": {
-        "coordinates": [
-          9.041581,
-          53.926445,
-          0
-        ],
+        "coordinates": [9.041581, 53.926445, 0],
         "type": "Point"
       },
       "id": 3087,
@@ -99,11 +71,7 @@
     },
     {
       "geometry": {
-        "coordinates": [
-          9.013977,
-          54.113866,
-          0
-        ],
+        "coordinates": [9.013977, 54.113866, 0],
         "type": "Point"
       },
       "id": 3086,
@@ -112,11 +80,7 @@
     },
     {
       "geometry": {
-        "coordinates": [
-          9.002436,
-          53.912535,
-          0
-        ],
+        "coordinates": [9.002436, 53.912535, 0],
         "type": "Point"
       },
       "id": 3085,
@@ -125,11 +89,7 @@
     },
     {
       "geometry": {
-        "coordinates": [
-          9.255936,
-          54.003762,
-          0
-        ],
+        "coordinates": [9.255936, 54.003762, 0],
         "type": "Point"
       },
       "id": 3084,

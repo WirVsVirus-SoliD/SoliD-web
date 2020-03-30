@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type Props = {
   value: boolean;
@@ -9,7 +9,7 @@ type Props = {
 /**
  * Renders one of two components based on the state of `props.value`.
  */
-const BooleanSwitch = ({value, trueRender, falseRender}: Props) => {
+const BooleanSwitch = ({ value, trueRender, falseRender }: Props) => {
   if (value) {
     return trueRender;
   } else {

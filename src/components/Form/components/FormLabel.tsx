@@ -1,5 +1,5 @@
-import classNames from 'classnames';
-import React from 'react';
+import classNames from "classnames";
+import React from "react";
 
 type Props = {
   title: string;
@@ -16,7 +16,7 @@ const FormLabel = ({
 }: Props) => {
   const css = classNames(
     {
-      'inline-block': !className && !block,
+      "inline-block": !className && !block,
       block
     },
     className

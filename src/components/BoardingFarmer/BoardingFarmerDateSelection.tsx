@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import {NextStepProps} from '.';
-import BaseButton from '../Button/BaseButton';
-import {Calendar} from '../Calendar';
-import {BoardingTitle} from '../Title';
-import {BoardingFarmerStepsHeader} from './steps';
+import React, { useState } from "react";
+import { NextStepProps } from ".";
+import BaseButton from "../Button/BaseButton";
+import { Calendar } from "../Calendar";
+import { BoardingTitle } from "../Title";
+import { BoardingFarmerStepsHeader } from "./steps";
 
-type Props = {} & Pick<NextStepProps, 'triggerNextPage'>;
+type Props = {} & Pick<NextStepProps, "triggerNextPage">;
 
 const BoardingFarmerDateSelection = (props: Props) => {
   const today = new Date();
@@ -14,7 +14,7 @@ const BoardingFarmerDateSelection = (props: Props) => {
   return (
     <div className="flex flex-col justify-between h-100vh py-4">
       <div>
-        <BoardingFarmerStepsHeader handleGoBack={() => {}}/>
+        <BoardingFarmerStepsHeader handleGoBack={() => {}} />
         <BoardingTitle>Wann benötigst Du Unterstützung?</BoardingTitle>
         <Calendar
           onChange={setDates}

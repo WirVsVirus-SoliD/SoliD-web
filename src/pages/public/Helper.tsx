@@ -1,42 +1,42 @@
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import {Form, Formik, FormikProps} from 'formik';
-import {useMemo} from 'react';
-import {PrimaryButton} from '../../components/Button';
-import {InputField} from '../../components/Form';
-import Header from '../../components/Header';
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import { Form, Formik, FormikProps } from "formik";
+import { useMemo } from "react";
+import { PrimaryButton } from "../../components/Button";
+import { InputField } from "../../components/Form";
+import Header from "../../components/Header";
 
-import {Table} from '../../components/Table';
+import { Table } from "../../components/Table";
 
 function createData(title: string, location: string, neededHelpers: number) {
-  return {title, location, neededHelpers};
+  return { title, location, neededHelpers };
 }
 
 const data = [
-  createData('Frozen yoghurt', 'Frankfurt am Main', 12),
-  createData('Ice cream sandwich', 'Frankfurt am Main', 14),
-  createData('Eclair', 'Frankfurt am Main', 8),
-  createData('Cupcake', 'Frankfurt am Main', 12),
-  createData('Gingerbread', 'Frankfurt am Main', 6)
+  createData("Frozen yoghurt", "Frankfurt am Main", 12),
+  createData("Ice cream sandwich", "Frankfurt am Main", 14),
+  createData("Eclair", "Frankfurt am Main", 8),
+  createData("Cupcake", "Frankfurt am Main", 12),
+  createData("Gingerbread", "Frankfurt am Main", 6)
 ];
 
 function useFarmTableColumns() {
   return useMemo(
     () => [
       {
-        Header: 'Ernteart',
-        accessor: 'title'
+        Header: "Ernteart",
+        accessor: "title"
       },
       {
-        Header: 'Standort',
-        accessor: 'location'
+        Header: "Standort",
+        accessor: "location"
       },
       {
-        Header: 'Benötigte Helfer',
-        accessor: 'neededHelpers'
+        Header: "Benötigte Helfer",
+        accessor: "neededHelpers"
       },
       {
-        Header: 'Aktion'
+        Header: "Aktion"
       }
     ],
     []
@@ -44,7 +44,7 @@ function useFarmTableColumns() {
 }
 
 const initialValues = {
-  location: '',
+  location: "",
   radius: null as number | null
 };
 
@@ -53,16 +53,16 @@ function Helper() {
 
   return (
     <Container>
-      <Header/>
+      <Header />
       {/* Form */}
 
       <Formik
         initialValues={initialValues}
-        onSubmit={values => {
+        onSubmit={(values) => {
           window.alert(JSON.stringify(values, null, 2));
         }}
       >
-        {({values}: FormikProps<typeof initialValues>) => {
+        {({ values }: FormikProps<typeof initialValues>) => {
           return (
             <Form className="mb-6">
               <Grid container spacing={2}>
@@ -95,7 +95,7 @@ function Helper() {
 
       {/* Table */}
 
-      <Table columns={columns} data={data} block/>
+      <Table columns={columns} data={data} block />
     </Container>
   );
 }
