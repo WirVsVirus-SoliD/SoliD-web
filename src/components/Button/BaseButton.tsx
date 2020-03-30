@@ -1,12 +1,14 @@
-import classnames from 'classnames';
-import React from 'react';
+import classnames from "classnames";
+import React from "react";
 
 export type Props = {
   children: React.ReactNode;
   block?: boolean;
   pill?: boolean;
-} & React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement>;
+} & React.DetailedHTMLProps<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>;
 
 const BaseButton = ({
   children,
@@ -16,10 +18,10 @@ const BaseButton = ({
   ...rest
 }: Props) => {
   const css = classnames(
-    'border-2 border-solid font-medium px-4 py-1',
-    pill ? 'rounded-full' : 'rounded',
+    "border-2 border-solid font-medium px-4 py-1",
+    pill ? "rounded-full" : "rounded",
     {
-      'w-full block': block
+      "w-full block": block
     },
     className
   );

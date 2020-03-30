@@ -1,14 +1,14 @@
-import React from 'react';
-import {useHistory} from 'react-router-dom';
+import React from "react";
+import { useHistory } from "react-router-dom";
 
-import {NextStepProps} from '.';
-import BaseButton from '../Button/BaseButton';
-import {Input} from '../Form/components';
+import { NextStepProps } from ".";
+import BaseButton from "../Button/BaseButton";
+import { Input } from "../Form/components";
 
-import {BoardingTitle} from '../Title';
-import {BoardingFarmerStepsHeader} from './steps';
+import { BoardingTitle } from "../Title";
+import { BoardingFarmerStepsHeader } from "./steps";
 
-type Props = {} & Pick<NextStepProps, 'triggerNextPage'>;
+type Props = {} & Pick<NextStepProps, "triggerNextPage">;
 
 const BoardingFarmerContact = (props: Props) => {
   let history = useHistory();
@@ -16,7 +16,7 @@ const BoardingFarmerContact = (props: Props) => {
   return (
     <div className="flex flex-col justify-between h-100vh py-4">
       <div>
-        <BoardingFarmerStepsHeader handleGoBack={() => {}}/>
+        <BoardingFarmerStepsHeader handleGoBack={() => {}} />
         <BoardingTitle>Wie können Dich Erntehelfer erreichen?</BoardingTitle>
         <Input
           className="bg-gray-100 focus:bg-gray-200 mb-4"
@@ -39,7 +39,7 @@ const BoardingFarmerContact = (props: Props) => {
       </div>
       <BaseButton
         className="bg-black text-white border-black"
-        onClick={() => history.push('/map')}
+        onClick={() => history.push("/map")}
         block
       >
         Inserat veröffentlichen

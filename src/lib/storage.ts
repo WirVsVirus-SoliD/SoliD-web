@@ -1,5 +1,5 @@
-const USER_TOKEN_KEY = 'jwt';
-const HIDE_BANNER_KEY = 'demo_banner';
+const USER_TOKEN_KEY = "jwt";
+const HIDE_BANNER_KEY = "demo_banner";
 
 let privateModeWarning = false;
 

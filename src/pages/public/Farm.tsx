@@ -1,42 +1,42 @@
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import {useMemo} from 'react';
-import {PrimaryButton} from '../../components/Button';
-import Header from '../../components/Header';
-import {SectionHeader} from '../../components/Section';
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import { useMemo } from "react";
+import { PrimaryButton } from "../../components/Button";
+import Header from "../../components/Header";
+import { SectionHeader } from "../../components/Section";
 
-import {Table} from '../../components/Table';
-import {SectionTitle, Title} from '../../components/Title';
+import { Table } from "../../components/Table";
+import { SectionTitle, Title } from "../../components/Title";
 
 function createData(title: string, location: string, neededHelpers: number) {
-  return {title, location, neededHelpers};
+  return { title, location, neededHelpers };
 }
 
 const data = [
-  createData('Frozen yoghurt', 'Frankfurt am Main', 12),
-  createData('Ice cream sandwich', 'Frankfurt am Main', 14),
-  createData('Eclair', 'Frankfurt am Main', 8),
-  createData('Cupcake', 'Frankfurt am Main', 12),
-  createData('Gingerbread', 'Frankfurt am Main', 6)
+  createData("Frozen yoghurt", "Frankfurt am Main", 12),
+  createData("Ice cream sandwich", "Frankfurt am Main", 14),
+  createData("Eclair", "Frankfurt am Main", 8),
+  createData("Cupcake", "Frankfurt am Main", 12),
+  createData("Gingerbread", "Frankfurt am Main", 6)
 ];
 
 function useFarmTableColumns() {
   return useMemo(
     () => [
       {
-        Header: 'Ernteart',
-        accessor: 'title'
+        Header: "Ernteart",
+        accessor: "title"
       },
       {
-        Header: 'Standort',
-        accessor: 'location'
+        Header: "Standort",
+        accessor: "location"
       },
       {
-        Header: 'Benötigte Helfer',
-        accessor: 'neededHelpers'
+        Header: "Benötigte Helfer",
+        accessor: "neededHelpers"
       },
       {
-        Header: 'Aktion'
+        Header: "Aktion"
       }
     ],
     []
@@ -44,16 +44,16 @@ function useFarmTableColumns() {
 }
 
 const initialValues = {
-  location: '',
+  location: "",
   radius: null as number | null
 };
 
-function Helper({data}: any) {
+function Helper({ data }: any) {
   const columns = useFarmTableColumns();
 
   return (
     <Container>
-      <Header/>
+      <Header />
 
       {/* Profile*/}
       <section className="mb-8">
@@ -85,7 +85,7 @@ function Helper({data}: any) {
         </SectionHeader>
       </section>
 
-      <Table columns={columns} data={data} block/>
+      <Table columns={columns} data={data} block />
     </Container>
   );
 }

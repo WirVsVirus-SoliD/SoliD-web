@@ -14,7 +14,7 @@ import * as serviceWorker from "./serviceWorker";
 
 const store = initStore();
 
-const render = Component => {
+const render = (Component) => {
   moment.locale("de");
   return ReactDOM.render(
     <Provider store={store}>

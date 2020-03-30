@@ -1,9 +1,9 @@
-import React from 'react';
-import './Logo.css';
+import React from "react";
+import "./Logo.css";
 
 type Props = { size?: number; className?: string };
 
-const Logo = ({size = 200, ...rest}: Props) => {
+const Logo = ({ size = 200, ...rest }: Props) => {
   return (
     <svg
       id="farmhelden_logo"

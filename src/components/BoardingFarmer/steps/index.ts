@@ -1,1 +1,1 @@
-export {default as BoardingFarmerStepsHeader} from './BoardingFarmerStepsHeader';
+export { default as BoardingFarmerStepsHeader } from "./BoardingFarmerStepsHeader";

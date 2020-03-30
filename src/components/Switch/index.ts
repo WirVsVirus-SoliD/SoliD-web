@@ -1,1 +1,1 @@
-export {default as BooleanSwitch} from './BooleanSwitch';
+export { default as BooleanSwitch } from "./BooleanSwitch";

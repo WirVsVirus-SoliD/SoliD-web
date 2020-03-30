@@ -1,10 +1,10 @@
-import React from 'react';
-import {BoardingFarmerProps} from '.';
-import {Input} from '../../Form/components';
+import React from "react";
+import { BoardingFarmerProps } from ".";
+import { Input } from "../../Form/components";
 
 type Props = BoardingFarmerProps;
 
-const BoardingFarmerHelpers = ({state, handleUpdate}: Props) => {
+const BoardingFarmerHelpers = ({ state, handleUpdate }: Props) => {
   return (
     <div>
       <p className="mb-2">
@@ -15,7 +15,7 @@ const BoardingFarmerHelpers = ({state, handleUpdate}: Props) => {
         min={1}
         max={1000}
         value={state.helpersNeededCount}
-        onChange={e => handleUpdate(e.currentTarget.value)}
+        onChange={(e) => handleUpdate(e.currentTarget.value)}
         autoFocus
         block
       />

@@ -1,30 +1,30 @@
-import classNames from 'classnames';
-import React from 'react';
+import classNames from "classnames";
+import React from "react";
 
 type Props = {
   children: React.ReactNode;
   className?: string;
   onChange: (e?: React.ChangeEvent<HTMLInputElement>) => void;
-  kind?: 'default' | 'borderless';
+  kind?: "default" | "borderless";
   block?: boolean;
-} & Omit<React.HTMLProps<HTMLInputElement>, 'label'>;
+} & Omit<React.HTMLProps<HTMLInputElement>, "label">;
 
-const BorderlessStyle = {borderColor: 'transparent'};
+const BorderlessStyle = { borderColor: "transparent" };
 
 const Checkbox = ({
   children,
   className,
   value,
   onChange,
-  kind = 'default',
+  kind = "default",
   block = false,
   ...rest
 }: Props) => {
   return (
     <label
       className={classNames(
-        'checkbox select-none',
-        block ? 'block' : 'inline-block',
+        "checkbox select-none",
+        block ? "block" : "inline-block",
         className
       )}
       onKeyUp={onChange as any}
@@ -38,7 +38,7 @@ const Checkbox = ({
       />
       <span
         className="pr-2"
-        style={kind === 'borderless' ? BorderlessStyle : undefined}
+        style={kind === "borderless" ? BorderlessStyle : undefined}
       >
         {children}
       </span>

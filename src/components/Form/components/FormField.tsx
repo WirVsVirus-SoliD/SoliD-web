@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from "react";
 
 type Props = {
   hasError: boolean;
@@ -10,7 +10,7 @@ type Props = {
  * A simple wrapper for a field in a form, which shows an error
  * if `hasError` is true.
  */
-const FormField = ({hasError, error, children}: Props) => {
+const FormField = ({ hasError, error, children }: Props) => {
   return (
     <Fragment>
       {children}
