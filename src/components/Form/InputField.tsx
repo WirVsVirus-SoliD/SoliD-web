@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import React from "react";
-import { FCProps } from "../../types";
+import { FCProps } from "~/types";
 import { FormField, FormLabel, Input } from "./components";
 import { useFormField } from "./hooks";
 
