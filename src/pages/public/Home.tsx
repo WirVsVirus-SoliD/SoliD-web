@@ -1,20 +1,23 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import BaseButton from '../../components/Button/BaseButton';
-import {Gradient} from '../../components/Gradient';
-import {Logo} from '../../components/Logo';
-import {Map} from '../../components/Map';
-import {Title} from '../../components/Title';
+import React from "react";
+import { Link } from "react-router-dom";
+import BaseButton from "../../components/Button/BaseButton";
+import { Gradient } from "../../components/Gradient";
+import { Logo } from "../../components/Logo";
+import { Map } from "../../components/Map";
+import { Title } from "../../components/Title";
+import { useMobileDevice } from "../../lib/hooks";
 
-const Home = (props) => {
-  const isMobile = props.ua.isMobile;
+type Props = {};
+
+const Home = (props: Props) => {
+  const isMobile = useMobileDevice();
   const logoSize = isMobile ? 60 : 80;
 
   return (
     <main className="h-100vh">
       <div className="relative z-10 bg-white flex justify-between p-2 pb-4">
         <div className="flex items-center">
-          <Logo size={logoSize}/>
+          <Logo size={logoSize} />
           <Title
             as="h1"
             className="text-3xl sm:text-4xl text-primary-dark ml-1"
@@ -39,7 +42,6 @@ const Home = (props) => {
               >
                 Ich suche Unterstützung
               </BaseButton>
-
             </Link>
             <Link to="/map">
               <BaseButton
@@ -52,7 +54,7 @@ const Home = (props) => {
           </div>
         </div>
         <div className="backdrop-blur fixed inset-0 z-0 h-100vh">
-          <Map hideNavigationControl hideFullScreenControl blur={4}/>
+          <Map hideNavigationControl hideFullScreenControl blur={4} />
         </div>
       </div>
     </main>
