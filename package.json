@@ -12,7 +12,7 @@
     "eject": "react-scripts eject",
     "build:staging": "cp ./.env.staging ./.env && yarn run build",
     "build:production": "cp ./.env.prod ./.env && yarn run build",
-    "generate:css": "postcss src/styles/main.src.css -c tailwind.config.js -o src/styles/main.css",
+    "generate:css": "postcss src/styles/main.src.css -c tailwind.config.js -o src/styles/main.css"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^2.1.0",
