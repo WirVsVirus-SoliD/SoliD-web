@@ -1,5 +1,5 @@
-import {fromJS} from 'immutable';
-import {EDIT_USER, LOGOUT, SET_USER} from '../constants/actions';
+import { fromJS } from "immutable";
+import { EDIT_USER, LOGOUT, SET_USER } from "../constants/actions";
 
 export const initialState = fromJS({
   id: null,
@@ -9,8 +9,7 @@ export const initialState = fromJS({
 export function user(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
-      return state
-        .merge(action.payload);
+      return state.merge(action.payload);
 
     case EDIT_USER:
       return state.merge(action.payload);
