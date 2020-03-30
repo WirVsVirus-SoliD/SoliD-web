@@ -6,8 +6,8 @@ import {
   BoardingFarmerDateSelection,
   BoardingFarmerIntroduction,
   BoardingFarmerSupportData
-} from "../../components/BoardingFarmer";
-import { BooleanSwitch } from "../../components/Switch";
+} from "~/components/BoardingFarmer";
+import { BooleanSwitch } from "~/components/Switch";
 
 type Props = {};
 

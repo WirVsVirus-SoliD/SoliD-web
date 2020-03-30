@@ -2,11 +2,11 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { Form, Formik, FormikProps } from "formik";
 import { useMemo } from "react";
-import { PrimaryButton } from "../../components/Button";
-import { InputField } from "../../components/Form";
-import Header from "../../components/Header";
+import { PrimaryButton } from "~/components/Button";
+import { InputField } from "~/components/Form";
+import Header from "~/components/Header";
 
-import { Table } from "../../components/Table";
+import { Table } from "~/components/Table";
 
 function createData(title: string, location: string, neededHelpers: number) {
   return { title, location, neededHelpers };

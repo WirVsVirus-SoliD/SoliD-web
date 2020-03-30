@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Award, ChevronRight, MapPin, Star, Users } from "react-feather";
 import { NextStepProps } from ".";
 
-import { Maybe, ValueOf } from "../../types";
+import { Maybe, ValueOf } from "~/types";
 import { PrimaryButton } from "../Button";
 import BaseButton from "../Button/BaseButton";
 import { FadingPillList } from "../Pill";

@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import BaseButton from "../../components/Button/BaseButton";
-import { Gradient } from "../../components/Gradient";
-import { Logo } from "../../components/Logo";
-import { Map } from "../../components/Map";
-import { Title } from "../../components/Title";
-import { useMobileDevice } from "../../lib/hooks";
+import BaseButton from "~/components/Button/BaseButton";
+import { Gradient } from "~/components/Gradient";
+import { Logo } from "~/components/Logo";
+import { Map } from "~/components/Map";
+import { Title } from "~/components/Title";
+import { useMobileDevice } from "~/lib/hooks";
 
 type Props = {};
 

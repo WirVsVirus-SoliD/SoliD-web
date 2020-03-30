@@ -2,7 +2,7 @@ import React from "react";
 import { ChevronLeft } from "react-feather";
 import { useHistory } from "react-router-dom";
 
-import { Title } from "../../Title";
+import { Title } from "~/components/Title";
 
 type Props = {
   handleGoBack: () => void;

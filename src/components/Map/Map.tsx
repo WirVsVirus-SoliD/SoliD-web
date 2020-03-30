@@ -4,8 +4,8 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
-import API from "../../lib/api";
-import axiosInstance from "../../lib/axiosInstance";
+import API from "~/lib/api";
+import axiosInstance from "~/lib/axiosInstance";
 
 import MapPopUp from "./MapPopUp";
 
