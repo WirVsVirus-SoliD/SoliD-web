@@ -1,7 +1,6 @@
 import { fromJS } from "immutable";
 import { EDIT_USER, LOGOUT, SET_USER } from "../constants/actions";
 
-// Prettier commit
 export const initialState = fromJS({
   id: null,
   email: null,
