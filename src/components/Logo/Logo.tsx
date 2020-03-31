@@ -1,5 +1,4 @@
 import React from "react";
-import "./Logo.css";
 import { LogoIcon, LogoWithText } from "./components";
 
 type Props = { size?: number | string; withText?: boolean } & React.SVGProps<

@@ -1,5 +1,4 @@
 import React from "react";
-import "./Logo.css";
 
 type Props = { height?: number | string } & React.SVGProps<SVGSVGElement>;
 
