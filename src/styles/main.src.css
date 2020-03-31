@@ -1,38 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind CSS */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 /* Components */
-.checkbox > input[type="checkbox"] {
-  @apply absolute outline-none;
-  z-index: -9999;
-  opacity: 0;
-}
-
-.checkbox > input[type="checkbox"] + span {
-  @apply relative bg-transparent block cursor-pointer;
-  padding-left: 1.75rem;
-  line-height: 1.7;
-}
-
-.checkbox > input[type="checkbox"]:focus + span {
-  @apply rounded;
-}
-
-.checkbox > input[type="checkbox"] + span::before {
-  @apply absolute rounded-sm border-brand border-2 bg-white block;
-  content: "";
-  top: 7px;
-  left: 5px;
-  width: 15px;
-  height: 15px;
-}
-
-.checkbox > input[type="checkbox"]:checked + span::after {
-  @apply absolute bg-brand;
-  content: "";
-  top: 10px;
-  left: 8px;
-  width: 9px;
-  height: 9px;
-}
+@import "../components/Form/Form.css";
