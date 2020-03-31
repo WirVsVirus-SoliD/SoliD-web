@@ -21,7 +21,7 @@ const Title = ({
 }: Props) => {
   const css = classnames(
     "font-title",
-    { block, "font-medium": bold },
+    { block, "font-extrabold": bold },
     className
   );
 

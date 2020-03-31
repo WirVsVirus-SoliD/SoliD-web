@@ -2,7 +2,7 @@ module.exports = {
   important: true,
   theme: {
     fontFamily: {
-      title: ["Roboto Slab, sans-serif"],
+      title: ["Raleway, sans-serif"],
       body: ["Roboto, sans-serif"]
     },
     extend: {
