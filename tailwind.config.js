@@ -12,7 +12,7 @@ module.exports = {
         "brand-dark": "#197649",
         "accent-light": "#DCB38E",
         accent: "#7C4B36",
-        grey: "#EBEBEB"
+        grey: "#C4C4C4"
       },
       height: {
         "100vh": "100vh"
