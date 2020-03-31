@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Checkbox */
+/* Components */
 .checkbox > input[type="checkbox"] {
   @apply absolute outline-none;
   z-index: -9999;
@@ -20,18 +20,18 @@
 }
 
 .checkbox > input[type="checkbox"] + span::before {
-  @apply absolute rounded-sm border-primary-dark border-2 bg-white block;
+  @apply absolute rounded-sm border-brand border-2 bg-white block;
   content: "";
-  top: 5px;
+  top: 7px;
   left: 5px;
   width: 15px;
   height: 15px;
 }
 
 .checkbox > input[type="checkbox"]:checked + span::after {
-  @apply absolute bg-primary-dark;
+  @apply absolute bg-brand;
   content: "";
-  top: 8px;
+  top: 10px;
   left: 8px;
   width: 9px;
   height: 9px;
