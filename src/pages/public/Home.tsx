@@ -18,11 +18,7 @@ const Home = (props: Props) => {
       <div className="relative z-10 bg-white flex justify-between p-2 pb-4">
         <div className="flex items-center">
           <Logo size={logoSize} />
-          <Title
-            as="h1"
-            className="text-3xl sm:text-4xl text-primary-dark ml-1"
-            bold
-          >
+          <Title as="h1" className="text-3xl sm:text-4xl text-brand ml-1" bold>
             FarmHelden
           </Title>
         </div>

@@ -8,10 +8,10 @@ type Props = {
 
 const PrimaryButton = ({ theme = "flat", className, ...rest }: Props) => {
   const css = classnames(
-    "border-primary-light hover:border-primary-dark focus:bg-secondary-dark focus:border-secondary-dark",
+    "border-primary-light hover:border-brand focus:bg-secondary-dark focus:border-secondary-dark",
     {
-      "bg-primary-light hover:bg-primary-dark text-white": theme === "flat",
-      "text-primary-light hover:bg-primary-dark hover:text-white focus:text-white":
+      "bg-primary-light hover:bg-brand text-white": theme === "flat",
+      "text-primary-light hover:bg-brand hover:text-white focus:text-white":
         theme === "border"
     },
     className

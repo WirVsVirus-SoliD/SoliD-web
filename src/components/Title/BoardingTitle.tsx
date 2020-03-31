@@ -10,10 +10,7 @@ type Props = {
  * The top title used during the boarding process.
  */
 const BoardingTitle = ({ className, as = "h1", ...rest }: Props) => {
-  const css = classnames(
-    "text-primary-dark text-xl sm:text-2xl mb-2",
-    className
-  );
+  const css = classnames("text-brand text-xl sm:text-2xl mb-2", className);
 
   return <Title as={as} className={css} {...rest} />;
 };
