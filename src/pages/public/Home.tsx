@@ -1,13 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import BaseButton from "~/components/Button/BaseButton";
+import { Info, User, Briefcase, CheckCircle } from "react-feather";
+
 import { Gradient } from "~/components/Gradient";
 import { Logo } from "~/components/Logo";
 import { Map } from "~/components/Map";
 import { Title } from "~/components/Title";
 import { useMobileDevice } from "~/lib/hooks";
+import { Steps } from "~/components/Steps";
 
 type Props = {};
+
+const steps = [
+  { title: "Hinweis", Icon: Info, Content: Info },
+  { title: "Über dich", Icon: User, Content: User },
+  { title: "Konditionen", Icon: Briefcase, Content: Briefcase },
+  { title: "Fertig!", Icon: CheckCircle, Content: CheckCircle }
+];
 
 const Home = (props: Props) => {
   const isMobile = useMobileDevice();
@@ -28,25 +36,11 @@ const Home = (props: Props) => {
           block
         />
       </div>
+
       <div className="fixed inset-0">
         <div className="absolute top-0 z-20 flex items-center w-full px-2 h-full">
-          <div className="block w-full md:text-center">
-            <Link to="/boarding-farmer">
-              <BaseButton
-                className="font-title mb-4 py-2 md:w-64 text-xl md:mx-auto rounded-full bg-primary-light border-primary-light text-white"
-                block
-              >
-                Ich suche Unterstützung
-              </BaseButton>
-            </Link>
-            <Link to="/map">
-              <BaseButton
-                className="font-title py-2 md:w-64 text-xl md:mx-auto rounded-full bg-accent-dark border-accent-dark text-white"
-                block
-              >
-                Ich möchte helfen
-              </BaseButton>
-            </Link>
+          <div className="block w-full">
+            <Steps steps={steps} />
           </div>
         </div>
         <div className="backdrop-blur fixed inset-0 z-0 h-100vh">
