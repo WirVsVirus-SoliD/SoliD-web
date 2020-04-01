@@ -175,7 +175,7 @@ const BoardingFarmerSupportData = (props: Props) => {
             />
 
             <div className="block">
-              <Title as="h2" className="mb-2 text-xl text-primary-dark" bold>
+              <Title as="h2" className="mb-2 text-xl text-brand" bold>
                 {activeItem.title}
               </Title>
             </div>

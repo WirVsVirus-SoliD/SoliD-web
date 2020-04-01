@@ -27,7 +27,7 @@ function Dot({ isActive }: { isActive: boolean }) {
     <span
       className={classnames(
         "inline-block rounded-full mr-2",
-        isActive ? "bg-primary-dark" : "bg-primary-light"
+        isActive ? "bg-brand" : "bg-primary-light"
       )}
       style={DotStyles}
     />

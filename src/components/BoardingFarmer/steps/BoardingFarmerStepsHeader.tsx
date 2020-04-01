@@ -13,7 +13,7 @@ const BoardingFarmerStepsHeader = ({ handleGoBack }: Props) => {
   return (
     <div className="flex justify-between items-end mb-4 w-full">
       <span
-        className="flex items-center text-primary-dark cursor-pointer"
+        className="flex items-center text-brand cursor-pointer"
         onClick={handleGoBack}
       >
         <ChevronLeft className="mr-1" size={16} />

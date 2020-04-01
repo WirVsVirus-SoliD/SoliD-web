@@ -10,7 +10,7 @@ const BoardingFarmerIntroduction = (props: Props) => {
     <div className="flex flex-col justify-between h-100vh py-4">
       <div>
         <Header />
-        <p className="text-xl text-primary-dark font-title mb-12">
+        <p className="text-xl text-brand font-title mb-12">
           Als landwirtschaftlicher Betrieb ist es zur Zeit nicht einfach.
           Erstelle jetzt schnell und einfach Unterstützungsanfragen und lass Dir
           von Menschen aus deiner Umgebung helfen.
