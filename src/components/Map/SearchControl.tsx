@@ -24,6 +24,4 @@ const SearchControl = () => {
   return null;
 };
 
-SearchControl.propTypes = {};
-
 export default SearchControl;

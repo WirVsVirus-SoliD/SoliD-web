@@ -2,7 +2,6 @@ import L from "leaflet";
 import "leaflet.markercluster/dist/leaflet.markercluster";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
-import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useLeaflet } from "react-leaflet";
 import "./MarkerCluster.css";
@@ -16,7 +15,11 @@ const customMarker = new L.Icon({
   popupAnchor: [2, -40]
 });
 
-const MarkerCluster = ({ geoJson }) => {
+type Props = {
+  geoJson: object;
+};
+
+const MarkerCluster = ({ geoJson }: Props) => {
   const { map } = useLeaflet();
 
   useEffect(() => {
@@ -38,10 +41,6 @@ const MarkerCluster = ({ geoJson }) => {
   }, [geoJson, map]);
 
   return null;
-};
-
-MarkerCluster.propTypes = {
-  geoJson: PropTypes.object.isRequired
 };
 
 export default MarkerCluster;

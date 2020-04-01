@@ -17,33 +17,41 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require("leaflet/dist/images/marker-shadow.png")
 });
 
-class LeafletMap extends React.Component<{}, { points: any; bbox: any }> {
+type Props = {};
+
+type State = {
+  points: { features: object; type: object; crs: object } | null;
+  bbox: Array<number> | null;
+};
+
+const mapStyles = { height: "100vh", width: "100vw" };
+
+class LeafletMap extends React.Component<Props, State> {
   state = {
     points: null,
     bbox: null
   };
 
   async componentDidMount() {
-    const response2 = await axiosInstance.get(API.locations.geoJson);
-    const points = response2.data;
+    const response = await axiosInstance.get(API.locations.geoJson);
+    const points = response.data;
     const bbox = turfBbox(points);
     this.setState({ bbox, points });
   }
 
   render() {
-    const { points, bbox } = this.state;
+    const { points } = this.state;
     return (
       <Map
         center={[51.163375, 10.447683]}
         zoom={7}
-        style={{ height: "100vh", width: "100vw" }}
+        style={mapStyles}
         zoomControl={false}
         maxZoom={17}
       >
         <MapBoxGLLayer
           accessToken="pk.eyJ1IjoiZmxvcmlhbmdlcmhhcmR0IiwiYSI6ImNrODFmOTI2ZDBlcnozaG1zaGR1M29hZ3MifQ.ZXKPWVeVAfD_ABvIGbsQnQ"
           style="mapbox://styles/mapbox/streets-v9"
-          attribution=""
         />
         <MarkerCluster geoJson={points} />
         <SearchControl />
