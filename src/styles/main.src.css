@@ -3,6 +3,9 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+/* Core */
+@import "./_layout.css";
+
 /* Components */
 @import "../components/Form/Form.css";
 @import "../components/Steps/Steps.css";
