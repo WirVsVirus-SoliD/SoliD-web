@@ -5,6 +5,7 @@ import BoardingFarmer from "../pages/public/BoardingFarmer";
 import Home from "./../pages/public/Home";
 import Map from "./../pages/public/Map";
 import SplashScreen from "~/pages/public/SplashScreen";
+import StartScreen from "~/pages/public/StartScreen";
 
 export default function AppRoutes() {
   return (
@@ -19,6 +20,7 @@ export default function AppRoutes() {
 
       {/* Screens - only for presentational purposes */}
       <Route exact path="/screens/splash" component={SplashScreen} />
+      <Route exact path="/screens/start" component={StartScreen} />
 
       {/*Redirect*/}
       <Redirect
