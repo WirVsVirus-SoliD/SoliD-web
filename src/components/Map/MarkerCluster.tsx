@@ -10,7 +10,7 @@ import "./MarkerCluster.css";
 const mcg = L.markerClusterGroup();
 
 const customMarker = new L.Icon({
-  iconUrl: require("~/assets/icons/FarmMarker@2x.png"),
+  iconUrl: require("~/assets/icons/FarmMarker.svg"),
   iconSize: [50, 60],
   iconAnchor: [10, 41],
   popupAnchor: [2, -40]
