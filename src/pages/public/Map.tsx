@@ -1,8 +1,8 @@
 import React from "react";
-import { Map as MapBoxMap } from "~/components/Map";
+import { default as LeafletMap } from "~/components/Map/Map2";
 
 const Map = () => {
-  return <MapBoxMap />;
+  return <LeafletMap />;
 };
 
 export default Map;
