@@ -1,0 +1,9 @@
+html,
+body,
+#root {
+  @apply h-full;
+}
+
+body {
+  @apply font-body;
+}
