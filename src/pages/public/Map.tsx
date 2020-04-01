@@ -1,5 +1,5 @@
 import React from "react";
-import { default as LeafletMap } from "~/components/Map/Map2";
+import { default as LeafletMap } from "~/components/Map/LeafletMap";
 
 const Map = () => {
   return <LeafletMap />;
