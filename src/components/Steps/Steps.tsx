@@ -19,7 +19,7 @@ const Steps = ({ steps, children }: Props) => {
     <>
       <StepsBar />
       <ActiveStepContent />
-      {children(rest)}
+      {children && children(rest)}
     </>
   );
 };
