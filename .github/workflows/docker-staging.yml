@@ -24,6 +24,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   update:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Update Portainer via Webhook
