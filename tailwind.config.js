@@ -18,7 +18,11 @@ module.exports = {
         "100vh": "100vh"
       },
       inset: {
-        "100perc": "100%"
+        "100perc": "100%",
+        "1/2": "50%"
+      },
+      zIndex: {
+        "9999": 9999
       }
     },
     backdropFilter: {

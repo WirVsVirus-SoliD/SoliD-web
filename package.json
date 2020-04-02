@@ -52,6 +52,7 @@
     "history": "^4.10.1",
     "immutable": "^4.0.0-rc.12",
     "leaflet": "^1.6.0",
+    "leaflet.locatecontrol": "FlorianGerhardt/leaflet-locatecontrol",
     "leaflet.markercluster": "^1.4.1",
     "mapbox-gl": "^1.9.0",
     "mapbox-gl-leaflet": "^0.0.12",

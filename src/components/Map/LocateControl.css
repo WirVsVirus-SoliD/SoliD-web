@@ -1,0 +1,19 @@
+.locate-control-icon {
+  background-image: url("../../assets/icons/Location.svg");
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  display: table;
+  margin: 0 auto;
+}
+
+.locate-control-icon-loading {
+  background-image: url("../../assets/icons/Location.svg");
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  display: table;
+  margin: 0 auto;
+}

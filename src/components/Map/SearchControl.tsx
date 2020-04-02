@@ -1,26 +1,36 @@
 import * as Geocoder from "esri-leaflet-geocoder";
+import "esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css";
 import "esri-leaflet/dist/esri-leaflet";
 import L from "leaflet";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useLeaflet } from "react-leaflet";
 
-const SearchControl = () => {
+import "./SearchControl.css";
+
+type Props = {
+  container: React.RefObject<HTMLInputElement>;
+};
+
+const SearchControl = ({ container }: Props) => {
   const { map } = useLeaflet();
 
   useEffect(() => {
     const searchControl = new Geocoder.Geosearch({
-      placeholder: "",
+      placeholder: "Standort suchen...",
       title: "",
       expanded: true,
       collapseAfterResult: false
-    }).addTo(map);
+    });
 
     const results = new L.LayerGroup().addTo(map);
     searchControl.on("results", function (data) {
       results.clearLayers();
       data.results.map((result) => results.addLayer(L.marker(result.latlng)));
     });
-  }, [map]);
+    const searchContainer = searchControl.onAdd(map);
+    container.current.appendChild(searchContainer);
+  }, [map, container]);
+
   return null;
 };
 
