@@ -1,4 +1,5 @@
 import turfBbox from "@turf/bbox";
+import { BBox } from "@turf/helpers";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import React, { createRef } from "react";
