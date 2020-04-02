@@ -5,7 +5,7 @@
   background-repeat: no-repeat;
   position: absolute;
   display: table;
-  margin: 0 auto;
+  background-position: center;
 }
 
 .locate-control-icon-loading {
@@ -15,5 +15,5 @@
   background-repeat: no-repeat;
   position: absolute;
   display: table;
-  margin: 0 auto;
+  background-position: center;
 }
