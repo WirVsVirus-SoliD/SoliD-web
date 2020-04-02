@@ -6967,6 +6967,10 @@ leaflet-virtual-grid@^1.0.7:
   dependencies:
     leaflet "^1.0.0"
 
+leaflet.locatecontrol@FlorianGerhardt/leaflet-locatecontrol:
+  version "0.71.0"
+  resolved "https://codeload.github.com/FlorianGerhardt/leaflet-locatecontrol/tar.gz/9201d8acb33511787ee3f9f76fa078836c31e8ce"
+
 leaflet.markercluster@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/leaflet.markercluster/-/leaflet.markercluster-1.4.1.tgz#b53f2c4f2ca7306ddab1dbb6f1861d5e8aa6c5e5"
