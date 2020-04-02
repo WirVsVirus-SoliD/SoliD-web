@@ -22,7 +22,7 @@ type Props = {};
 
 type State = {
   geoJson: { features: object; type: object; crs: object } | null;
-  bbox: [number, number, number, number] | null;
+  bbox: BBox | null;
 };
 
 class LeafletMap extends React.Component<Props, State> {
