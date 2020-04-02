@@ -1,4 +1,5 @@
 import turfBbox from "@turf/bbox";
+import { BBox } from "@turf/helpers";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import React, { createRef } from "react";
@@ -70,7 +71,7 @@ class LeafletMap extends React.Component<Props, State> {
           ref={this.searchContainer}
         />
         <div
-          className="absolute top-0 mt-4 z-9999 h-10 right-0 mr-4"
+          className="absolute bottom-0 mb-4 z-9999 h-10 right-0 mr-4"
           ref={this.locateContainer}
         />
       </>

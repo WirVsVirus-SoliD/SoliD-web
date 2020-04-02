@@ -13,12 +13,12 @@ const LocateControl = ({ container }: Props) => {
   const { map } = useLeaflet();
 
   useEffect(() => {
-    // FIXME the icons are from fontawesome by default, override them by setting the options below
     const locatecontrol = new Locatecontrol({
       strings: {
         title: "Standort"
-      }
-      /*icon: "locate-control-icon", iconLoading: "locate-control-icon-loading"*/
+      },
+      icon: "locate-control-icon",
+      iconLoading: "locate-control-icon-loading"
     });
 
     const locateContainer = locatecontrol.onAdd(map);
