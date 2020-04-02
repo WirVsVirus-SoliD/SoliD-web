@@ -22,6 +22,10 @@ jobs:
           BUILD_CONTEXT: "."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  update:
+    runs-on: ubuntu-latest
+    steps:
       - name: Update Portainer via Webhook
         uses: wei/curl@v1
         with:
