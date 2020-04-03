@@ -7,13 +7,16 @@ import BoardingFarmer from "~/pages/public/BoardingFarmer";
 import Home from "~/pages/public/Home";
 import Map from "~/pages/public/Map";
 import SignIn from "~/pages/public/SignIn";
+import Register from "~/pages/public/Register";
 
 export default function AppRoutes() {
   return (
     <Switch>
       {/*Public Routes*/}
       <Route exact path="/" component={Home} />
+
       <Route exact path="/signin" component={SignIn} />
+      <Route exact path="/register" component={Register} />
 
       <Route exact path="/map" component={Map} />
       <Route exact path="/boarding-farmer" component={BoardingFarmer} />
