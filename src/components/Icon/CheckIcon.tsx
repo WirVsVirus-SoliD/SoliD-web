@@ -2,14 +2,14 @@ import React from "react";
 
 type Props = {
   size?: string | number;
-};
+} & React.SVGAttributes<SVGElement>;
 
 /**
  * The `CheckIcon` component is a custom-made icon used for checklist-style information.
  * Its purpose is to stand out and provide additional visibility to the user.
  * Therefore, use this component only for presentational purposes, not interactive ones.
  */
-const CheckIcon = ({ size = 24 }: Props) => {
+const CheckIcon = ({ size = 24, ...rest }: Props) => {
   return (
     <svg
       width={size}
@@ -17,6 +17,7 @@ const CheckIcon = ({ size = 24 }: Props) => {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...rest}
     >
       <circle opacity="0.3" cx="13" cy="10" r="8" fill="#199057" />
       <path
