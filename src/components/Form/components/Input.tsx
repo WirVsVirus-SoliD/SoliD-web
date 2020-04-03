@@ -16,9 +16,9 @@ const Input = ({
   ...rest
 }: Props) => {
   const css = classnames(
-    "px-2 py-2 border-gray-400 rounded focus:border-secondary-dark",
+    "pt-2 pb-1 px-1 border-gray-400 focus:bg-gray-200 outline-none",
     { "w-full block": block },
-    { "border-2": !borderless },
+    { "border-b-2": !borderless },
     className
   );
 
