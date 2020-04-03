@@ -32,7 +32,9 @@ module.exports = {
   },
   variants: {
     backgroundColor: ["responsive", "hover", "focus", "even", "odd"],
-    borderRadius: ["responsive", "first", "last"]
+    borderRadius: ["responsive", "first", "last"],
+    borderWidth: ["responsive", "first", "last"],
+    padding: ["responsive", "first", "last"]
   },
   plugins: [require("tailwindcss-filters")]
 };
