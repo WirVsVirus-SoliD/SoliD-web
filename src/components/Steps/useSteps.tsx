@@ -7,6 +7,8 @@ type StepsBarRestProps = React.DetailedHTMLProps<
   HTMLUListElement
 >;
 
+const EmptyRender = () => null;
+
 export function useSteps(steps: Step[]) {
   const maxIndex = steps.length - 1;
   const [activeStepIndex, setActiveStepIndex] = useState(0);
@@ -23,6 +25,6 @@ export function useSteps(steps: Step[]) {
     StepsBar: (props: StepsBarRestProps) => (
       <StepsBar activeStepIndex={activeStepIndex} steps={steps} {...props} />
     ),
-    ActiveStepContent: steps[activeStepIndex].Content
+    ActiveStepContent: steps[activeStepIndex]?.Content ?? EmptyRender
   };
 }
