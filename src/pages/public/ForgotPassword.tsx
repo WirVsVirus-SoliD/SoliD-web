@@ -1,6 +1,6 @@
 import { Form, Formik, FormikProps } from "formik";
 import React from "react";
-import * as yup from "yup";
+import { object as yupObject, string as yupString } from "yup";
 import { PrimaryButton } from "~/components/Button";
 import { InputField } from "~/components/Form";
 
@@ -8,8 +8,8 @@ const initialValues = {
   email: ""
 };
 
-const validationSchema = yup.object().shape({
-  email: yup.string().email("Ungültige E-Mail-Addresse").required("Pflichtfeld")
+const validationSchema = yupObject().shape({
+  email: yupString().email("Ungültige E-Mail-Addresse").required("Pflichtfeld")
 });
 
 const ForgotPassword = () => {

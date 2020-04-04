@@ -1,7 +1,7 @@
 import { Form, Formik, FormikProps } from "formik";
 import React from "react";
 import { Link } from "react-router-dom";
-import * as yup from "yup";
+import { object as yupObject, string as yupString } from "yup";
 import { PrimaryButton } from "~/components/Button";
 import { InputField } from "~/components/Form";
 
@@ -10,12 +10,9 @@ const initialValues = {
   password: ""
 };
 
-const validationSchema = yup.object().shape({
-  email: yup
-    .string()
-    .email("Ungültige E-Mail-Addresse")
-    .required("Pflichtfeld"),
-  password: yup.string().required("Pflichtfeld")
+const validationSchema = yupObject().shape({
+  email: yupString().email("Ungültige E-Mail-Addresse").required("Pflichtfeld"),
+  password: yupString().required("Pflichtfeld")
 });
 
 const Login = () => {
