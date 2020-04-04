@@ -1,4 +1,13 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Used Libraries
+
+This project uses
+- [Create React App](https://github.com/facebook/create-react-app)
+- TypeScript
+- Support for absolute path imports via [tsconfig.paths.json](./tsconfig.paths.json) and [craco](https://github.com/sharegate/craco) (see [example](./src/pages/public/Home.tsx))
+- [tailwindcss](https://tailwindcss.com/)
+- [immutable-js](https://immutable-js.github.io/immutable-js/)
+- [redux](https://redux.js.org/)
+
 
 ## Available Scripts
 
