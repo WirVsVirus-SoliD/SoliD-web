@@ -1,5 +1,6 @@
 import { Form, Formik, FormikProps } from "formik";
 import React from "react";
+import * as yup from "yup";
 import { PrimaryButton } from "~/components/Button";
 import { InputField } from "~/components/Form";
 
@@ -7,17 +8,9 @@ const initialValues = {
   email: ""
 };
 
-const validate = (values) => {
-  const errors: { email?: string; password?: string } = {};
-
-  if (!values.email) {
-    errors.email = "Pflichtfeld";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Ungültige E-Mail-Addresse";
-  }
-
-  return errors;
-};
+const validationSchema = yup.object().shape({
+  email: yup.string().email("Ungültige E-Mail-Addresse").required("Pflichtfeld")
+});
 
 const ForgotPassword = () => {
   return (
@@ -29,7 +22,7 @@ const ForgotPassword = () => {
       <div className="h-full w-full max-w-xs">
         <Formik
           initialValues={initialValues}
-          validate={validate}
+          validationSchema={validationSchema}
           onSubmit={(values) => {
             console.log(values);
             window.alert(JSON.stringify(values, null, 2));
