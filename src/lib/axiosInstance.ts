@@ -1,5 +1,5 @@
 import axios from "axios";
-import Storage from "./storage";
+import storage from "./storage";
 
 let instance = axios.create({
   headers: {
@@ -13,16 +13,11 @@ let instance = axios.create({
 });
 
 instance.interceptors.request.use(function (config) {
-  if (Storage.get("jwt"))
+  if (storage.getToken())
     config.headers.common = {
       ...config.headers.common,
-      Authorization: "bearer " + Storage.get("jwt")
+      Authorization: "bearer " + storage.getToken()
     };
-  return config;
-});
-
-instance.interceptors.response.use(function (config) {
-  if (config.headers.jwt) Storage.setToken(config.headers.jwt);
   return config;
 });
 

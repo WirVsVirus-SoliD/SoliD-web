@@ -1,7 +1,9 @@
 import { Form, Formik, FormikProps } from "formik";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { object as yupObject, string as yupString } from "yup";
+import { login } from "~/actions/user";
 import { PrimaryButton } from "~/components/Button";
 import { InputField } from "~/components/Form";
 
@@ -16,6 +18,7 @@ const validationSchema = yupObject().shape({
 });
 
 const Login = () => {
+  const dispatch = useDispatch();
   return (
     <div className="flex flex-col py-4 items-center justify-start px-8 h-full">
       <div className="w-full md:text-center text-xl mb-12">Anmeldung</div>
@@ -27,8 +30,7 @@ const Login = () => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={(values) => {
-            console.log(values);
-            window.alert(JSON.stringify(values, null, 2));
+            dispatch(login(values.email, values.password));
           }}
         >
           {({ values }: FormikProps<typeof initialValues>) => {
