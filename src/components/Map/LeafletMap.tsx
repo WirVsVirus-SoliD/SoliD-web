@@ -26,6 +26,8 @@ type State = {
   bbox: BBox | null;
 };
 
+const containerStyle = { height: "calc(100% - 56px)" };
+
 class LeafletMap extends React.Component<Props, State> {
   searchContainer: React.RefObject<HTMLInputElement>;
   locateContainer: React.RefObject<HTMLInputElement>;
@@ -50,7 +52,7 @@ class LeafletMap extends React.Component<Props, State> {
   render() {
     const { geoJson } = this.state;
     return (
-      <div className="w-full relative" style={{ height: "calc(100% - 56px)" }}>
+      <div className="w-full relative" style={containerStyle}>
         <Map
           center={[51.163375, 10.447683]}
           zoom={7}
