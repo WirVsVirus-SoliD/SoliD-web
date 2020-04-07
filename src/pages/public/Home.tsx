@@ -38,7 +38,7 @@ const Home = (props: Props) => {
           <p className="mt-12 mb-2 text-center text-sm">
             Oder hast du schon einen Account?
           </p>
-          <Link to="/login">
+          <Link to="/signin">
             <PrimaryButton block theme="border" className="tracking-wider">
               Anmelden
             </PrimaryButton>

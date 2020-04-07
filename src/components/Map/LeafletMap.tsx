@@ -50,11 +50,11 @@ class LeafletMap extends React.Component<Props, State> {
   render() {
     const { geoJson } = this.state;
     return (
-      <>
+      <div className="w-full relative" style={{ height: "calc(100% - 56px)" }}>
         <Map
           center={[51.163375, 10.447683]}
           zoom={7}
-          className="h-100vh w-100vw"
+          className="h-full w-full"
           zoomControl={false}
           maxZoom={17}
         >
@@ -74,7 +74,7 @@ class LeafletMap extends React.Component<Props, State> {
           className="absolute bottom-0 mb-4 z-9999 h-10 right-0 mr-4"
           ref={this.locateContainer}
         />
-      </>
+      </div>
     );
   }
 }
