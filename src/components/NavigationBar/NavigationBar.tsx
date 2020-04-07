@@ -3,6 +3,8 @@ import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+const classes = { selected: "text-brand" };
+
 const NavigationBar = ({ tabs }) => {
   const [value, setValue] = useState();
   return (
@@ -16,6 +18,7 @@ const NavigationBar = ({ tabs }) => {
     >
       {tabs.map((tab) => (
         <BottomNavigationAction
+          classes={classes}
           value={tab.value}
           label={tab.label}
           icon={tab.icon}

@@ -27,7 +27,7 @@ export default function AppRoutes() {
       <Route exact path="/404" component={NotFoundPage} />
 
       {/*Redirect*/}
-      <Redirect push to={{ pathname: "/404" }} />
+      <Redirect push to="/404" />
     </Switch>
   );
 }
