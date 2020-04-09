@@ -18,6 +18,7 @@ const NavigationBar = ({ tabs }) => {
     >
       {tabs.map((tab) => (
         <BottomNavigationAction
+          key={tab.value}
           classes={classes}
           value={tab.value}
           label={tab.label}

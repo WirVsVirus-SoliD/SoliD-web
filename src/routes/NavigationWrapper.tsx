@@ -1,37 +1,67 @@
+import PersonIcon from "@material-ui/icons/Person";
+import RoomIcon from "@material-ui/icons/Room";
+import ScheduleIcon from "@material-ui/icons/Schedule";
 import React from "react";
-import { Clock, MapPin, User } from "react-feather";
 import { Route, Switch } from "react-router-dom";
 import { NavigationBar } from "~/components/NavigationBar";
 import { Helpers, Jobs, Profile } from "~/pages/private";
 import { Login, Map } from "~/pages/public";
-
-const helperTabs = [
-  { route: "/map", icon: <MapPin />, value: "nearby", label: "In der Nähe" },
-  { route: "/jobs", icon: <Clock />, value: "jobs", label: "Jobs" },
-  { route: "/profile", icon: <User />, value: "profile", label: "Profil" },
-  { route: "/login", icon: <User />, value: "login", label: "Login" }
-];
+import { useTypedSelector } from "~/reducers";
+import { userIsAuthenticated } from "~/routes/auth";
 
 const providerTabs = [
   {
     route: "/helpers",
-    icon: <Clock />,
+    icon: <ScheduleIcon />,
     value: "helpers",
     label: "Meine Helfer"
   },
-  { route: "/profile", icon: <User />, value: "profile", label: "Meine Daten" }
+  {
+    route: "/profile",
+    icon: <PersonIcon />,
+    value: "profile",
+    label: "Meine Daten"
+  }
 ];
 
 const NavigationWrapper = () => {
-  const helper = true;
-  // FIXME Use user data from store
+  const user = useTypedSelector((state) => state.get("user"));
+  const isHelper = true;
+  let tabs;
+
+  if (isHelper) {
+    tabs = [
+      {
+        route: "/map",
+        icon: <RoomIcon />,
+        value: "nearby",
+        label: "In der Nähe"
+      },
+      { route: "/jobs", icon: <ScheduleIcon />, value: "jobs", label: "Jobs" },
+      user.get("login")
+        ? {
+            route: "/profile",
+            icon: <PersonIcon />,
+            value: "profile",
+            label: "Profil"
+          }
+        : {
+            route: "/login",
+            icon: <PersonIcon />,
+            value: "login",
+            label: "Login"
+          }
+    ];
+  } else {
+    tabs = providerTabs;
+  }
 
   const renderHelperRoutes = () => {
     return (
       <Switch>
         <Route path={"/map"} component={Map} />
-        <Route path={"/jobs"} component={Jobs} />
-        <Route path={"/profile"} component={Profile} />
+        <Route path={"/jobs"} component={userIsAuthenticated(Jobs)} />
+        <Route path={"/profile"} component={userIsAuthenticated(Profile)} />
         <Route path={"/login"} component={Login} />
       </Switch>
     );
@@ -40,16 +70,20 @@ const NavigationWrapper = () => {
   const renderProviderRoutes = () => {
     return (
       <Switch>
-        <Route path={"/helpers"} exact component={Helpers} />
-        <Route path={"/profile"} component={Profile} />
+        <Route
+          path={"/helpers"}
+          exact
+          component={userIsAuthenticated(Helpers)}
+        />
+        <Route path={"/profile"} component={userIsAuthenticated(Profile)} />
       </Switch>
     );
   };
 
   return (
     <>
-      {helper ? renderHelperRoutes() : renderProviderRoutes()}
-      <NavigationBar tabs={helper ? helperTabs : providerTabs} />
+      {isHelper ? renderHelperRoutes() : renderProviderRoutes()}
+      <NavigationBar tabs={tabs} />
     </>
   );
 };

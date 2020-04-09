@@ -1,8 +1,9 @@
 import { TypedUseSelectorHook, useSelector } from "react-redux";
+import { Reducer } from "redux";
 import { combineReducers } from "redux-immutable";
 import { user } from "./user";
 
-const rootReducer = combineReducers({
+const rootReducer: Reducer = combineReducers({
   user
 });
 
