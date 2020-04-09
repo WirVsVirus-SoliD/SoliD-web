@@ -4,10 +4,14 @@ import { useTypedSelector } from "~/reducers";
 
 const Profile = () => {
   const helper = true;
-  // FIXME Use user data from store
-  const user = useTypedSelector((state) => state.user);
+  const user = useTypedSelector((state) => state.get("user"));
+  const data = user.get("data");
 
-  return helper ? <HelperProfile /> : <ProviderProfile />;
+  return helper ? (
+    <HelperProfile data={data} />
+  ) : (
+    <ProviderProfile data={data} />
+  );
 };
 
 export default Profile;

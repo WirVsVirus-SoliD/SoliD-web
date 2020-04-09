@@ -7,6 +7,7 @@ import SplashScreen from "~/pages/public/SplashScreen";
 import NavigationWrapper from "~/routes/NavigationWrapper";
 
 export default function AppRoutes() {
+  // TODO validate token on first start here?
   return (
     <Switch>
       {/*Public Routes*/}

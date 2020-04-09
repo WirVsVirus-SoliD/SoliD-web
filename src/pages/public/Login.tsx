@@ -1,4 +1,5 @@
 import { Form, Formik, FormikProps } from "formik";
+import * as queryString from "querystring";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -6,6 +7,7 @@ import { object as yupObject, string as yupString } from "yup";
 import { login } from "~/actions/user";
 import { PrimaryButton } from "~/components/Button";
 import { InputField } from "~/components/Form";
+import { Title } from "~/components/Title";
 
 const initialValues = {
   email: "",
@@ -13,15 +15,24 @@ const initialValues = {
 };
 
 const validationSchema = yupObject().shape({
-  email: yupString().email("Ungültige E-Mail-Addresse").required("Pflichtfeld"),
+  email: yupString() /*.email("Ungültige E-Mail-Addresse")*/
+    .required("Pflichtfeld"),
   password: yupString().required("Pflichtfeld")
 });
 
-const Login = () => {
+const Login = ({ location }) => {
   const dispatch = useDispatch();
+
+  const getRedirectRoute = () => {
+    let urlParams = queryString.parse(location && location.search);
+    return urlParams["?redirect"] || "/map";
+  };
+
   return (
-    <div className="flex flex-col py-4 items-center justify-start px-8 h-full">
-      <div className="w-full md:text-center text-xl mb-12">Anmeldung</div>
+    <div className="flex flex-col py-4 items-center justify-start px-8 h-full pb-20">
+      <Title as="h1" className="w-full md:text-center text-xl mb-12">
+        Anmeldung
+      </Title>
       <div className="w-full md:text-center text-2xl mb-16">
         Willkommen zurück!
       </div>
@@ -30,7 +41,7 @@ const Login = () => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={(values) => {
-            dispatch(login(values.email, values.password));
+            dispatch(login(values.email, values.password, getRedirectRoute()));
           }}
         >
           {({ values }: FormikProps<typeof initialValues>) => {

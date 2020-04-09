@@ -15,7 +15,11 @@ const LocateControl = ({ container }: Props) => {
   useEffect(() => {
     const locatecontrol = new Locatecontrol({
       strings: {
-        title: "Standort"
+        title: "Standort",
+        metersUnit: "m",
+        popup: "Sie sind innerhalb von {distance}{unit} von diesem Punkt",
+        outsideMapBoundsMsg:
+          "Ihr Standort befindet sich außerhalb des sichtbaren Bereichs"
       },
       icon: "locate-control-icon",
       iconLoading: "locate-control-icon-loading"
