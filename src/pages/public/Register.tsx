@@ -147,7 +147,54 @@ const steps: Step[] = [
   {
     title: "Fertig!",
     Icon: CheckCircle,
-    Content: () => <>hi</>
+    Content: () => {
+      // Placeholder: remove when form is implemented
+      const email = "abc@gmail.com";
+
+      return (
+        <div className="flex flex-col items-center">
+          <div className="mb-8">
+            {/* TODO: request svg from design team (group icon in Figma to allow svg export) */}
+            <svg
+              width="176"
+              height="176"
+              viewBox="0 0 176 176"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="88" cy="88" r="88" fill="#94E1AE" />
+              <path
+                d="M12.1 4H76.9C81.355 4 85 7.65625 85 12.125V60.875C85 65.3438 81.355 69 76.9 69H12.1C7.645 69 4 65.3438 4 60.875V12.125C4 7.65625 7.645 4 12.1 4Z"
+                stroke="white"
+                stroke-width="8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M85 4L44.5 32L4 4"
+                stroke="white"
+                stroke-width="8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div className="flex-grow">
+            <Title
+              as="h2"
+              className="text-xl font-medium text-center mb-4"
+              block
+            >
+              E-Mail-Verifizierung
+            </Title>
+            <p>
+              Wir haben dir einen Bestätigungslink per E-Mail an{" "}
+              <strong>{email}</strong> geschickt. Bitte öffne diese.
+            </p>
+          </div>
+        </div>
+      );
+    }
   }
 ];
 
@@ -160,7 +207,7 @@ const Register = () => {
     goPrevious,
     activeStepIndex
   } = useSteps(steps);
-
+  console.log({ activeStepIndex });
   return (
     <div className="flex flex-col h-full px-8 py-4">
       <div className="flex-grow">
@@ -171,15 +218,23 @@ const Register = () => {
         <ActiveStepContent />
       </div>
       <div className="flex">
-        <button
-          onClick={activeStepIndex < 1 ? () => push("/signin") : goPrevious}
-          className="flex-grow mr-4 text-gray-500 hover:bg-gray-200 hover:text-gray-700 rounded-full px-4 py-1 cursor-pointer"
-        >
-          Zurück
-        </button>
-        <PrimaryButton className="flex-grow" onClick={goNext}>
-          Okay, verstanden!
-        </PrimaryButton>
+        {activeStepIndex < steps.length - 1 ? (
+          <>
+            <button
+              onClick={activeStepIndex < 1 ? () => push("/signin") : goPrevious}
+              className="flex-grow mr-4 text-gray-500 hover:bg-gray-200 hover:text-gray-700 rounded-full px-4 py-1 cursor-pointer"
+            >
+              Zurück
+            </button>
+            <PrimaryButton className="flex-grow" onClick={goNext}>
+              Okay, verstanden!
+            </PrimaryButton>
+          </>
+        ) : (
+          <button className="text-brand underline block p-1 text-center mx-auto">
+            Ich habe keine E-Mail erhalten
+          </button>
+        )}
       </div>
     </div>
   );
