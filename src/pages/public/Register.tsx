@@ -8,6 +8,7 @@ import { Step, useSteps } from "~/components/Steps";
 import { PrimaryButton } from "~/components/Button";
 import { CheckIcon } from "~/components/Icon";
 import { FormTitle } from "~/components/Form";
+import { Radio } from "~/components/Form/components";
 
 const checklistTexts = [
   "Du bist für die Sicherheit der Helfer*innen verantwortlich",
@@ -61,6 +62,7 @@ const steps: Step[] = [
     Icon: Briefcase,
     Content: () => {
       const [hourlyWage, setHourlyWage] = useState(9.35);
+      const [stayPrice, setStayPrice] = useState(5);
 
       return (
         <>
@@ -85,29 +87,58 @@ const steps: Step[] = [
             <FormTitle as="h2" className="mb-2">
               Stundenlohn
             </FormTitle>
-            <div className="flex items-center text-center">
+            <div className="flex items-stretch text-center">
               <button
-                className="flex-grow border-2 border-r-0 rounded-l-full border-brand bg-brand text-white"
+                className="flex-grow border-2 border-r-0 rounded-l-full border-brand bg-brand text-white py-1"
                 onClick={() => setHourlyWage(hourlyWage - 0.5)}
               >
                 -
               </button>
-              <div className="flex-grow border-2 border-brand">
-                {`${hourlyWage} €`}
+              <div className="flex flex-grow items-center border-2 border-brand py-1 text-sm font-medium">
+                <span className="w-full text-center">{`${hourlyWage.toFixed(
+                  2
+                )} €`}</span>
               </div>
               <button
-                className="flex-grow border-2 border-l-0 rounded-r-full border-brand bg-brand text-white"
+                className="flex-grow border-2 border-l-0 rounded-r-full border-brand bg-brand text-white py-1"
                 onClick={() => setHourlyWage(hourlyWage + 0.5)}
               >
                 +
               </button>
             </div>
           </div>
-          <div>
+          <div className="mb-8">
             <FormTitle as="h2" className="mb-2">
               Übernachtungsmöglichkeiten für Helfer*innen
             </FormTitle>
-            <div></div>
+            <div>
+              <Radio block>Ja</Radio>
+              <Radio block>Nein</Radio>
+            </div>
+          </div>
+          <div>
+            <FormTitle as="h2" className="mb-2">
+              Übernachtungspreis
+            </FormTitle>
+            <div className="flex items-stretch text-center">
+              <button
+                className="flex-grow border-2 border-r-0 rounded-l-full border-brand bg-brand text-white py-1"
+                onClick={() => setStayPrice(stayPrice - 0.5)}
+              >
+                -
+              </button>
+              <div className="flex flex-grow items-center border-2 border-brand py-1 text-sm font-medium">
+                <span className="w-full text-center">{`${stayPrice.toFixed(
+                  2
+                )} €`}</span>
+              </div>
+              <button
+                className="flex-grow border-2 border-l-0 rounded-r-full border-brand bg-brand text-white py-1"
+                onClick={() => setStayPrice(stayPrice + 0.5)}
+              >
+                +
+              </button>
+            </div>
           </div>
         </>
       );
