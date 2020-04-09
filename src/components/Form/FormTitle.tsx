@@ -5,7 +5,7 @@ import BaseTitle, { Props as BaseTitleProps } from "../Title/BaseTitle";
 type Props = BaseTitleProps;
 
 const FormTitle = ({ className, ...rest }: Props) => {
-  const css = classnames("text-lg", className);
+  const css = classnames("text-base", className);
 
   return <BaseTitle className={css} {...rest} />;
 };

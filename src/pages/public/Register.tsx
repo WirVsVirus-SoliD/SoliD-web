@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { TextField } from "@material-ui/core";
+import { Info, User, Briefcase, CheckCircle } from "react-feather";
+
 import { Title } from "~/components/Title";
 import { Step, useSteps } from "~/components/Steps";
 import { PrimaryButton } from "~/components/Button";
-import { Info, User, Briefcase, CheckCircle } from "react-feather";
 import { CheckIcon } from "~/components/Icon";
-import { Input } from "~/components/Form/components";
-import { useHistory } from "react-router-dom";
 import { FormTitle } from "~/components/Form";
 
 const checklistTexts = [
@@ -48,41 +49,69 @@ const steps: Step[] = [
         <FormTitle as="h2" className="mb-4">
           Ansprechpartner
         </FormTitle>
-        <Input className="mb-4" block placeholder="Vorname" />
-        <Input className="mb-4" block placeholder="Nachname" />
-        <Input className="mb-4" block placeholder="Telefonnummer" />
-        <Input className="mb-4" block placeholder="E-Mail" />
+        <TextField label="Vorname" className="mb-4 text-brand" fullWidth />
+        <TextField label="Nachname" className="mb-4" fullWidth />
+        <TextField label="Telefonnummer" className="mb-4" fullWidth />
+        <TextField label="E-Mail" className="mb-4" fullWidth />
       </>
     )
   },
   {
     title: "Konditionen",
     Icon: Briefcase,
-    Content: () => (
-      <>
-        <div className="mb-4">
-          <FormTitle as="h2">Mindestbeschäftigungsdauer</FormTitle>
-          {/* TODO: switch to radio buttons, when implementing form */}
-          {/* FIXME: first-child selector not working. god knows why... */}
-          {["1/2 Tag", "1 Tag", "1 Woche", "Länger"].map((text, i) => (
-            <button
-              key={i}
-              className="border-2 border-r-0 last:border-r-2 first:rounded-l-2 last:rounded-r-full border-brand text-brand text-sm py-1 px-2 first:pl-4 last:pr-4 font-medium focus:text-white focus:bg-brand"
-            >
-              {text}
-            </button>
-          ))}
-        </div>
-        <div className="mb-4">
-          <FormTitle as="h2">Stundenlohn</FormTitle>
-        </div>
-        <div>
-          <FormTitle as="h2">
-            Übernachtungsmöglichkeiten für Helfer*innen
-          </FormTitle>
-        </div>
-      </>
-    )
+    Content: () => {
+      const [hourlyWage, setHourlyWage] = useState(9.35);
+
+      return (
+        <>
+          <div className="mb-8">
+            <FormTitle as="h2" className="mb-2">
+              Mindestbeschäftigungsdauer
+            </FormTitle>
+            <div className="flex">
+              {/* TODO: switch to radio buttons, when implementing form */}
+              {/* FIXME: first-child selector not working. god knows why... */}
+              {["1/2 Tag", "1 Tag", "1 Woche", "Länger"].map((text, i) => (
+                <button
+                  key={i}
+                  className="flex-grow border-2 border-r-0 last:border-r-2 first:rounded-l-full last:rounded-r-full border-brand text-brand text-sm py-1 px-2 first:pl-4 last:pr-4 font-medium focus:text-white focus:bg-brand"
+                >
+                  {text}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="mb-8">
+            <FormTitle as="h2" className="mb-2">
+              Stundenlohn
+            </FormTitle>
+            <div className="flex items-center text-center">
+              <button
+                className="flex-grow border-2 border-r-0 rounded-l-full border-brand bg-brand text-white"
+                onClick={() => setHourlyWage(hourlyWage - 0.5)}
+              >
+                -
+              </button>
+              <div className="flex-grow border-2 border-brand">
+                {`${hourlyWage} €`}
+              </div>
+              <button
+                className="flex-grow border-2 border-l-0 rounded-r-full border-brand bg-brand text-white"
+                onClick={() => setHourlyWage(hourlyWage + 0.5)}
+              >
+                +
+              </button>
+            </div>
+          </div>
+          <div>
+            <FormTitle as="h2" className="mb-2">
+              Übernachtungsmöglichkeiten für Helfer*innen
+            </FormTitle>
+            <div></div>
+          </div>
+        </>
+      );
+    }
   },
   {
     title: "Fertig!",
