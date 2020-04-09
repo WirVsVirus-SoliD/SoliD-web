@@ -2,7 +2,7 @@ import Avatar from "@material-ui/core/Avatar";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { logOut } from "~/actions/user";
-import BaseButton from "~/components/Button/BaseButton";
+import { DangerButton } from "~/components/Button";
 import { Title } from "~/components/Title";
 
 const HelperProfile = ({ data }: any) => {
@@ -46,13 +46,12 @@ const HelperProfile = ({ data }: any) => {
         <p>{data.get("employmentStatus")}</p>
       </div>
 
-      <BaseButton
-        pill
-        className="w-full bg-red-600 text-white mt-auto"
+      <DangerButton
+        className="w-full mt-auto"
         onClick={() => dispatch(logOut())}
       >
         <Title as="h6">Ausloggen</Title>
-      </BaseButton>
+      </DangerButton>
     </div>
   );
 };
