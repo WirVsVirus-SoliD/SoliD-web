@@ -19,6 +19,7 @@ export function useSteps(
 
   return {
     activeStepIndex: currentValue.stepIndex,
+    activeStep: steps[currentValue.stepIndex],
     goPrevious,
     goNext,
     StepsBar: (props: StepsBarRestProps) => (

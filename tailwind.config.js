@@ -28,6 +28,9 @@ module.exports = {
     backdropFilter: {
       none: "none",
       blur: "blur(20px)"
+    },
+    boxShadow: {
+      "selection-brand": "0px 0px 0px 2px #199057"
     }
   },
   variants: {
