@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import { TextField } from "@material-ui/core";
-import { Info, User, Briefcase, CheckCircle } from "react-feather";
 import classnames from "classnames";
+import { Formik, FormikProps } from "formik";
+import { Info, User, Briefcase, CheckCircle } from "react-feather";
+import { TextField } from "@material-ui/core";
 
 import { Title } from "~/components/Title";
 import { Step, useSteps, StepContent } from "~/components/Steps";
@@ -10,6 +11,10 @@ import { PrimaryButton } from "~/components/Button";
 import { CheckIcon } from "~/components/Icon";
 import { FormTitle } from "~/components/Form";
 import { Radio } from "~/components/Form/components";
+import { StepCalculator } from "./components";
+
+type FormProps = FormikProps<typeof initialValues>;
+type PassedFormProps = Pick<FormProps, "setFieldValue" | "values">;
 
 const checklistTexts = [
   "Du bist für die Sicherheit der Helfer*innen verantwortlich",
@@ -68,30 +73,50 @@ const contents: (StepContent | StepContent[])[] = [
   [
     {
       stepIndex: 1,
-      Content: () => (
+      Content: (props: PassedFormProps) => (
         <>
           <FormTitle as="h2" className="mb-4">
             Ansprechpartner
           </FormTitle>
-          <TextField label="Vorname" className="mb-4 text-brand" fullWidth />
-          <TextField label="Nachname" className="mb-4" fullWidth />
-          <TextField label="Telefonnummer" className="mb-4" fullWidth />
-          <TextField label="E-Mail" className="mb-4" fullWidth />
+          {[
+            ["contact.firstName", "Vorname"],
+            ["contact.lastName", "Nachname"],
+            ["contact.phone", "Telefonnummer"],
+            ["contact.email", "E-Mail"]
+          ].map(([key, label]) => (
+            <TextField
+              key={key}
+              label={label}
+              className="mb-4 text-brand"
+              fullWidth
+              onChange={(e) => props.setFieldValue(key, e.currentTarget.value)}
+            />
+          ))}
         </>
       )
     },
     {
       stepIndex: 1,
-      Content: () => (
+      Content: (props: PassedFormProps) => (
         <>
           <FormTitle as="h2" className="mb-4">
             Dein Hof
           </FormTitle>
-          <TextField label="Hofname" className="mb-4 text-brand" fullWidth />
-          <TextField label="Straße und Hausnummer" className="mb-4" fullWidth />
-          <TextField label="PLZ" className="mb-4" fullWidth />
-          <TextField label="Ort" className="mb-4" fullWidth />
-          <TextField label="Webseite (optional)" className="mb-4" fullWidth />
+          {[
+            ["farm.name", "Hofname"],
+            ["farm.streetAddress", "Straße und Hausnummer"],
+            ["farm.postalCode", "PLZ"],
+            ["farm.location", "Ort"],
+            ["farm.website", "Webseite (optional)"]
+          ].map(([key, label]) => (
+            <TextField
+              key={key}
+              label={label}
+              className="mb-4 text-brand"
+              fullWidth
+              onChange={(e) => props.setFieldValue(key, e.currentTarget.value)}
+            />
+          ))}
         </>
       )
     },
@@ -143,144 +168,97 @@ const contents: (StepContent | StepContent[])[] = [
   [
     {
       stepIndex: 2,
-      Content: () => {
-        const [hourlyWage, setHourlyWage] = useState(9.35);
-        const [stayPrice, setStayPrice] = useState(5);
+      Content: () => (
+        <>
+          <div className="mb-8">
+            <FormTitle as="h2" className="mb-2">
+              Mindestbeschäftigungsdauer
+            </FormTitle>
+            <div className="flex">
+              {/* TODO: switch to radio buttons, when implementing form */}
+              {/* FIXME: first-child selector not working. god knows why... */}
+              {["1/2 Tag", "1 Tag", "1 Woche", "Länger"].map((text, i) => (
+                <button
+                  key={i}
+                  className="flex-grow border-2 border-r-0 last:border-r-2 first:rounded-l-full last:rounded-r-full border-brand text-brand text-sm py-1 px-2 first:pl-4 last:pr-4 font-medium focus:text-white focus:bg-brand"
+                >
+                  {text}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="mb-8">
+            <FormTitle as="h2" className="mb-2">
+              Stundenlohn
+            </FormTitle>
 
-        return (
-          <>
-            <div className="mb-8">
-              <FormTitle as="h2" className="mb-2">
-                Mindestbeschäftigungsdauer
-              </FormTitle>
-              <div className="flex">
-                {/* TODO: switch to radio buttons, when implementing form */}
-                {/* FIXME: first-child selector not working. god knows why... */}
-                {["1/2 Tag", "1 Tag", "1 Woche", "Länger"].map((text, i) => (
-                  <button
-                    key={i}
-                    className="flex-grow border-2 border-r-0 last:border-r-2 first:rounded-l-full last:rounded-r-full border-brand text-brand text-sm py-1 px-2 first:pl-4 last:pr-4 font-medium focus:text-white focus:bg-brand"
-                  >
-                    {text}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="mb-8">
-              <FormTitle as="h2" className="mb-2">
-                Stundenlohn
-              </FormTitle>
-              <div className="flex items-stretch text-center">
-                <button
-                  className="flex-grow border-2 border-r-0 rounded-l-full border-brand bg-brand text-white py-1"
-                  onClick={() => setHourlyWage(hourlyWage - 0.5)}
-                >
-                  -
-                </button>
-                <div className="flex flex-grow items-center border-2 border-brand py-1 text-sm font-medium">
-                  <span className="w-full text-center">{`${hourlyWage.toFixed(
-                    2
-                  )} €`}</span>
-                </div>
-                <button
-                  className="flex-grow border-2 border-l-0 rounded-r-full border-brand bg-brand text-white py-1"
-                  onClick={() => setHourlyWage(hourlyWage + 0.5)}
-                >
-                  +
-                </button>
-              </div>
-            </div>
-            <div className="mb-8">
-              <FormTitle as="h2" className="mb-2">
-                Übernachtungsmöglichkeiten für Helfer*innen
-              </FormTitle>
-              <div>
-                <Radio block>Ja</Radio>
-                <Radio block>Nein</Radio>
-              </div>
-            </div>
+            <StepCalculator
+              initialValue={9.35}
+              steps={0.5}
+              min={0}
+              renderValue={(v) => `${v.toFixed(2)} €`}
+            />
+          </div>
+          <div className="mb-8">
+            <FormTitle as="h2" className="mb-2">
+              Übernachtungsmöglichkeiten für Helfer*innen
+            </FormTitle>
             <div>
-              <FormTitle as="h2" className="mb-2">
-                Übernachtungspreis
-              </FormTitle>
-              <div className="flex items-stretch text-center">
-                <button
-                  className="flex-grow border-2 border-r-0 rounded-l-full border-brand bg-brand text-white py-1"
-                  onClick={() => setStayPrice(stayPrice - 0.5)}
-                >
-                  -
-                </button>
-                <div className="flex flex-grow items-center border-2 border-brand py-1 text-sm font-medium">
-                  <span className="w-full text-center">{`${stayPrice.toFixed(
-                    2
-                  )} €`}</span>
-                </div>
-                <button
-                  className="flex-grow border-2 border-l-0 rounded-r-full border-brand bg-brand text-white py-1"
-                  onClick={() => setStayPrice(stayPrice + 0.5)}
-                >
-                  +
-                </button>
-              </div>
+              <Radio block>Ja</Radio>
+              <Radio block>Nein</Radio>
             </div>
-          </>
-        );
-      }
+          </div>
+          <div>
+            <FormTitle as="h2" className="mb-2">
+              Übernachtungspreis
+            </FormTitle>
+            <StepCalculator
+              initialValue={5}
+              steps={0.5}
+              min={0}
+              renderValue={(v) => `${v.toFixed(2)} €`}
+            />
+          </div>
+        </>
+      )
     },
     {
       stepIndex: 2,
-      Content: () => {
-        const [distance, setDistance] = useState(5);
-        return (
-          <>
-            <div className="mb-8">
-              <FormTitle as="h2" className="mb-2">
-                Anreise der Helfer*innen
-              </FormTitle>
-              <div>
-                <Radio block>Eigenständig (keine Abholung)</Radio>
-                <Radio block>
-                  Abholung möglich, mit einer maximalen Entfernung von bis zu
-                  ...
-                </Radio>
-              </div>
-              <div className="flex items-stretch text-center mt-4">
-                <button
-                  className="flex-grow border-2 border-r-0 rounded-l-full border-brand bg-brand text-white py-1"
-                  onClick={() => distance >= 5 && setDistance(distance - 5)}
-                >
-                  -
-                </button>
-                <div className="flex flex-grow items-center border-2 border-brand py-1 text-sm font-medium">
-                  <span className="w-full text-center">{`${distance.toFixed(
-                    0
-                  )} km`}</span>
-                </div>
-                <button
-                  className="flex-grow border-2 border-l-0 rounded-r-full border-brand bg-brand text-white py-1"
-                  onClick={() => setDistance(distance + 5)}
-                >
-                  +
-                </button>
-              </div>
-            </div>
+      Content: () => (
+        <>
+          <div className="mb-8">
+            <FormTitle as="h2" className="mb-2">
+              Anreise der Helfer*innen
+            </FormTitle>
             <div>
-              <FormTitle as="h2" className="mb-2">
-                Zusätzliche Angaben
-              </FormTitle>
-              <p className="text-gray-600 text-sm mb-2">
-                Arbeitsbeginn, Übernachtungsmöglichkeit, Verplegung, Sprache,
-                etc.
-              </p>
-              <textarea
-                className="border border-black rounded-lg w-full p-2"
-                placeholder="Beschreibung eingeben"
-                rows={4}
-              ></textarea>
+              <Radio block>Eigenständig (keine Abholung)</Radio>
+              <Radio block>
+                Abholung möglich, mit einer maximalen Entfernung von bis zu ...
+              </Radio>
             </div>
-          </>
-        );
-      }
+            <StepCalculator
+              initialValue={5}
+              steps={5}
+              min={0}
+              renderValue={(v) => `${v.toFixed(0)} km`}
+              className="mt-4"
+            />
+          </div>
+          <div>
+            <FormTitle as="h2" className="mb-2">
+              Zusätzliche Angaben
+            </FormTitle>
+            <p className="text-gray-600 text-sm mb-2">
+              Arbeitsbeginn, Übernachtungsmöglichkeit, Verplegung, Sprache, etc.
+            </p>
+            <textarea
+              className="border border-black rounded-lg w-full p-2"
+              placeholder="Beschreibung eingeben"
+              rows={4}
+            ></textarea>
+          </div>
+        </>
+      )
     },
     {
       stepIndex: 2,
@@ -304,15 +282,13 @@ const contents: (StepContent | StepContent[])[] = [
                 "Sonstige"
               ].map((type, i, array) => (
                 <div
+                  key={type}
                   className={classnames("p-1", {
                     "w-1/3": i < array.length - 1,
                     "w-full": i === array.length - 1
                   })}
                 >
-                  <button
-                    key={type}
-                    className="w-full border rounded-lg focus:shadow-selection-brand border-brand focus:bg-brand-light"
-                  >
+                  <button className="w-full border rounded-lg focus:shadow-selection-brand border-brand focus:bg-brand-light">
                     <span
                       //  Temporary until icons are added
                       style={{ lineHeight: 4 }}
@@ -330,10 +306,7 @@ const contents: (StepContent | StepContent[])[] = [
   ],
   {
     stepIndex: 3,
-    Content: () => {
-      // Placeholder: remove when form is implemented
-      const email = "abc@gmail.com";
-
+    Content: ({ values }: PassedFormProps) => {
       return (
         <div className="flex flex-col items-center">
           <div className="mb-8">
@@ -372,7 +345,8 @@ const contents: (StepContent | StepContent[])[] = [
             </Title>
             <p>
               Wir haben dir einen Bestätigungslink per E-Mail an{" "}
-              <strong>{email}</strong> geschickt. Bitte öffne diese.
+              <strong>{values.contact.email}</strong> geschickt. Bitte öffne
+              diese.
             </p>
           </div>
         </div>
@@ -380,6 +354,17 @@ const contents: (StepContent | StepContent[])[] = [
     }
   }
 ];
+
+const initialValues = {
+  contact: { firstName: "", lastName: "", phone: "", email: "" },
+  farm: {
+    name: "",
+    streetAddress: "",
+    postalCode: "",
+    location: "",
+    website: ""
+  }
+};
 
 const Register = () => {
   const { push } = useHistory();
@@ -399,7 +384,16 @@ const Register = () => {
           Registrierung
         </Title>
         <StepsBar className="mb-8 text-sm" />
-        <ActiveStepContent />
+        <Formik
+          initialValues={initialValues}
+          onSubmit={(input) => {
+            console.log(input);
+          }}
+        >
+          {({ setFieldValue, values }: FormProps) => (
+            <ActiveStepContent setFieldValue={setFieldValue} values={values} />
+          )}
+        </Formik>
       </div>
       <div className="flex">
         {activeStepIndex < steps.length - 1 ? (

@@ -15,5 +15,5 @@ export type Step = {
 
 export type StepContent = {
   stepIndex: number;
-  Content: React.ComponentType<{}>;
+  Content: React.ComponentType<any>;
 };
