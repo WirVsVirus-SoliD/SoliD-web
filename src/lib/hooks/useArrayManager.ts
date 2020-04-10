@@ -3,7 +3,7 @@ import { useState } from "react";
 /**
  * Each value in an array is accessible via its index. However, some arrays
  * may contain additional arrays. Since we dont know about them, the easiest way
- * to access the underlying values (e.g. when rotation through each value) is to
+ * to access the underlying values (e.g. when rotating through each value) is to
  * provide cursors to each value in a sorted array. That's what this function does.
  *
  * E.g. `["a", "b", ["c.a", "c.b"], "d"]` => `["0", "1", "2.1", "2.2", "3"]`
