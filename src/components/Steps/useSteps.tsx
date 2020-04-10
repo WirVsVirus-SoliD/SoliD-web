@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
+import { useArrayManager } from "~/lib/hooks";
 import { StepsBar } from "./components";
-import { Step } from ".";
+import { Step, StepContent } from ".";
 
 type StepsBarRestProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLUListElement>,
@@ -9,22 +10,24 @@ type StepsBarRestProps = React.DetailedHTMLProps<
 
 const EmptyRender = () => null;
 
-export function useSteps(steps: Step[]) {
-  const maxIndex = steps.length - 1;
-  const [activeStepIndex, setActiveStepIndex] = useState(0);
-  const goTo = (index: number) => {
-    setActiveStepIndex(index < 0 ? 0 : index > maxIndex ? maxIndex : index);
-  };
-  const goPrevious = () => goTo(activeStepIndex - 1);
-  const goNext = () => goTo(activeStepIndex + 1);
+export function useSteps(
+  steps: Step[],
+  contents: (StepContent | StepContent[])[]
+) {
+  const { goPrevious, goNext, ...rest } = useArrayManager(contents);
+  const currentValue = rest.currentValue as StepContent;
 
   return {
-    activeStepIndex,
+    activeStepIndex: currentValue.stepIndex,
     goPrevious,
     goNext,
     StepsBar: (props: StepsBarRestProps) => (
-      <StepsBar activeStepIndex={activeStepIndex} steps={steps} {...props} />
+      <StepsBar
+        activeStepIndex={currentValue.stepIndex}
+        steps={steps}
+        {...props}
+      />
     ),
-    ActiveStepContent: steps[activeStepIndex]?.Content ?? EmptyRender
+    ActiveStepContent: currentValue?.Content ?? EmptyRender
   };
 }

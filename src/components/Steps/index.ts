@@ -10,5 +10,9 @@ type IconProps = {
 export type Step = {
   title: string;
   Icon: React.ComponentType<IconProps>;
+};
+
+export type StepContent = {
+  stepIndex: number;
   Content: React.ComponentType<{}>;
 };

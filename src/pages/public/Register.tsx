@@ -4,7 +4,7 @@ import { TextField } from "@material-ui/core";
 import { Info, User, Briefcase, CheckCircle } from "react-feather";
 
 import { Title } from "~/components/Title";
-import { Step, useSteps } from "~/components/Steps";
+import { Step, useSteps, StepContent } from "~/components/Steps";
 import { PrimaryButton } from "~/components/Button";
 import { CheckIcon } from "~/components/Icon";
 import { FormTitle } from "~/components/Form";
@@ -19,7 +19,25 @@ const checklistTexts = [
 const steps: Step[] = [
   {
     title: "Hinweis",
-    Icon: Info,
+    Icon: Info
+  },
+  {
+    title: "Deine Daten",
+    Icon: User
+  },
+  {
+    title: "Konditionen",
+    Icon: Briefcase
+  },
+  {
+    title: "Fertig!",
+    Icon: CheckCircle
+  }
+];
+
+const contents: (StepContent | StepContent[])[] = [
+  {
+    stepIndex: 0,
     Content: () => (
       <>
         <p className="mb-8">
@@ -42,24 +60,38 @@ const steps: Step[] = [
       </>
     )
   },
+  [
+    {
+      stepIndex: 1,
+      Content: () => (
+        <>
+          <FormTitle as="h2" className="mb-4">
+            Ansprechpartner
+          </FormTitle>
+          <TextField label="Vorname" className="mb-4 text-brand" fullWidth />
+          <TextField label="Nachname" className="mb-4" fullWidth />
+          <TextField label="Telefonnummer" className="mb-4" fullWidth />
+          <TextField label="E-Mail" className="mb-4" fullWidth />
+        </>
+      )
+    },
+    {
+      stepIndex: 1,
+      Content: () => (
+        <>
+          <FormTitle as="h2" className="mb-4">
+            Test
+          </FormTitle>
+          <TextField label="Vorname" className="mb-4 text-brand" fullWidth />
+          <TextField label="Nachname" className="mb-4" fullWidth />
+          <TextField label="Telefonnummer" className="mb-4" fullWidth />
+          <TextField label="E-Mail" className="mb-4" fullWidth />
+        </>
+      )
+    }
+  ],
   {
-    title: "Deine Daten",
-    Icon: User,
-    Content: () => (
-      <>
-        <FormTitle as="h2" className="mb-4">
-          Ansprechpartner
-        </FormTitle>
-        <TextField label="Vorname" className="mb-4 text-brand" fullWidth />
-        <TextField label="Nachname" className="mb-4" fullWidth />
-        <TextField label="Telefonnummer" className="mb-4" fullWidth />
-        <TextField label="E-Mail" className="mb-4" fullWidth />
-      </>
-    )
-  },
-  {
-    title: "Konditionen",
-    Icon: Briefcase,
+    stepIndex: 2,
     Content: () => {
       const [hourlyWage, setHourlyWage] = useState(9.35);
       const [stayPrice, setStayPrice] = useState(5);
@@ -145,8 +177,7 @@ const steps: Step[] = [
     }
   },
   {
-    title: "Fertig!",
-    Icon: CheckCircle,
+    stepIndex: 3,
     Content: () => {
       // Placeholder: remove when form is implemented
       const email = "abc@gmail.com";
@@ -166,16 +197,16 @@ const steps: Step[] = [
               <path
                 d="M12.1 4H76.9C81.355 4 85 7.65625 85 12.125V60.875C85 65.3438 81.355 69 76.9 69H12.1C7.645 69 4 65.3438 4 60.875V12.125C4 7.65625 7.645 4 12.1 4Z"
                 stroke="white"
-                stroke-width="8"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M85 4L44.5 32L4 4"
                 stroke="white"
-                stroke-width="8"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </div>
@@ -206,8 +237,8 @@ const Register = () => {
     goNext,
     goPrevious,
     activeStepIndex
-  } = useSteps(steps);
-  console.log({ activeStepIndex });
+  } = useSteps(steps, contents);
+
   return (
     <div className="flex flex-col h-full px-8 py-4">
       <div className="flex-grow">
