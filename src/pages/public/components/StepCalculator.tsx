@@ -9,6 +9,7 @@ type Props = {
   initialValue?: number;
   renderValue?: (value: number) => React.ReactNode;
   className?: string;
+  onChange?: (value: number) => void;
 };
 
 const StepCalculator = ({
@@ -17,12 +18,21 @@ const StepCalculator = ({
   steps,
   initialValue,
   className,
-  renderValue
+  renderValue,
+  onChange
 }: Props) => {
   const css = classnames("flex items-stretch text-center", className);
   const [value, setValue] = useState(initialValue);
-  const decrease = () => setValue(value - steps <= min ? min : value - steps);
-  const increase = () => setValue(value + steps >= max ? max : value + steps);
+  const decrease = () => {
+    const v = Math.max(min, value - steps);
+    setValue(v);
+    onChange?.(v);
+  };
+  const increase = () => {
+    const v = Math.min(max, value + steps);
+    setValue(v);
+    onChange?.(v);
+  };
   const reachedMin = value === min;
   const reachedMax = value === max;
 
