@@ -1,14 +1,14 @@
 const domain = process.env.REACT_APP_API_PATH;
 
 export default {
-  user: {
-    signIn: domain + "/auth/sign_in",
-    auth: domain + "/auth"
+  auth: {
+    refresh: domain + "/auth/refresh",
+    login: domain + "/auth/login"
   },
-  campaigns: {
-    collection: domain + "/campaigns"
+  providers: {
+    collection: domain + "/providers"
   },
-  locations: {
-    geoJson: domain + "/locations/all_as_geo_json"
+  helpers: {
+    collection: domain + "/helpers"
   }
 };
