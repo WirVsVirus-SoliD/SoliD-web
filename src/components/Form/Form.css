@@ -1,4 +1,5 @@
 /* Checkbox */
+.input--hidden,
 .checkbox > input[type="checkbox"] {
   @apply absolute outline-none;
   z-index: -9999;
@@ -28,6 +29,43 @@
   @apply absolute bg-brand;
   content: "";
   top: 10px;
+  left: 8px;
+  width: 9px;
+  height: 9px;
+}
+
+/* Radio */
+.radio > input[type="radio"] {
+  @apply absolute outline-none;
+  z-index: -9999;
+  opacity: 0;
+}
+
+.radio > input[type="radio"] + span {
+  @apply relative bg-transparent border-brand block cursor-pointer;
+  min-width: 60px;
+  min-height: 28px;
+  padding-left: 1.75rem;
+  line-height: 1.7;
+}
+
+.radio > input[type="radio"]:focus + span::after {
+  @apply absolute bg-gray-200 rounded-full;
+}
+
+.radio > input[type="radio"] + span::before {
+  @apply absolute rounded-full border-brand border-2;
+  content: "";
+  top: 4px;
+  left: 4px;
+  width: 17px;
+  height: 17px;
+}
+
+.radio > input[type="radio"]:checked + span::after {
+  @apply absolute bg-brand rounded-full;
+  content: "";
+  top: 8px;
   left: 8px;
   width: 9px;
   height: 9px;

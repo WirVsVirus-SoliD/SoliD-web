@@ -7,3 +7,7 @@ body,
 body {
   @apply font-body;
 }
+
+strong {
+  font-weight: 500;
+}

@@ -1,35 +1,15 @@
-import classnames from "classnames";
 import React from "react";
+import classnames from "classnames";
+import BaseTitle, { Props as BaseTitleProps } from "./BaseTitle";
 
-export type Props = {
-  as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  block?: boolean;
+export type Props = BaseTitleProps & {
   bold?: boolean;
-  children: React.ReactNode;
-} & React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLHeadingElement>,
-  HTMLHeadingElement
->;
+};
 
-const Title = ({
-  as: Component = "h6",
-  block,
-  bold,
-  className,
-  children,
-  ...rest
-}: Props) => {
-  const css = classnames(
-    "font-title",
-    { block, "font-extrabold": bold },
-    className
-  );
+const Title = ({ bold, className, ...rest }: Props) => {
+  const css = classnames("font-title", { "font-extrabold": bold }, className);
 
-  return (
-    <Component className={css} {...rest}>
-      {children}
-    </Component>
-  );
+  return <BaseTitle className={css} {...rest} />;
 };
 
 export default Title;

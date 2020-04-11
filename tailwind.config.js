@@ -28,11 +28,16 @@ module.exports = {
     backdropFilter: {
       none: "none",
       blur: "blur(20px)"
+    },
+    boxShadow: {
+      "selection-brand": "0px 0px 0px 2px #199057"
     }
   },
   variants: {
     backgroundColor: ["responsive", "hover", "focus", "even", "odd"],
-    borderRadius: ["responsive", "first", "last"]
+    borderRadius: ["responsive", "first", "last"],
+    borderWidth: ["responsive", "first", "last"],
+    padding: ["responsive", "first", "last"]
   },
   plugins: [require("tailwindcss-filters")]
 };

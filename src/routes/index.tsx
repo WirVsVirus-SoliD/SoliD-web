@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 
 import NotFoundPage from "~/pages/error/NotFound";
 import { BoardingFarmer, ForgotPassword, Home, Login } from "~/pages/public";
+import Register from "~/pages/public/Register";
 import SplashScreen from "~/pages/public/SplashScreen";
 import NavigationWrapper from "~/routes/NavigationWrapper";
 
@@ -12,7 +13,9 @@ export default function AppRoutes() {
     <Switch>
       {/*Public Routes*/}
       <Route exact path="/" component={Home} />
+
       <Route exact path="/signin" component={Login} />
+      <Route exact path="/register" component={Register} />
 
       <Route exact path="/boarding-farmer" component={BoardingFarmer} />
       <Route exact path="/forgot-password" component={ForgotPassword} />
