@@ -175,7 +175,7 @@ const contents: (StepContent | StepContent[])[] = [
             <StepCalculator
               initialValue={9.35}
               steps={0.5}
-              min={0}
+              min={9.35}
               renderValue={(v) => `${v.toFixed(2)} €`}
             />
           </div>
