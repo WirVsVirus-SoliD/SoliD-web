@@ -1,38 +1,37 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
-import SplashScreen from "~/pages/public/SplashScreen";
 import NotFoundPage from "~/pages/error/NotFound";
-import BoardingFarmer from "~/pages/public/BoardingFarmer";
-import Home from "~/pages/public/Home";
-import Map from "~/pages/public/Map";
-import SignIn from "~/pages/public/SignIn";
+import { BoardingFarmer, ForgotPassword, Home, Login } from "~/pages/public";
 import Register from "~/pages/public/Register";
+import SplashScreen from "~/pages/public/SplashScreen";
+import NavigationWrapper from "~/routes/NavigationWrapper";
 
 export default function AppRoutes() {
+  // TODO validate token on first start here?
   return (
     <Switch>
       {/*Public Routes*/}
       <Route exact path="/" component={Home} />
 
-      <Route exact path="/signin" component={SignIn} />
+      <Route exact path="/signin" component={Login} />
       <Route exact path="/register" component={Register} />
 
-      <Route exact path="/map" component={Map} />
       <Route exact path="/boarding-farmer" component={BoardingFarmer} />
-
-      <Route exact path="/404" component={NotFoundPage} />
+      <Route exact path="/forgot-password" component={ForgotPassword} />
 
       {/* Screens - only for presentational purposes */}
       <Route exact path="/screens/splash" component={SplashScreen} />
+      {/*
+       <Route path="/profile" component={userIsAuthenticated(Profile)}/>
+       */}
+
+      <NavigationWrapper />
+
+      <Route exact path="/404" component={NotFoundPage} />
 
       {/*Redirect*/}
-      <Redirect
-        push
-        to={{
-          pathname: "/404"
-        }}
-      />
+      <Redirect push to="/404" />
     </Switch>
   );
 }

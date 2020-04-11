@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Logo } from "~/components/Logo";
 import { PrimaryButton } from "~/components/Button";
+import { Logo } from "~/components/Logo";
 
-const SignIn = () => {
+const Boarding = () => {
   return (
     <div className="flex flex-col py-4 px-8 h-full">
       <div className="w-full flex-grow items-center">
@@ -31,4 +31,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default Boarding;
