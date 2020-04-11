@@ -25,6 +25,7 @@ import { CheckIcon } from "~/components/Icon";
 import { FormTitle } from "~/components/Form";
 import { Radio } from "~/components/Form/components";
 import { StepCalculator } from "./components";
+import { updateArray } from "~/lib/immutable";
 
 type FormProps = FormikProps<typeof initialValues>;
 type PassedFormProps = Pick<FormProps, "setFieldValue" | "values">;
@@ -148,23 +149,42 @@ const contents: (StepContent | StepContent[])[] = [
   [
     {
       stepIndex: 2,
-      Content: () => (
+      Content: ({ setFieldValue, values }: PassedFormProps) => (
         <>
           <div className="mb-8">
             <FormTitle as="h2" className="mb-2">
               Mindestbeschäftigungsdauer
             </FormTitle>
             <div className="flex">
-              {/* TODO: switch to radio buttons, when implementing form */}
-              {/* FIXME: first-child selector not working. god knows why... */}
-              {["1/2 Tag", "1 Tag", "1 Woche", "Länger"].map((text, i) => (
-                <button
-                  key={i}
-                  className="flex-grow border-2 border-r-0 last:border-r-2 first:rounded-l-full last:rounded-r-full border-brand text-brand text-sm py-1 px-2 first:pl-4 last:pr-4 font-medium focus:text-white focus:bg-brand"
-                >
-                  {text}
-                </button>
-              ))}
+              {[
+                ["1/2 Tag", 0.5],
+                ["1 Tag", 1],
+                ["1 Woche", 7],
+                ["Länger", Infinity]
+              ].map(([label, value], i) => {
+                const checked = value === values.terms.tenureInDays;
+
+                return (
+                  <label
+                    key={i}
+                    onClick={() => setFieldValue("terms.tenureInDays", value)}
+                    className={classnames(
+                      "relative flex-grow border-2 border-r-0 last:border-r-2 first:rounded-l-full last:rounded-r-full border-brand text-sm py-1 px-2 first:pl-4 last:pr-4 font-medium",
+                      {
+                        "bg-brand text-white": checked,
+                        "text-brand": !checked
+                      }
+                    )}
+                  >
+                    <input
+                      type="radio"
+                      className="input--hidden"
+                      checked={checked}
+                    />
+                    {label}
+                  </label>
+                );
+              })}
             </div>
           </div>
           <div className="mb-8">
@@ -173,76 +193,114 @@ const contents: (StepContent | StepContent[])[] = [
             </FormTitle>
 
             <StepCalculator
-              initialValue={9.35}
+              initialValue={values.terms.hourlyRate}
               steps={0.5}
               min={9.35}
               renderValue={(v) => `${v.toFixed(2)} €`}
+              onChange={(v) => setFieldValue("terms.hourlyRate", v)}
             />
           </div>
-          <div className="mb-8">
+          <div className="mb-2">
             <FormTitle as="h2" className="mb-2">
               Übernachtungsmöglichkeiten für Helfer*innen
             </FormTitle>
             <div>
-              <Radio block>Ja</Radio>
-              <Radio block>Nein</Radio>
+              <Radio
+                checked={values.terms.offersStay}
+                onClick={() => setFieldValue("terms.offersStay", true)}
+                block
+              >
+                Ja
+              </Radio>
+              <Radio
+                checked={!values.terms.offersStay}
+                onClick={() => setFieldValue("terms.offersStay", false)}
+                block
+              >
+                Nein
+              </Radio>
             </div>
           </div>
-          <div>
-            <FormTitle as="h2" className="mb-2">
-              Übernachtungspreis
-            </FormTitle>
-            <StepCalculator
-              initialValue={5}
-              steps={0.5}
-              min={0}
-              renderValue={(v) => `${v.toFixed(2)} €`}
-            />
-          </div>
+          {values.terms.offersStay && (
+            <div>
+              <FormTitle as="h2" className="mb-2">
+                Übernachtungspreis
+              </FormTitle>
+              <StepCalculator
+                initialValue={values.terms.stayPrice}
+                steps={0.5}
+                min={0}
+                renderValue={(v) => `${v.toFixed(2)} €`}
+                onChange={(v) => setFieldValue("terms.stayPrice", v)}
+              />
+            </div>
+          )}
         </>
       )
     },
     {
       stepIndex: 2,
-      Content: () => (
+      Content: ({ setFieldValue, values }: PassedFormProps) => (
         <>
           <div className="mb-8">
             <FormTitle as="h2" className="mb-2">
               Anreise der Helfer*innen
             </FormTitle>
             <div>
-              <Radio block>Eigenständig (keine Abholung)</Radio>
-              <Radio block>
-                Abholung möglich, mit einer maximalen Entfernung von bis zu ...
+              <Radio
+                checked={!values.terms.offersPickup}
+                onClick={() => setFieldValue("terms.offersPickup", false)}
+                block
+              >
+                Eigenständig (keine Abholung)
+              </Radio>
+              <Radio
+                checked={values.terms.offersPickup}
+                onClick={() => setFieldValue("terms.offersPickup", true)}
+                block
+              >
+                Abholung möglich
               </Radio>
             </div>
-            <StepCalculator
-              initialValue={5}
-              steps={5}
-              min={0}
-              renderValue={(v) => `${v.toFixed(0)} km`}
-              className="mt-4"
-            />
+            {values.terms.offersPickup && (
+              <div>
+                <FormTitle as="h2" className="mt-1 mb-2">
+                  Abholung im Umkreis von ...
+                </FormTitle>
+                <StepCalculator
+                  initialValue={values.terms.maxPickupDistance}
+                  steps={5}
+                  min={0}
+                  renderValue={(v) => `${v.toFixed(0)} km`}
+                  onChange={(v) => setFieldValue("terms.maxPickupDistance", v)}
+                />
+              </div>
+            )}
           </div>
           <div>
             <FormTitle as="h2" className="mb-2">
               Zusätzliche Angaben
             </FormTitle>
             <p className="text-gray-600 text-sm mb-2">
-              Arbeitsbeginn, Übernachtungsmöglichkeit, Verplegung, Sprache, etc.
+              Arbeitsbeginn, Übernachtungsmöglichkeit, Verpflegung, Sprache,
+              etc.
             </p>
             <textarea
               className="border border-black rounded-lg w-full p-2"
               placeholder="Beschreibung eingeben"
               rows={4}
-            ></textarea>
+              onChange={(e) =>
+                setFieldValue("terms.additionalNotes", e.currentTarget.value)
+              }
+              value={values.terms.additionalNotes}
+            />
           </div>
         </>
       )
     },
     {
       stepIndex: 2,
-      Content: () => {
+      Content: ({ setFieldValue, values }: PassedFormProps) => {
         return (
           <>
             <FormTitle as="h2" className="mb-2">
@@ -262,6 +320,8 @@ const contents: (StepContent | StepContent[])[] = [
                 ["Sonstige", Vegetables]
               ].map(([type, Icon], i, array) => {
                 const isLast = i === array.length - 1;
+                const checked = values.terms.cultures.includes(type as string);
+
                 return (
                   <div
                     key={type as string}
@@ -270,7 +330,34 @@ const contents: (StepContent | StepContent[])[] = [
                       "w-full": isLast
                     })}
                   >
-                    <button className="w-full border rounded-lg focus:shadow-selection-brand border-brand focus:bg-brand-light outline-none p-2">
+                    <label
+                      className={classnames(
+                        "block w-full border rounded-lg border-brand outline-none p-2 text-center",
+                        {
+                          "shadow-selection-brand bg-brand-light": checked
+                        }
+                      )}
+                      onClick={() => {
+                        console.log(
+                          updateArray(
+                            type as string,
+                            values.terms.cultures.slice(0)
+                          )
+                        );
+                        setFieldValue(
+                          "terms.cultures",
+                          updateArray(
+                            type as string,
+                            values.terms.cultures.slice(0)
+                          )
+                        );
+                      }}
+                    >
+                      <input
+                        type="checkbox"
+                        className="input--hidden"
+                        checked={checked}
+                      />
                       <Icon
                         className={classnames({
                           "mx-auto": !isLast,
@@ -278,7 +365,7 @@ const contents: (StepContent | StepContent[])[] = [
                         })}
                       />
                       <span className="text-sm">{type}</span>
-                    </button>
+                    </label>
                   </div>
                 );
               })}
@@ -325,6 +412,16 @@ const initialValues = {
     postalCode: "",
     location: "",
     website: ""
+  },
+  terms: {
+    tenureInDays: 7,
+    hourlyRate: 9.35,
+    offersStay: true,
+    stayPrice: 5,
+    offersPickup: false,
+    maxPickupDistance: 5,
+    additionalNotes: "",
+    cultures: [] as string[]
   }
 };
 

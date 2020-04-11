@@ -1,4 +1,5 @@
 /* Checkbox */
+.input--hidden,
 .checkbox > input[type="checkbox"] {
   @apply absolute outline-none;
   z-index: -9999;
