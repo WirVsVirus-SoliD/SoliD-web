@@ -7,6 +7,17 @@ import { TextField } from "@material-ui/core";
 
 import { ReactComponent as UploadFarmPhotoSvg } from "~/assets/icons/UploadFarmPhoto.svg";
 import { ReactComponent as EmailSentSvg } from "~/assets/icons/EmailSent.svg";
+import { ReactComponent as Asparagus } from "~/assets/icons/cultures/asparagus.svg";
+import { ReactComponent as Basket } from "~/assets/icons/cultures/basket.svg";
+import { ReactComponent as Cabbage } from "~/assets/icons/cultures/cabbage.svg";
+import { ReactComponent as Cucumber } from "~/assets/icons/cultures/cucumber.svg";
+import { ReactComponent as Grape } from "~/assets/icons/cultures/grape.svg";
+import { ReactComponent as Hop } from "~/assets/icons/cultures/hop.svg";
+import { ReactComponent as Lettuce } from "~/assets/icons/cultures/lettuce.svg";
+import { ReactComponent as Radish } from "~/assets/icons/cultures/radish.svg";
+import { ReactComponent as Strawberry } from "~/assets/icons/cultures/strawberry.svg";
+import { ReactComponent as Vegetables } from "~/assets/icons/cultures/vegetables.svg";
+
 import { Title } from "~/components/Title";
 import { Step, useSteps, StepContent } from "~/components/Steps";
 import { PrimaryButton } from "~/components/Button";
@@ -239,34 +250,38 @@ const contents: (StepContent | StepContent[])[] = [
             </FormTitle>
             <div className="flex flex-wrap -m-1">
               {[
-                "Spargel",
-                "Erdbeeren",
-                "Hopfen",
-                "Weinbau",
-                "Obstbau",
-                "Salate",
-                "Gurken",
-                "Kohl",
-                "Radieschen",
-                "Sonstige"
-              ].map((type, i, array) => (
-                <div
-                  key={type}
-                  className={classnames("p-1", {
-                    "w-1/3": i < array.length - 1,
-                    "w-full": i === array.length - 1
-                  })}
-                >
-                  <button className="w-full border rounded-lg focus:shadow-selection-brand border-brand focus:bg-brand-light">
-                    <span
-                      //  Temporary until icons are added
-                      style={{ lineHeight: 4 }}
-                    >
-                      {type}
-                    </span>
-                  </button>
-                </div>
-              ))}
+                ["Spargel", Asparagus],
+                ["Erdbeeren", Strawberry],
+                ["Hopfen", Hop],
+                ["Weinbau", Grape],
+                ["Obstbau", Basket],
+                ["Salate", Lettuce],
+                ["Gurken", Cucumber],
+                ["Kohl", Cabbage],
+                ["Radieschen", Radish],
+                ["Sonstige", Vegetables]
+              ].map(([type, Icon], i, array) => {
+                const isLast = i === array.length - 1;
+                return (
+                  <div
+                    key={type as string}
+                    className={classnames("p-1", {
+                      "w-1/3": !isLast,
+                      "w-full": isLast
+                    })}
+                  >
+                    <button className="w-full border rounded-lg focus:shadow-selection-brand border-brand focus:bg-brand-light outline-none p-2">
+                      <Icon
+                        className={classnames({
+                          "mx-auto": !isLast,
+                          "inline-block mr-2": isLast
+                        })}
+                      />
+                      <span className="text-sm">{type}</span>
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           </>
         );
