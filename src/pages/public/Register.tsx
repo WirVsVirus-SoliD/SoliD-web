@@ -431,48 +431,65 @@ const Register = () => {
     activeStep,
     ActiveStepContent,
     activeStepIndex,
+    currentDotIndex,
     goNext,
     goPrevious,
     StepsBar
   } = useSteps(steps, contents);
+  // The step before the last one has a dot-notated index of '2.2'.
+  // This allows us to identify when to submit our form using the click handler on the 'next' button.
+  const shouldSubmitForm = currentDotIndex === "2.2";
 
   return (
     <div className="flex flex-col h-full px-8 py-4">
-      <div className="flex-grow">
-        <Title as="h1" className="text-2xl mb-8" bold>
-          Registrierung
-        </Title>
-        <StepsBar className="mb-8 text-sm" />
-        <Formik
-          initialValues={initialValues}
-          onSubmit={(input) => {
-            console.log(input);
-          }}
-        >
-          {({ setFieldValue, values }: FormProps) => (
-            <ActiveStepContent setFieldValue={setFieldValue} values={values} />
-          )}
-        </Formik>
-      </div>
-      <div className="flex">
-        {activeStepIndex < steps.length - 1 ? (
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(input) => {
+          console.log(input);
+        }}
+      >
+        {({ setFieldValue, values, handleSubmit }: FormProps) => (
           <>
-            <button
-              onClick={activeStepIndex < 1 ? () => push("/signin") : goPrevious}
-              className="flex-grow mr-4 text-gray-500 hover:bg-gray-200 hover:text-gray-700 rounded-full px-4 py-1 cursor-pointer"
-            >
-              Zurück
-            </button>
-            <PrimaryButton className="flex-grow" onClick={goNext}>
-              {activeStep.okText}
-            </PrimaryButton>
+            <div className="flex-grow">
+              <Title as="h1" className="text-2xl mb-8" bold>
+                Registrierung
+              </Title>
+              <StepsBar className="mb-8 text-sm" />
+              <ActiveStepContent
+                setFieldValue={setFieldValue}
+                values={values}
+              />
+            </div>
+            <div className="flex">
+              {activeStepIndex < steps.length - 1 ? (
+                <>
+                  <button
+                    onClick={
+                      activeStepIndex < 1 ? () => push("/signin") : goPrevious
+                    }
+                    className="flex-grow mr-4 text-gray-500 hover:bg-gray-200 hover:text-gray-700 rounded-full px-4 py-1 cursor-pointer"
+                  >
+                    Zurück
+                  </button>
+                  <PrimaryButton
+                    className="flex-grow"
+                    onClick={() => {
+                      goNext();
+                      shouldSubmitForm && handleSubmit();
+                    }}
+                  >
+                    {activeStep.okText}
+                  </PrimaryButton>
+                </>
+              ) : (
+                <button className="text-brand underline block p-1 text-center mx-auto">
+                  Ich habe keine E-Mail erhalten
+                </button>
+              )}
+            </div>
           </>
-        ) : (
-          <button className="text-brand underline block p-1 text-center mx-auto">
-            Ich habe keine E-Mail erhalten
-          </button>
         )}
-      </div>
+      </Formik>
     </div>
   );
 };

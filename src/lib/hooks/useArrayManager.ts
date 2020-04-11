@@ -108,6 +108,7 @@ export function useArrayManager<T>(values: T[]) {
   return {
     goPrevious,
     goNext,
-    currentValue: getNestedArrayValue(values, dotIndexes[currentIndex])
+    currentValue: getNestedArrayValue(values, dotIndexes[currentIndex]),
+    currentDotIndex: dotIndexes[currentIndex]
   };
 }

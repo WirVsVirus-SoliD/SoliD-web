@@ -14,12 +14,15 @@ export function useSteps(
   steps: Step[],
   contents: (StepContent | StepContent[])[]
 ) {
-  const { goPrevious, goNext, ...rest } = useArrayManager(contents);
+  const { goPrevious, goNext, currentDotIndex, ...rest } = useArrayManager(
+    contents
+  );
   const currentValue = rest.currentValue as StepContent;
 
   return {
     activeStepIndex: currentValue.stepIndex,
     activeStep: steps[currentValue.stepIndex],
+    currentDotIndex,
     goPrevious,
     goNext,
     StepsBar: (props: StepsBarRestProps) => (
