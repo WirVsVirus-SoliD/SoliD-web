@@ -1,12 +1,9 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import { TextField } from "@material-ui/core";
 import classnames from "classnames";
 import { Formik, FormikProps } from "formik";
-import { Info, User, Briefcase, CheckCircle } from "react-feather";
-import { TextField } from "@material-ui/core";
-
-import { ReactComponent as UploadFarmPhotoSvg } from "~/assets/icons/UploadFarmPhoto.svg";
-import { ReactComponent as EmailSentSvg } from "~/assets/icons/EmailSent.svg";
+import React from "react";
+import { Briefcase, CheckCircle, Info, User } from "react-feather";
+import { useHistory } from "react-router-dom";
 import { ReactComponent as Asparagus } from "~/assets/icons/cultures/asparagus.svg";
 import { ReactComponent as Basket } from "~/assets/icons/cultures/basket.svg";
 import { ReactComponent as Cabbage } from "~/assets/icons/cultures/cabbage.svg";
@@ -17,15 +14,18 @@ import { ReactComponent as Lettuce } from "~/assets/icons/cultures/lettuce.svg";
 import { ReactComponent as Radish } from "~/assets/icons/cultures/radish.svg";
 import { ReactComponent as Strawberry } from "~/assets/icons/cultures/strawberry.svg";
 import { ReactComponent as Vegetables } from "~/assets/icons/cultures/vegetables.svg";
+import { ReactComponent as EmailSentSvg } from "~/assets/icons/EmailSent.svg";
 
-import { Title } from "~/components/Title";
-import { Step, useSteps, StepContent } from "~/components/Steps";
+import { ReactComponent as UploadFarmPhotoSvg } from "~/assets/icons/UploadFarmPhoto.svg";
 import { PrimaryButton } from "~/components/Button";
-import { CheckIcon } from "~/components/Icon";
 import { FormTitle } from "~/components/Form";
 import { Radio } from "~/components/Form/components";
-import { StepCalculator } from "./components";
+import { CheckIcon } from "~/components/Icon";
+import { Step, StepContent, useSteps } from "~/components/Steps";
+
+import { Title } from "~/components/Title";
 import { updateArray } from "~/lib/immutable";
+import { StepCalculator } from "./components";
 
 type FormProps = FormikProps<typeof initialValues>;
 type PassedFormProps = Pick<FormProps, "setFieldValue" | "values">;
@@ -180,6 +180,7 @@ const contents: (StepContent | StepContent[])[] = [
                       type="radio"
                       className="input--hidden"
                       checked={checked}
+                      readOnly
                     />
                     {label}
                   </label>
@@ -337,13 +338,8 @@ const contents: (StepContent | StepContent[])[] = [
                           "shadow-selection-brand bg-brand-light": checked
                         }
                       )}
-                      onClick={() => {
-                        console.log(
-                          updateArray(
-                            type as string,
-                            values.terms.cultures.slice(0)
-                          )
-                        );
+                      onClick={(event) => {
+                        event.preventDefault();
                         setFieldValue(
                           "terms.cultures",
                           updateArray(
@@ -357,6 +353,7 @@ const contents: (StepContent | StepContent[])[] = [
                         type="checkbox"
                         className="input--hidden"
                         checked={checked}
+                        readOnly
                       />
                       <Icon
                         className={classnames({
