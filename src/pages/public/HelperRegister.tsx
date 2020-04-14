@@ -142,29 +142,28 @@ const contents: (StepContent | StepContent[])[] = [
             </Checkbox>
           </div>
         </div>
-        {/* FIXME das ist sehr unklar für mich was hier wirklich abgefragt wird, vor allem mit den Untertiteln im Design */}
-        {/*<div className="mb-2">
-         <FormTitle as="h2" className="mb-2">
-         Für die Anfahrt bist du
-         </FormTitle>
-         <div>
-         <Radio
-         className="mb-2"
-         checked={values.pickupRequired === true}
-         onClick={() => setFieldValue("pickupRequired", true)}
-         block
-         >
-         Flexibel / mobil
-         </Radio>
-         <Radio
-         checked={values.pickupRequired === false}
-         onClick={() => setFieldValue("pickupRequired", false)}
-         block
-         >
-         Eingeschränkt mobil
-         </Radio>
-         </div>
-         </div>*/}
+        <div className="mb-2">
+          <FormTitle as="h2" className="mb-2">
+            Für die Anreise bist du
+          </FormTitle>
+          <div>
+            <Radio
+              className="mb-2"
+              checked={values.pickupRequired === false}
+              onClick={() => setFieldValue("pickupRequired", false)}
+              block
+            >
+              Eigenständig
+            </Radio>
+            <Radio
+              checked={values.pickupRequired === true}
+              onClick={() => setFieldValue("pickupRequired", true)}
+              block
+            >
+              Auf Abholung angewiesen
+            </Radio>
+          </div>
+        </div>
         <div className="mb-8">
           <FormTitle as="h2" className="mb-2">
             Hast du einen Führerschein?
