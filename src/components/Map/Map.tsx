@@ -48,18 +48,16 @@ class Map extends React.Component<
   async componentDidMount() {
     const { hideNavigationControl, hideFullScreenControl } = this.props;
     /*
-         const { data } = useRequest<string[]>({
-         url: 'https://api.staging.farm-helden.de/campaigns'
-         })
-         */
+     const { data } = useRequest<string[]>({
+     url: 'https://api.staging.farm-helden.de/campaigns'
+     })
+     */
     /*
-         const resp = await axiosInstance.post(API.user.signIn, {"user": {"email": "florian.gerhardt92@gmail.com", "password": "asdf1234"}})
-         console.log(resp)
-         */
-    const response = await axiosInstance.get(API.campaigns.collection);
-    const response2 = await axiosInstance.get(API.locations.geoJson);
-    console.log(response, response2);
-    const points = response2.data;
+     const resp = await axiosInstance.post(API.user.signIn, {"user": {"email": "florian.gerhardt92@gmail.com", "password": "asdf1234"}})
+     console.log(resp)
+     */
+    const response = await axiosInstance.get(API.providers.collection);
+    const points = response.data;
     const bbox = turfBbox(points);
     this.setState({ bbox, points });
 
