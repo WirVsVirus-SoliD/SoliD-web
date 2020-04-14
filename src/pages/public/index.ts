@@ -6,3 +6,4 @@ export { default as BoardingFarmer } from "./BoardingFarmer";
 export { default as HelperRegister } from "./HelperRegister";
 export { default as ProviderRegister } from "./ProviderRegister";
 export { default as SplashScreen } from "./SplashScreen";
+export { default as Boarding } from "./Boarding";

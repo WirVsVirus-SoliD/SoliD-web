@@ -6,6 +6,7 @@ import storage from "~/lib/storage";
 
 import NotFoundPage from "~/pages/error/NotFound";
 import {
+  Boarding,
   BoardingFarmer,
   ForgotPassword,
   HelperRegister,
@@ -44,6 +45,7 @@ export default function AppRoutes() {
       <Route exact path="/register/provider" component={ProviderRegister} />
       <Route exact path="/register/helper" component={HelperRegister} />
 
+      <Route exact path="/boarding" component={Boarding} />
       <Route exact path="/boarding-farmer" component={BoardingFarmer} />
       <Route exact path="/forgot-password" component={ForgotPassword} />
 
