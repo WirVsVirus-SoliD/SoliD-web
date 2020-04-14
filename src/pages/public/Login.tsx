@@ -15,8 +15,7 @@ const initialValues = {
 };
 
 const validationSchema = yupObject().shape({
-  email: yupString() /*.email("Ungültige E-Mail-Addresse")*/
-    .required("Pflichtfeld"),
+  email: yupString().email("Ungültige E-Mail-Addresse").required("Pflichtfeld"),
   password: yupString().required("Pflichtfeld")
 });
 
@@ -25,6 +24,7 @@ const Login = ({ location }) => {
 
   const getRedirectRoute = () => {
     let urlParams = queryString.parse(location && location.search);
+    // FIXME Provider hat keine Map
     return urlParams["?redirect"] || "/map";
   };
 

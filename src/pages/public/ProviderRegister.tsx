@@ -15,14 +15,12 @@ import { ReactComponent as Radish } from "~/assets/icons/cultures/radish.svg";
 import { ReactComponent as Strawberry } from "~/assets/icons/cultures/strawberry.svg";
 import { ReactComponent as Vegetables } from "~/assets/icons/cultures/vegetables.svg";
 import { ReactComponent as EmailSentSvg } from "~/assets/icons/EmailSent.svg";
-
 import { ReactComponent as UploadFarmPhotoSvg } from "~/assets/icons/UploadFarmPhoto.svg";
 import { PrimaryButton } from "~/components/Button";
 import { FormTitle } from "~/components/Form";
 import { Radio } from "~/components/Form/components";
 import { CheckIcon } from "~/components/Icon";
 import { Step, StepContent, useSteps } from "~/components/Steps";
-
 import { Title } from "~/components/Title";
 import { updateArray } from "~/lib/immutable";
 import { StepCalculator } from "./components";
@@ -78,9 +76,6 @@ const contents: (StepContent | StepContent[])[] = [
             </li>
           ))}
         </ul>
-        <a href="#more-details" className="underline text-brand">
-          Mehr Infos
-        </a>
       </>
     )
   },
@@ -93,10 +88,10 @@ const contents: (StepContent | StepContent[])[] = [
             Ansprechpartner
           </FormTitle>
           {[
-            ["contact.firstName", "Vorname"],
-            ["contact.lastName", "Nachname"],
-            ["contact.phone", "Telefonnummer"],
-            ["contact.email", "E-Mail"]
+            ["account.firstName", "Vorname"],
+            ["account.lastName", "Nachname"],
+            ["account.phone", "Telefonnummer"],
+            ["account.email", "E-Mail"]
           ].map(([key, label]) => (
             <TextField
               key={key}
@@ -117,11 +112,12 @@ const contents: (StepContent | StepContent[])[] = [
             Dein Hof
           </FormTitle>
           {[
-            ["farm.name", "Hofname"],
-            ["farm.streetAddress", "Straße und Hausnummer"],
-            ["farm.postalCode", "PLZ"],
-            ["farm.location", "Ort"],
-            ["farm.website", "Webseite (optional)"]
+            ["farmName", "Hofname"],
+            ["address.street", "Straße"],
+            ["address.housenr", "Hausnummer"],
+            ["address.zip", "PLZ"],
+            ["address.city", "Ort"],
+            ["url", "Webseite (optional)"]
           ].map(([key, label]) => (
             <TextField
               key={key}
@@ -162,12 +158,12 @@ const contents: (StepContent | StepContent[])[] = [
                 ["1 Woche", 7],
                 ["Länger", Infinity]
               ].map(([label, value], i) => {
-                const checked = value === values.terms.tenureInDays;
+                const checked = value === values.minWorkPeriod;
 
                 return (
                   <label
                     key={i}
-                    onClick={() => setFieldValue("terms.tenureInDays", value)}
+                    onClick={() => setFieldValue("minWorkPeriod", value)}
                     className={classnames(
                       "relative flex-grow border-2 border-r-0 last:border-r-2 first:rounded-l-full last:rounded-r-full border-brand text-sm py-1 px-2 first:pl-4 last:pr-4 font-medium",
                       {
@@ -194,11 +190,11 @@ const contents: (StepContent | StepContent[])[] = [
             </FormTitle>
 
             <StepCalculator
-              initialValue={values.terms.hourlyRate}
+              initialValue={values.hourlyRate}
               steps={0.5}
               min={9.35}
               renderValue={(v) => `${v.toFixed(2)} €`}
-              onChange={(v) => setFieldValue("terms.hourlyRate", v)}
+              onChange={(v) => setFieldValue("hourlyRate", v)}
             />
           </div>
           <div className="mb-2">
@@ -207,32 +203,32 @@ const contents: (StepContent | StepContent[])[] = [
             </FormTitle>
             <div>
               <Radio
-                checked={values.terms.offersStay}
-                onClick={() => setFieldValue("terms.offersStay", true)}
+                checked={values.overnightPossible === true}
+                onClick={() => setFieldValue("overnightPossible", true)}
                 block
               >
                 Ja
               </Radio>
               <Radio
-                checked={!values.terms.offersStay}
-                onClick={() => setFieldValue("terms.offersStay", false)}
+                checked={values.overnightPossible === false}
+                onClick={() => setFieldValue("overnightPossible", false)}
                 block
               >
                 Nein
               </Radio>
             </div>
           </div>
-          {values.terms.offersStay && (
+          {values.overnightPossible && (
             <div>
               <FormTitle as="h2" className="mb-2">
                 Übernachtungspreis
               </FormTitle>
               <StepCalculator
-                initialValue={values.terms.stayPrice}
+                initialValue={values.overnightPrice}
                 steps={0.5}
                 min={0}
                 renderValue={(v) => `${v.toFixed(2)} €`}
-                onChange={(v) => setFieldValue("terms.stayPrice", v)}
+                onChange={(v) => setFieldValue("overnightPrice", v)}
               />
             </div>
           )}
@@ -249,31 +245,31 @@ const contents: (StepContent | StepContent[])[] = [
             </FormTitle>
             <div>
               <Radio
-                checked={!values.terms.offersPickup}
-                onClick={() => setFieldValue("terms.offersPickup", false)}
+                checked={!values.pickupPossible}
+                onClick={() => setFieldValue("pickupPossible", false)}
                 block
               >
                 Eigenständig (keine Abholung)
               </Radio>
               <Radio
-                checked={values.terms.offersPickup}
-                onClick={() => setFieldValue("terms.offersPickup", true)}
+                checked={values.pickupPossible}
+                onClick={() => setFieldValue("pickupPossible", true)}
                 block
               >
                 Abholung möglich
               </Radio>
             </div>
-            {values.terms.offersPickup && (
+            {values.pickupPossible && (
               <div>
                 <FormTitle as="h2" className="mt-1 mb-2">
                   Abholung im Umkreis von ...
                 </FormTitle>
                 <StepCalculator
-                  initialValue={values.terms.maxPickupDistance}
+                  initialValue={values.pickupRange}
                   steps={5}
                   min={0}
                   renderValue={(v) => `${v.toFixed(0)} km`}
-                  onChange={(v) => setFieldValue("terms.maxPickupDistance", v)}
+                  onChange={(v) => setFieldValue("pickupRange", v)}
                 />
               </div>
             )}
@@ -291,9 +287,9 @@ const contents: (StepContent | StepContent[])[] = [
               placeholder="Beschreibung eingeben"
               rows={4}
               onChange={(e) =>
-                setFieldValue("terms.additionalNotes", e.currentTarget.value)
+                setFieldValue("additionalNotes", e.currentTarget.value)
               }
-              value={values.terms.additionalNotes}
+              value={values.additionalNotes}
             />
           </div>
         </>
@@ -321,7 +317,7 @@ const contents: (StepContent | StepContent[])[] = [
                 ["Sonstige", Vegetables]
               ].map(([type, Icon], i, array) => {
                 const isLast = i === array.length - 1;
-                const checked = values.terms.cultures.includes(type as string);
+                const checked = values.crops.includes(type as string);
 
                 return (
                   <div
@@ -341,11 +337,8 @@ const contents: (StepContent | StepContent[])[] = [
                       onClick={(event) => {
                         event.preventDefault();
                         setFieldValue(
-                          "terms.cultures",
-                          updateArray(
-                            type as string,
-                            values.terms.cultures.slice(0)
-                          )
+                          "crops",
+                          updateArray(type as string, values.crops.slice(0))
                         );
                       }}
                     >
@@ -391,7 +384,7 @@ const contents: (StepContent | StepContent[])[] = [
             </Title>
             <p>
               Wir haben dir einen Bestätigungslink per E-Mail an{" "}
-              <strong>{values.contact.email}</strong> geschickt. Bitte öffne
+              <strong>{values.account.email}</strong> geschickt. Bitte öffne
               diese.
             </p>
           </div>
@@ -402,27 +395,26 @@ const contents: (StepContent | StepContent[])[] = [
 ];
 
 const initialValues = {
-  contact: { firstName: "", lastName: "", phone: "", email: "" },
-  farm: {
-    name: "",
-    streetAddress: "",
+  account: { firstName: "", lastName: "", phone: "", email: "" },
+  address: {
+    street: "",
+    housenr: "",
     postalCode: "",
-    location: "",
+    city: "",
     website: ""
   },
-  terms: {
-    tenureInDays: 7,
-    hourlyRate: 9.35,
-    offersStay: true,
-    stayPrice: 5,
-    offersPickup: false,
-    maxPickupDistance: 5,
-    additionalNotes: "",
-    cultures: [] as string[]
-  }
+  farmName: "",
+  minWorkPeriod: null,
+  hourlyRate: 9.35,
+  overnightPossible: null,
+  overnightPrice: 5,
+  pickupPossible: null,
+  pickupRange: 5,
+  additionalNotes: "",
+  crops: [] as string[]
 };
 
-const Register = () => {
+const ProviderRegister = () => {
   const { push } = useHistory();
   const {
     activeStep,
@@ -491,4 +483,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default ProviderRegister;

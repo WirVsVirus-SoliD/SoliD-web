@@ -26,11 +26,11 @@ export const login = (email, password, redirect) => {
     dispatch(loginRequest());
     try {
       const response = await axiosInstance.post(api.auth.login, {
-        username: email,
+        email,
         password
       });
       const accessToken = response.data.accessToken;
-      storage.setToken(accessToken);
+      storage.setAccessToken(accessToken);
       dispatch(loginSuccess());
       dispatch(setUser(helper));
       // TODO Set User
@@ -39,6 +39,20 @@ export const login = (email, password, redirect) => {
     } catch (error) {
       console.log(error);
       dispatch(loginFail());
+    }
+  };
+};
+
+export const validate = () => {
+  return async (dispatch: Function) => {
+    try {
+      const response = await axiosInstance.get(api.auth.validate);
+      // dispatch(setUser(response.data.data));
+      // dispatch(initApp());
+      return Promise.resolve(response);
+    } catch (error) {
+      console.log("ERROR IN VALIDATING USER", error);
+      return Promise.reject(error);
     }
   };
 };

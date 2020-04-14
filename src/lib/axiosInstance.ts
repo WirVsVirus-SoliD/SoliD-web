@@ -13,10 +13,10 @@ let instance = axios.create({
 });
 
 instance.interceptors.request.use(function (config) {
-  if (storage.getToken())
+  if (storage.getAccessToken())
     config.headers.common = {
       ...config.headers.common,
-      Authorization: "bearer " + storage.getToken()
+      Authorization: "bearer " + storage.getAccessToken()
     };
   return config;
 });

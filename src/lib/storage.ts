@@ -1,5 +1,5 @@
-const USER_TOKEN_KEY = "jwt";
-const HIDE_BANNER_KEY = "demo_banner";
+const USER_ACCESS_TOKEN_KEY = "access";
+const USER_REFRESH_TOKEN_KEY = "refresh";
 
 let privateModeWarning = false;
 
@@ -33,20 +33,20 @@ export default {
     }
   },
 
-  setToken: function (token) {
-    this.setObject(USER_TOKEN_KEY, token);
+  setAccessToken: function (token) {
+    this.setObject(USER_ACCESS_TOKEN_KEY, token);
   },
 
-  getToken: function () {
-    return this.get(USER_TOKEN_KEY);
+  getAccessToken: function () {
+    return this.get(USER_ACCESS_TOKEN_KEY);
   },
 
-  setHideBanner: function (hideBanner) {
-    this.setObject(HIDE_BANNER_KEY, hideBanner);
+  setRefreshToken: function (token) {
+    this.setObject(USER_REFRESH_TOKEN_KEY, token);
   },
 
-  getHideBanner: function () {
-    return this.get(HIDE_BANNER_KEY);
+  getRefreshToken: function () {
+    return this.get(USER_REFRESH_TOKEN_KEY);
   },
 
   clearStorage: function () {
