@@ -9,9 +9,9 @@ import {
   LOGOUT,
   SET_USER
 } from "~/constants/actions";
+import api from "~/lib/api";
 import axiosInstance from "~/lib/axiosInstance";
 import history from "~/lib/history";
-import solidApi from "~/lib/solidApi";
 import storage from "~/lib/storage";
 
 const setUser = createAction(SET_USER);
@@ -25,7 +25,7 @@ export const login = (email, password, redirect) => {
   return async (dispatch: Function) => {
     dispatch(loginRequest());
     try {
-      const response = await axiosInstance.post(solidApi.auth.login, {
+      const response = await axiosInstance.post(api.auth.login, {
         username: email,
         password
       });

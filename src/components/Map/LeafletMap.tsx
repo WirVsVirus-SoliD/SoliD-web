@@ -8,7 +8,7 @@ import LocateControl from "~/components/Map/LocateControl";
 import MapBoxGLLayer from "~/components/Map/MapBoxGLLayer";
 import MarkerCluster from "~/components/Map/MarkerCluster";
 import SearchControl from "~/components/Map/SearchControl";
-import API from "~/lib/api";
+import api from "~/lib/api";
 import axiosInstance from "~/lib/axiosInstance";
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -43,7 +43,7 @@ class LeafletMap extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
-    const response = await axiosInstance.get(API.locations.geoJson);
+    const response = await axiosInstance.get(api.providers.collection);
     const geoJson = response.data;
     const bbox = turfBbox(geoJson);
     this.setState({ bbox, geoJson });
