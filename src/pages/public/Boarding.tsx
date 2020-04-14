@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { PrimaryButton } from "~/components/Button";
 import { Logo } from "~/components/Logo";
 
-const Boarding = () => {
+const Boarding = ({ isHelper = true }) => {
+  const linkTo = isHelper ? "/register/helper" : "/register/provider";
   return (
     <div className="flex flex-col py-4 px-8 h-full">
       <div className="w-full flex-grow items-center">
@@ -20,7 +21,7 @@ const Boarding = () => {
         </div>
         <div>
           <p className="mb-2">Oder bist du neu hier?</p>
-          <Link to="/register">
+          <Link to={linkTo}>
             <PrimaryButton theme="border" block>
               Registrieren
             </PrimaryButton>

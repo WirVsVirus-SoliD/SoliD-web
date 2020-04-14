@@ -32,7 +32,5 @@ export const helper = {
   fullTime: true,
   helperId: 4,
   lastName: "Huber",
-  phone: "0176 32942841",
-  pickupRange: 10,
-  pickupRequired: true
+  phone: "0176 32942841"
 };
