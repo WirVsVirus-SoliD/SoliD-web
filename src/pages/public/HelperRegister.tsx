@@ -75,12 +75,13 @@ const contents: (StepContent | StepContent[])[] = [
           ["account.firstName", "Vorname"],
           ["account.lastName", "Nachname"],
           ["account.phone", "Telefonnummer"],
-          ["account.email", "E-Mail"],
-          ["account.password", "Passwort"],
-          ["account.password_confirmation", "Passwort wiederholen"]
-        ].map(([key, label]) => (
+          ["account.email", "E-Mail", "email"],
+          ["account.password", "Passwort", "password"],
+          ["account.password_confirmation", "Passwort wiederholen", "password"]
+        ].map(([key, label, type = "text"]) => (
           <TextField
             key={key}
+            type={type}
             label={label}
             className="mb-4 text-brand"
             fullWidth
@@ -104,7 +105,7 @@ const contents: (StepContent | StepContent[])[] = [
                 <Radio
                   key={i}
                   checked={checked}
-                  onClick={() => setFieldValue("employmentStatus", value)}
+                  onChange={() => setFieldValue("employmentStatus", value)}
                   block
                 >
                   {label}
@@ -128,14 +129,14 @@ const contents: (StepContent | StepContent[])[] = [
             <Checkbox
               className="mb-2"
               checked={values.fullTime === true}
-              onChange={() => setFieldValue("fullTime", true)}
+              onChange={() => setFieldValue("fullTime", !values.fullTime)}
               block
             >
               Vollzeit
             </Checkbox>
             <Checkbox
               checked={values.partTime === true}
-              onChange={() => setFieldValue("partTime", false)}
+              onChange={() => setFieldValue("partTime", !values.partTime)}
               block
             >
               Teilzeit
@@ -150,14 +151,14 @@ const contents: (StepContent | StepContent[])[] = [
             <Radio
               className="mb-2"
               checked={values.pickupRequired === false}
-              onClick={() => setFieldValue("pickupRequired", false)}
+              onChange={() => setFieldValue("pickupRequired", false)}
               block
             >
               Eigenständig
             </Radio>
             <Radio
               checked={values.pickupRequired === true}
-              onClick={() => setFieldValue("pickupRequired", true)}
+              onChange={() => setFieldValue("pickupRequired", true)}
               block
             >
               Auf Abholung angewiesen
