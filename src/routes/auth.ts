@@ -14,3 +14,8 @@ export const helperIsAuthenticated = connectedRouterRedirect({
   ...userIsAuthenticatedDefaults,
   redirectPath: "/boarding"
 });
+
+export const providerIsAuthenticated = connectedRouterRedirect({
+  ...userIsAuthenticatedDefaults,
+  redirectPath: "/signin"
+});

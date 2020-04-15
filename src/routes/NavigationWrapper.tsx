@@ -7,7 +7,7 @@ import { NavigationBar } from "~/components/NavigationBar";
 import { Helpers, Jobs, Profile } from "~/pages/private";
 import { Login, Map } from "~/pages/public";
 import { useTypedSelector } from "~/reducers";
-import { userIsAuthenticated } from "~/routes/auth";
+import { providerIsAuthenticated, userIsAuthenticated } from "~/routes/auth";
 
 const providerTabs = [
   {
@@ -26,7 +26,7 @@ const providerTabs = [
 
 const NavigationWrapper = () => {
   const user = useTypedSelector((state) => state.get("user"));
-  const isHelper = true;
+  const isHelper = user.get("type") === "helper";
   let tabs;
 
   if (isHelper) {
@@ -73,9 +73,9 @@ const NavigationWrapper = () => {
         <Route
           path={"/helpers"}
           exact
-          component={userIsAuthenticated(Helpers)}
+          component={providerIsAuthenticated(Helpers)}
         />
-        <Route path={"/profile"} component={userIsAuthenticated(Profile)} />
+        <Route path={"/profile"} component={providerIsAuthenticated(Profile)} />
       </Switch>
     );
   };
