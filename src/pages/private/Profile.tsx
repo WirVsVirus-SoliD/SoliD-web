@@ -5,12 +5,12 @@ import { useTypedSelector } from "~/reducers";
 const Profile = () => {
   const user = useTypedSelector((state) => state.get("user"));
   const data = user.get("data");
-  const isHelper = user.get("type") === "helper";
+  const isProvider = user.get("type") === "provider";
 
-  return isHelper ? (
-    <HelperProfile data={data} />
-  ) : (
+  return isProvider ? (
     <ProviderProfile data={data} />
+  ) : (
+    <HelperProfile data={data} />
   );
 };
 

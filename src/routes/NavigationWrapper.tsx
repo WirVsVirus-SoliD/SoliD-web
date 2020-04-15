@@ -26,10 +26,11 @@ const providerTabs = [
 
 const NavigationWrapper = () => {
   const user = useTypedSelector((state) => state.get("user"));
-  const isHelper = user.get("type") === "helper";
+  const isProvider = user.get("type") === "provider";
   let tabs;
-
-  if (isHelper) {
+  if (isProvider) {
+    tabs = providerTabs;
+  } else {
     tabs = [
       {
         route: "/map",
@@ -52,8 +53,6 @@ const NavigationWrapper = () => {
             label: "Login"
           }
     ];
-  } else {
-    tabs = providerTabs;
   }
 
   const renderHelperRoutes = () => {
@@ -82,7 +81,7 @@ const NavigationWrapper = () => {
 
   return (
     <>
-      {isHelper ? renderHelperRoutes() : renderProviderRoutes()}
+      {isProvider ? renderProviderRoutes() : renderHelperRoutes()}
       <NavigationBar tabs={tabs} />
     </>
   );
