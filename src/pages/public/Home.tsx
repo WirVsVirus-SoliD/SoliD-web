@@ -9,6 +9,7 @@ const ResetTopMarginStyles = { marginTop: 0 };
 type Props = {};
 
 const Home = (props: Props) => {
+  // TODO also check here for token, validate it and redirect to proper starting page
   return (
     <>
       <div className="relative z-10 flex flex-col h-full px-4">

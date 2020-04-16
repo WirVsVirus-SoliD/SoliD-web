@@ -7,9 +7,11 @@ export default {
     validate: domain + "/auth/validate"
   },
   providers: {
-    collection: domain + "/providers"
+    collection: domain + "/providers",
+    inquired: domain + "/providers/inquired"
   },
   helpers: {
-    collection: domain + "/helpers"
+    collection: domain + "/helpers",
+    inquired: domain + "/helpers/inquired"
   }
 };

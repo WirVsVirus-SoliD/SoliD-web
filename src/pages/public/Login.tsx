@@ -24,8 +24,7 @@ const Login = ({ location }) => {
 
   const getRedirectRoute = () => {
     let urlParams = queryString.parse(location && location.search);
-    // FIXME Provider hat keine Map
-    return urlParams["?redirect"] || "/map";
+    return urlParams["?redirect"];
   };
 
   return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { validate } from "~/actions/user";
@@ -18,23 +18,31 @@ import {
 import NavigationWrapper from "~/routes/NavigationWrapper";
 
 export default function AppRoutes() {
-  // TODO validate token on first start here?
   const history = useHistory();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
   const token = storage.getAccessToken();
-  if (token) {
-    dispatch(validate())
-      // @ts-ignore
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-        // TODO TRY REFRESH TOKEN
-        storage.clearStorage();
-        history.push("/login");
-      });
-  }
+  useEffect(() => {
+    if (token) {
+      dispatch(validate())
+        // @ts-ignore
+        .then((response) => {
+          console.log(response);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setLoading(false);
+          // TODO TRY REFRESH TOKEN IN MIDDLEWARE?
+          storage.clearStorage();
+          history.push("/login");
+        });
+    } else {
+      setLoading(false);
+    }
+  }, [token, history, dispatch]);
+
+  if (loading) return null;
 
   return (
     <Switch>
