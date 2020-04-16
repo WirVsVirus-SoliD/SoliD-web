@@ -13,7 +13,8 @@ import {
   Home,
   Login,
   ProviderRegister,
-  SplashScreen
+  SplashScreen,
+  FarmProfile
 } from "~/pages/public";
 import NavigationWrapper from "~/routes/NavigationWrapper";
 
@@ -51,6 +52,8 @@ export default function AppRoutes() {
 
       {/* Screens - only for presentational purposes */}
       <Route exact path="/screens/splash" component={SplashScreen} />
+      <Route exact path="/farm" component={FarmProfile} />
+
       {/*
        <Route path="/profile" component={userIsAuthenticated(Profile)}/>
        */}
