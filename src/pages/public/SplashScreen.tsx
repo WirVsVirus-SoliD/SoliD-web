@@ -10,9 +10,8 @@ const SplashScreen = () => {
     <>
       <div className="relative z-10 flex items-center h-full">
         {/* Logo and subtitle */}
-        <ResponsiveLandingTitle />
+        <ResponsiveLandingTitle withSpinner={true} />
       </div>
-
       {/* Bottom background */}
       <ResponsiveSvgBackground width={360} height={201}>
         <path

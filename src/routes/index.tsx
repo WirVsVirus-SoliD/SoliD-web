@@ -26,10 +26,10 @@ export default function AppRoutes() {
     if (token) {
       dispatch(validate())
         // @ts-ignore
-        .then((response) => {
-          console.log(response);
+        .then(({ response, redirect }) => {
           setTimeout(() => {
             setLoading(false);
+            history.push(redirect);
           }, 2000);
         })
         .catch((error) => {

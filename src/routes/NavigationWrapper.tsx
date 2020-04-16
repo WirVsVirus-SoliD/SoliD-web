@@ -37,22 +37,31 @@ const NavigationWrapper = () => {
         icon: <RoomIcon />,
         value: "nearby",
         label: "In der Nähe"
-      },
-      { route: "/jobs", icon: <ScheduleIcon />, value: "jobs", label: "Jobs" },
-      user.get("login")
-        ? {
-            route: "/profile",
-            icon: <PersonIcon />,
-            value: "profile",
-            label: "Profil"
-          }
-        : {
-            route: "/login",
-            icon: <PersonIcon />,
-            value: "login",
-            label: "Login"
-          }
+      }
     ];
+    if (user.get("login")) {
+      tabs.push([
+        {
+          route: "/jobs",
+          icon: <ScheduleIcon />,
+          value: "jobs",
+          label: "Jobs"
+        },
+        {
+          route: "/profile",
+          icon: <PersonIcon />,
+          value: "profile",
+          label: "Profil"
+        }
+      ]);
+    } else {
+      tabs.push({
+        route: "/login",
+        icon: <PersonIcon />,
+        value: "login",
+        label: "Login"
+      });
+    }
   }
 
   const renderHelperRoutes = () => {
