@@ -5,7 +5,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { NavigationBar } from "~/components/NavigationBar";
 import { Helpers, Jobs, Profile } from "~/pages/private";
-import { Login, Map } from "~/pages/public";
+import { Login, Map, ProviderDetails } from "~/pages/public";
 import { useTypedSelector } from "~/reducers";
 import { providerIsAuthenticated, userIsAuthenticated } from "~/routes/auth";
 
@@ -58,10 +58,11 @@ const NavigationWrapper = () => {
   const renderHelperRoutes = () => {
     return (
       <Switch>
-        <Route path={"/map"} component={Map} />
-        <Route path={"/jobs"} component={userIsAuthenticated(Jobs)} />
-        <Route path={"/profile"} component={userIsAuthenticated(Profile)} />
-        <Route path={"/login"} component={Login} />
+        <Route path="/map" component={Map} />
+        <Route path="/jobs" component={userIsAuthenticated(Jobs)} />
+        <Route path="/profile" component={userIsAuthenticated(Profile)} />
+        <Route path="/providers/:id" component={ProviderDetails} />
+        <Route path="/login" component={Login} />
       </Switch>
     );
   };

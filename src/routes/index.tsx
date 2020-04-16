@@ -59,6 +59,7 @@ export default function AppRoutes() {
 
       {/* Screens - only for presentational purposes */}
       <Route exact path="/screens/splash" component={SplashScreen} />
+
       {/*
        <Route path="/profile" component={userIsAuthenticated(Profile)}/>
        */}
