@@ -28,21 +28,27 @@ export default function AppRoutes() {
         // @ts-ignore
         .then((response) => {
           console.log(response);
-          setLoading(false);
+          setTimeout(() => {
+            setLoading(false);
+          }, 2000);
         })
         .catch((error) => {
           console.log(error);
-          setLoading(false);
-          // TODO TRY REFRESH TOKEN IN MIDDLEWARE?
-          storage.clearStorage();
-          history.push("/login");
+          setTimeout(() => {
+            setLoading(false);
+            // TODO TRY REFRESH TOKEN IN MIDDLEWARE?
+            storage.clearStorage();
+            history.push("/login");
+          }, 2000);
         });
     } else {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     }
   }, [token, history, dispatch]);
 
-  if (loading) return null;
+  if (loading) return <SplashScreen />;
 
   return (
     <Switch>
@@ -56,9 +62,6 @@ export default function AppRoutes() {
       <Route exact path="/boarding" component={Boarding} />
       <Route exact path="/boarding-farmer" component={BoardingFarmer} />
       <Route exact path="/forgot-password" component={ForgotPassword} />
-
-      {/* Screens - only for presentational purposes */}
-      <Route exact path="/screens/splash" component={SplashScreen} />
 
       {/*
        <Route path="/profile" component={userIsAuthenticated(Profile)}/>
