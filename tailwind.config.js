@@ -12,7 +12,11 @@ module.exports = {
         "brand-dark": "#197649",
         "accent-light": "#DCB38E",
         accent: "#7C4B36",
-        grey: "#C4C4C4"
+        grey: "#C4C4C4",
+        "white-primary": `rgba(255, 255, 255, 0.87)`,
+        "white-secondary": `rgba(255, 255, 255, 0.54)`,
+        "white-hint": `rgba(255, 255, 255, 0.34)`,
+        "white-divide": `rgba(255, 255, 255, 0.15)`
       },
       height: {
         "100vh": "100vh"
