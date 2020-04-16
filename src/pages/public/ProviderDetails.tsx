@@ -11,7 +11,7 @@ import { InfoIcon } from "~/components/Icon";
 
 type Props = {};
 
-const FarmProfile = () => {
+const ProviderDetails = () => {
   const isOrganicFarm = true;
 
   return (
@@ -116,4 +116,4 @@ const FarmProfile = () => {
   );
 };
 
-export default FarmProfile;
+export default ProviderDetails;
