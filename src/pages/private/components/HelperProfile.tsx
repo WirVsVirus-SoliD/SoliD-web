@@ -7,6 +7,7 @@ import { Title } from "~/components/Title";
 
 const HelperProfile = ({ data }: any) => {
   const dispatch = useDispatch();
+  const account = data.get("account");
   return (
     <div className="mx-4 pt-8">
       <div className="mb-5">
@@ -23,7 +24,7 @@ const HelperProfile = ({ data }: any) => {
       <div className="flex justify-between">
         <div>
           <Title as="h2" className="text-xl mb-6" bold>
-            {data.get("firstName")} {data.get("lastName")}
+            {account.get("firstName")} {account.get("lastName")}
           </Title>
         </div>
         <div>
@@ -33,12 +34,12 @@ const HelperProfile = ({ data }: any) => {
 
       <div className="mb-5">
         <p className="mb-1 text-xs opacity-50">Handynummer</p>
-        <p>{data.get("phone")}</p>
+        <p>{account.get("phone")}</p>
       </div>
 
       <div className="mb-5">
         <p className="mb-1 text-xs opacity-50">E-Mail</p>
-        <p>{data.get("email")}</p>
+        <p>{account.get("email")}</p>
       </div>
 
       <div className="mb-5">

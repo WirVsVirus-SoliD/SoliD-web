@@ -30,7 +30,7 @@ const Home = (props: Props) => {
               Ich will helfen
             </PrimaryButton>
           </Link>
-          <Link to="/boarding-farmer">
+          <Link to="/register/provider">
             <PrimaryButton block className="tracking-wider">
               Ich benötige Hilfe
             </PrimaryButton>

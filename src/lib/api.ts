@@ -12,6 +12,7 @@ export default {
   },
   helpers: {
     collection: domain + "/helpers",
-    inquired: domain + "/helpers/inquired"
+    inquired: domain + "/helpers/inquired",
+    favorites: domain + "/helpers/favorites"
   }
 };

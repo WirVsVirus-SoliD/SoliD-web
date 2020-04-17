@@ -44,7 +44,7 @@ const HelperCard = ({ data }) => {
   );
 };
 
-const Helpers = () => {
+const ProviderDashboard = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -62,4 +62,4 @@ const Helpers = () => {
   );
 };
 
-export default Helpers;
+export default ProviderDashboard;

@@ -28,15 +28,6 @@ const validateFail = createAction(VALIDATE_FAIL);
 const validateSuccess = createAction(VALIDATE_SUCCESS);
 const logout = createAction(LOGOUT);
 
-const redirectByType = (type) => {
-  // FIXME change to /dashboard when provider and helper have dashboard
-  if (type === "helper") {
-    return "/map";
-  } else {
-    return "/helpers";
-  }
-};
-
 export const login = (email, password, redirect) => {
   return async (dispatch: Function) => {
     dispatch(loginRequest());
@@ -50,7 +41,7 @@ export const login = (email, password, redirect) => {
       dispatch(loginSuccess());
       dispatch(setUser(response.data.data));
       if (!redirect) {
-        redirect = redirectByType(response.data.type);
+        redirect = "/dashboard";
       }
       history.push(redirect);
     } catch (error) {
@@ -60,7 +51,7 @@ export const login = (email, password, redirect) => {
   };
 };
 
-export const validate = () => {
+export const validate = (redirect) => {
   return async (dispatch: Function) => {
     dispatch(validateRequest());
     try {
@@ -68,7 +59,7 @@ export const validate = () => {
       dispatch(setUserType(response.data.type));
       dispatch(setUser(response.data.data));
       dispatch(validateSuccess());
-      const redirect = redirectByType(response.data.type);
+      if (redirect === "/") redirect = "/dashboard";
       return Promise.resolve({ response, redirect });
     } catch (error) {
       console.log("ERROR IN VALIDATING USER", error);

@@ -24,7 +24,7 @@ export default function AppRoutes() {
   const token = storage.getAccessToken();
   useEffect(() => {
     if (token) {
-      dispatch(validate())
+      dispatch(validate(window.location.pathname))
         // @ts-ignore
         .then(({ response, redirect }) => {
           setTimeout(() => {
