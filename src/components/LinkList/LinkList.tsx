@@ -17,9 +17,11 @@ const LinkList = ({ links }: LinkListProps) => {
       {links.map((link) => (
         <div className="py-3 border-t border-lightGrey last:border-b">
           <Link to={link.link}>
-            {link.title}
-            <div className="float-right pt-2">
-              <ChevronRightIcon />
+            <div>
+              {link.title}
+              <div className="float-right pt-2">
+                <ChevronRightIcon />
+              </div>
             </div>
           </Link>
         </div>
