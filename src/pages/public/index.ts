@@ -8,3 +8,8 @@ export { default as HelperRegister } from "./HelperRegister";
 export { default as ProviderRegister } from "./ProviderRegister";
 export { default as SplashScreen } from "./SplashScreen";
 export { default as Boarding } from "./Boarding";
+export { default as FaqOverview } from "./FaqOverview";
+export { default as FaqFarmer } from "./FaqFarmer";
+export { default as FaqHelper } from "./FaqHelper";
+export { default as Credits } from "./Credits";
+export { default as CreditsPhotoMaterial } from "./CreditsPhotoMaterial";
