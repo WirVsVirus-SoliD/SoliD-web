@@ -5,6 +5,11 @@ import NotFoundPage from "~/pages/error/NotFound";
 import {
   Boarding,
   BoardingFarmer,
+  Credits,
+  CreditsPhotoMaterial,
+  FaqOverview,
+  FaqFarmer,
+  FaqHelper,
   ForgotPassword,
   HelperRegister,
   Home,
@@ -26,6 +31,17 @@ export default function AppRoutes() {
       <Route exact path="/boarding" component={Boarding} />
       <Route exact path="/boarding-farmer" component={BoardingFarmer} />
       <Route exact path="/forgot-password" component={ForgotPassword} />
+
+      <Route exact path="/faq" component={FaqOverview} />
+      <Route exact path="/faq/farmer" component={FaqFarmer} />
+      <Route exact path="/faq/helper" component={FaqHelper} />
+
+      <Route exact path="/credits" component={Credits} />
+      <Route
+        exact
+        path="/credits/photo-material"
+        component={CreditsPhotoMaterial}
+      />
 
       {/*
        <Route path="/profile" component={userIsAuthenticated(Profile)}/>
