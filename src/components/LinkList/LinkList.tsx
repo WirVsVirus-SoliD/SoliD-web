@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { ChevronRightIcon } from "~/components/Icon";
 
 interface LinkProps {
   title: string;
@@ -14,8 +15,13 @@ const LinkList = ({ links }: LinkListProps) => {
   return (
     <div>
       {links.map((link) => (
-        <div>
-          <Link to={link.link}>{link.title}</Link>
+        <div className="py-3 border-t border-lightGrey last:border-b">
+          <Link to={link.link}>
+            {link.title}
+            <div className="float-right pt-2">
+              <ChevronRightIcon />
+            </div>
+          </Link>
         </div>
       ))}
     </div>
