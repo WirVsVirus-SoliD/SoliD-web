@@ -6,6 +6,13 @@ module.exports = {
       body: ["Roboto, sans-serif"]
     },
     extend: {
+      backdropFilter: {
+        none: "none",
+        blur: "blur(20px)"
+      },
+      boxShadow: {
+        "selection-brand": "0px 0px 0px 2px #199057"
+      },
       colors: {
         "brand-light": "#94E1AE",
         brand: "#199057",
@@ -28,13 +35,6 @@ module.exports = {
       zIndex: {
         "9999": 9999
       }
-    },
-    backdropFilter: {
-      none: "none",
-      blur: "blur(20px)"
-    },
-    boxShadow: {
-      "selection-brand": "0px 0px 0px 2px #199057"
     }
   },
   variants: {

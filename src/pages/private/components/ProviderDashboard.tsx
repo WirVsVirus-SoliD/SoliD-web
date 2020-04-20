@@ -1,45 +1,24 @@
 import Container from "@material-ui/core/Container";
 import React, { useEffect, useState } from "react";
 import { User } from "react-feather";
+import { Title } from "~/components/Title";
 import api from "~/lib/api";
 import axiosInstance from "~/lib/axiosInstance";
-
-/*{
- "applyDate": "2020-04-10T18:30:49.66Z[UTC]",
- "contacted": false,
- "helper": {
- "account": {
- "accountId": 4,
- "email": "kontakt@bauernhof-mueller.de",
- "firstName": "Bauer",
- "lastName": "Müller",
- "phone": "07195 57413"
- },
- "driverLicense": true,
- "employmentStatus": "Student",
- "fullTime": true,
- "helperId": 1,
- "pickupRange": 10,
- "pickupRequired": true
- },
- "inquiryId": 1
- }*/
-
-type Inquiry = {
-  inquiryId: number;
-  contacted: boolean;
-  applyDate: string;
-  helper: object;
-};
+import momentInstance from "~/lib/momentInstance";
 
 const HelperCard = ({ data }) => {
   const helper = data.helper;
   return (
     <div className="flex flex-row h-20">
-      <User />
-      <p>
-        {helper.account.firstName} {helper.account.lastName.substr(0, 1)}.
-      </p>
+      <User width={70} height={70} />
+      <div className="pl-2">
+        <p>
+          {helper.account.firstName} {helper.account.lastName.substr(0, 1)}.
+        </p>
+        <div className="rounded bg-grey text-white p-1">
+          {momentInstance(data.applyDate).format("L")}
+        </div>
+      </div>
     </div>
   );
 };
@@ -49,12 +28,15 @@ const ProviderDashboard = () => {
 
   useEffect(() => {
     (async () => {
-      const result = await axiosInstance.get(api.providers.inquired);
+      const result = await axiosInstance.get(api.inquiries.collection);
       setData(result.data);
     })();
   }, []);
   return (
     <Container>
+      <Title as="h2" className="text-2xl pt-6 mb-2">
+        Meine Anfragen
+      </Title>
       {data.map((helper) => (
         <HelperCard key={helper.inquiryId} data={helper} />
       ))}
