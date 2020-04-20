@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 const classes = { selected: "text-brand" };
 
-const NavigationBar = ({ tabs }) => {
-  const [value, setValue] = useState();
+const NavigationBar = ({ tabs, pathname }) => {
+  const [value, setValue] = useState(pathname);
   return (
     <BottomNavigation
       className="w-full fixed bottom-0"

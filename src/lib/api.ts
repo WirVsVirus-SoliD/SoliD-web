@@ -7,11 +7,18 @@ export default {
     validate: domain + "/auth/validate"
   },
   providers: {
-    collection: domain + "/providers",
-    inquired: domain + "/providers/inquired"
+    collection: domain + "/providers"
   },
   helpers: {
-    collection: domain + "/helpers",
-    inquired: domain + "/helpers/inquired"
+    collection: domain + "/helpers"
+  },
+  inquiries: {
+    collection: domain + "/inquiries"
+  },
+  favorites: {
+    collection: domain + "/favorites"
+  },
+  media: {
+    downloadPicture: (id) => domain + `/media/${id}/download-picture`
   }
 };

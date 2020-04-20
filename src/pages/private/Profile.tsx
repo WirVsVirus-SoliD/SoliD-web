@@ -1,6 +1,6 @@
 import React from "react";
-import { HelperProfile, ProviderProfile } from "~/components/Profile";
 import { useTypedSelector } from "~/reducers";
+import { HelperProfile, ProviderProfile } from "./components";
 
 const Profile = () => {
   const user = useTypedSelector((state) => state.get("user"));

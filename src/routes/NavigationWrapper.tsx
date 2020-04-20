@@ -2,29 +2,29 @@ import PersonIcon from "@material-ui/icons/Person";
 import RoomIcon from "@material-ui/icons/Room";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, RouteProps, Switch } from "react-router-dom";
 import { NavigationBar } from "~/components/NavigationBar";
-import { Helpers, Jobs, Profile } from "~/pages/private";
+import { Dashboard, Profile } from "~/pages/private";
 import { Login, Map, ProviderDetails } from "~/pages/public";
 import { useTypedSelector } from "~/reducers";
 import { providerIsAuthenticated, userIsAuthenticated } from "~/routes/auth";
 
 const providerTabs = [
   {
-    route: "/helpers",
+    route: "/dashboard",
     icon: <ScheduleIcon />,
-    value: "helpers",
+    value: "/dashboard",
     label: "Meine Helfer"
   },
   {
     route: "/profile",
     icon: <PersonIcon />,
-    value: "profile",
+    value: "/profile",
     label: "Meine Daten"
   }
 ];
 
-const NavigationWrapper = () => {
+const NavigationWrapper = ({ location }: RouteProps) => {
   const user = useTypedSelector((state) => state.get("user"));
   const isProvider = user.get("type") === "provider";
   let tabs;
@@ -35,22 +35,22 @@ const NavigationWrapper = () => {
       {
         route: "/map",
         icon: <RoomIcon />,
-        value: "nearby",
+        value: "/map",
         label: "In der Nähe"
       }
     ];
     if (user.get("login")) {
-      tabs.push([
+      tabs = tabs.concat([
         {
-          route: "/jobs",
+          route: "/dashboard",
           icon: <ScheduleIcon />,
-          value: "jobs",
+          value: "/dashboard",
           label: "Jobs"
         },
         {
           route: "/profile",
           icon: <PersonIcon />,
-          value: "profile",
+          value: "/profile",
           label: "Profil"
         }
       ]);
@@ -58,7 +58,7 @@ const NavigationWrapper = () => {
       tabs.push({
         route: "/login",
         icon: <PersonIcon />,
-        value: "login",
+        value: "/login",
         label: "Login"
       });
     }
@@ -68,7 +68,7 @@ const NavigationWrapper = () => {
     return (
       <Switch>
         <Route path="/map" component={Map} />
-        <Route path="/jobs" component={userIsAuthenticated(Jobs)} />
+        <Route path="/dashboard" component={userIsAuthenticated(Dashboard)} />
         <Route path="/profile" component={userIsAuthenticated(Profile)} />
         <Route path="/providers/:id" component={ProviderDetails} />
         <Route path="/login" component={Login} />
@@ -80,9 +80,9 @@ const NavigationWrapper = () => {
     return (
       <Switch>
         <Route
-          path={"/helpers"}
+          path={"/dashboard"}
           exact
-          component={providerIsAuthenticated(Helpers)}
+          component={providerIsAuthenticated(Dashboard)}
         />
         <Route path={"/profile"} component={providerIsAuthenticated(Profile)} />
       </Switch>
@@ -92,7 +92,7 @@ const NavigationWrapper = () => {
   return (
     <>
       {isProvider ? renderProviderRoutes() : renderHelperRoutes()}
-      <NavigationBar tabs={tabs} />
+      <NavigationBar pathname={location.pathname} tabs={tabs} />
     </>
   );
 };
