@@ -6,6 +6,12 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGOUT,
+  REGISTER_HELPER_FAIL,
+  REGISTER_HELPER_REQUEST,
+  REGISTER_HELPER_SUCCESS,
+  REGISTER_PROVIDER_FAIL,
+  REGISTER_PROVIDER_REQUEST,
+  REGISTER_PROVIDER_SUCCESS,
   SET_USER,
   SET_USER_TYPE,
   VALIDATE_FAIL,
@@ -26,7 +32,48 @@ const loginSuccess = createAction(LOGIN_SUCCESS);
 const validateRequest = createAction(VALIDATE_REQUEST);
 const validateFail = createAction(VALIDATE_FAIL);
 const validateSuccess = createAction(VALIDATE_SUCCESS);
+const registerProviderRequest = createAction(REGISTER_PROVIDER_REQUEST);
+const registerProviderFail = createAction(REGISTER_PROVIDER_FAIL);
+const registerProviderSuccess = createAction(REGISTER_PROVIDER_SUCCESS);
+const registerHelperRequest = createAction(REGISTER_HELPER_REQUEST);
+const registerHelperFail = createAction(REGISTER_HELPER_FAIL);
+const registerHelperSuccess = createAction(REGISTER_HELPER_SUCCESS);
 const logout = createAction(LOGOUT);
+
+export const registerHelper = (input) => {
+  return async (dispatch: Function) => {
+    dispatch(registerHelperRequest());
+    try {
+      const response = await axiosInstance.post(api.helpers.collection, input);
+      console.log(response);
+      dispatch(registerHelperSuccess());
+      return Promise.resolve({ response });
+    } catch (error) {
+      console.log(error);
+      dispatch(registerHelperFail());
+      return Promise.reject({ error });
+    }
+  };
+};
+
+export const registerProvider = (input) => {
+  return async (dispatch: Function) => {
+    dispatch(registerProviderRequest());
+    try {
+      const response = await axiosInstance.post(
+        api.providers.collection,
+        input
+      );
+      console.log(response);
+      dispatch(registerProviderSuccess());
+      return Promise.resolve({ response });
+    } catch (error) {
+      console.log(error);
+      dispatch(registerProviderFail());
+      return Promise.reject({ error });
+    }
+  };
+};
 
 export const login = (email, password, redirect) => {
   return async (dispatch: Function) => {

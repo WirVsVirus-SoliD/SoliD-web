@@ -3,7 +3,9 @@ import classnames from "classnames";
 import { Formik, FormikProps } from "formik";
 import React from "react";
 import { Briefcase, CheckCircle, Info, User } from "react-feather";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { registerHelper } from "~/actions/user";
 import { ReactComponent as EmailSentSvg } from "~/assets/icons/EmailSent.svg";
 import { PrimaryButton } from "~/components/Button";
 import { FormTitle } from "~/components/Form";
@@ -282,12 +284,13 @@ const initialValues = {
   employmentStatus: null,
   pickupRequired: null,
   driverLicense: null,
-  driverJobs: null,
+  driverJobs: false,
   fullTime: null,
   partTime: null
 };
 
 const HelperRegister = () => {
+  const dispatch = useDispatch();
   const { push } = useHistory();
   const {
     activeStep,
@@ -308,6 +311,10 @@ const HelperRegister = () => {
         initialValues={initialValues}
         onSubmit={(input) => {
           console.log(input);
+          // @ts-ignore
+          dispatch(registerHelper(input)).then((response) => {
+            goNext();
+          });
         }}
       >
         {({ setFieldValue, values, handleSubmit }: FormProps) => (
@@ -336,8 +343,7 @@ const HelperRegister = () => {
                   <PrimaryButton
                     className="flex-grow"
                     onClick={() => {
-                      goNext();
-                      shouldSubmitForm && handleSubmit();
+                      shouldSubmitForm ? handleSubmit() : goNext();
                     }}
                   >
                     {activeStep.okText}
