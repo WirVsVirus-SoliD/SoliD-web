@@ -3,7 +3,9 @@ import classnames from "classnames";
 import { Formik, FormikProps } from "formik";
 import React from "react";
 import { Briefcase, CheckCircle, Info, User } from "react-feather";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { registerProvider } from "~/actions/user";
 import { ReactComponent as Asparagus } from "~/assets/icons/cultures/asparagus.svg";
 import { ReactComponent as Basket } from "~/assets/icons/cultures/basket.svg";
 import { ReactComponent as Cabbage } from "~/assets/icons/cultures/cabbage.svg";
@@ -15,7 +17,6 @@ import { ReactComponent as Radish } from "~/assets/icons/cultures/radish.svg";
 import { ReactComponent as Strawberry } from "~/assets/icons/cultures/strawberry.svg";
 import { ReactComponent as Vegetables } from "~/assets/icons/cultures/vegetables.svg";
 import { ReactComponent as EmailSentSvg } from "~/assets/icons/EmailSent.svg";
-import { ReactComponent as UploadFarmPhotoSvg } from "~/assets/icons/UploadFarmPhoto.svg";
 import { PrimaryButton } from "~/components/Button";
 import { FormTitle } from "~/components/Form";
 import { Radio } from "~/components/Form/components";
@@ -90,11 +91,18 @@ const contents: (StepContent | StepContent[])[] = [
           {[
             ["account.firstName", "Vorname"],
             ["account.lastName", "Nachname"],
-            ["account.phone", "Telefonnummer"],
-            ["account.email", "E-Mail"]
-          ].map(([key, label]) => (
+            ["account.phone", "Telefonnummer (optional)"],
+            ["account.email", "E-Mail", "email"],
+            ["account.password", "Passwort", "password"],
+            [
+              "account.password_confirmation",
+              "Passwort wiederholen",
+              "password"
+            ]
+          ].map(([key, label, type = "text"]) => (
             <TextField
               key={key}
+              type={type}
               label={label}
               className="mb-4 text-brand"
               fullWidth
@@ -127,17 +135,6 @@ const contents: (StepContent | StepContent[])[] = [
               onChange={(e) => props.setFieldValue(key, e.currentTarget.value)}
             />
           ))}
-        </>
-      )
-    },
-    {
-      stepIndex: 1,
-      Content: () => (
-        <>
-          <FormTitle as="h2" className="mb-4">
-            Foto deines Hofes
-          </FormTitle>
-          <UploadFarmPhotoSvg className="mx-auto" />
         </>
       )
     }
@@ -245,14 +242,14 @@ const contents: (StepContent | StepContent[])[] = [
             </FormTitle>
             <div>
               <Radio
-                checked={!values.pickupPossible}
+                checked={values.pickupPossible === false}
                 onClick={() => setFieldValue("pickupPossible", false)}
                 block
               >
                 Eigenständig (keine Abholung)
               </Radio>
               <Radio
-                checked={values.pickupPossible}
+                checked={values.pickupPossible === true}
                 onClick={() => setFieldValue("pickupPossible", true)}
                 block
               >
@@ -415,6 +412,7 @@ const initialValues = {
 };
 
 const ProviderRegister = () => {
+  const dispatch = useDispatch();
   const { push } = useHistory();
   const {
     activeStep,
@@ -435,6 +433,10 @@ const ProviderRegister = () => {
         initialValues={initialValues}
         onSubmit={(input) => {
           console.log(input);
+          // @ts-ignore
+          dispatch(registerProvider(input)).then((response) => {
+            goNext();
+          });
         }}
       >
         {({ setFieldValue, values, handleSubmit }: FormProps) => (
@@ -463,11 +465,10 @@ const ProviderRegister = () => {
                   <PrimaryButton
                     className="flex-grow"
                     onClick={() => {
-                      goNext();
-                      shouldSubmitForm && handleSubmit();
+                      shouldSubmitForm ? handleSubmit() : goNext();
                     }}
                   >
-                    {activeStep.okText}
+                    {shouldSubmitForm ? "Account erstellen" : activeStep.okText}
                   </PrimaryButton>
                 </>
               ) : (
