@@ -1,6 +1,6 @@
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import React from "react";
 import { Link } from "react-router-dom";
-import { ChevronRightIcon } from "~/components/Icon";
 
 interface LinkProps {
   title: string;
@@ -19,7 +19,7 @@ const LinkList = ({ links }: LinkListProps) => {
           <Link to={link.link}>
             <div>
               {link.title}
-              <div className="float-right pt-2">
+              <div className="float-right">
                 <ChevronRightIcon />
               </div>
             </div>
