@@ -1,7 +1,11 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { validate } from "~/actions/user";
 import { ResponsiveSvgBackground } from "~/components/Background";
 import { PrimaryButton } from "~/components/Button";
+import storage from "~/lib/storage";
+import { SplashScreen } from "~/pages/public/index";
 import { ResponsiveLandingTitle } from "./components";
 
 const ResetTopMarginStyles = { marginTop: 0 };
@@ -9,7 +13,39 @@ const ResetTopMarginStyles = { marginTop: 0 };
 type Props = {};
 
 const Home = (props: Props) => {
-  // TODO also check here for token, validate it and redirect to proper starting page
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [loading, setLoading] = useState(true);
+  const token = storage.getAccessToken();
+
+  useEffect(() => {
+    if (token) {
+      dispatch(validate("/dashboard"))
+        // @ts-ignore
+        .then(({ response, redirect }) => {
+          setTimeout(() => {
+            setLoading(false);
+            history.push(redirect);
+          }, 2000);
+        })
+        .catch((error) => {
+          console.log(error);
+          setTimeout(() => {
+            setLoading(false);
+            // TODO TRY REFRESH TOKEN IN MIDDLEWARE?
+            storage.clearStorage();
+            history.push("/login");
+          }, 2000);
+        });
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    }
+  }, [token, history, dispatch]);
+
+  if (loading) return <SplashScreen />;
+
   return (
     <>
       <div className="relative z-10 flex flex-col h-full px-4">

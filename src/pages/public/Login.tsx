@@ -1,13 +1,15 @@
 import { Form, Formik, FormikProps } from "formik";
 import * as queryString from "querystring";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { object as yupObject, string as yupString } from "yup";
-import { login } from "~/actions/user";
+import { login, validate } from "~/actions/user";
 import { PrimaryButton } from "~/components/Button";
 import { InputField } from "~/components/Form";
 import { Title } from "~/components/Title";
+import storage from "~/lib/storage";
+import { SplashScreen } from "~/pages/public/index";
 
 const initialValues = {
   email: "",
@@ -21,11 +23,42 @@ const validationSchema = yupObject().shape({
 
 const Login = ({ location }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const [loading, setLoading] = useState(true);
+  const token = storage.getAccessToken();
 
   const getRedirectRoute = () => {
     let urlParams = queryString.parse(location && location.search);
     return urlParams["?redirect"];
   };
+
+  useEffect(() => {
+    if (token) {
+      dispatch(validate(getRedirectRoute()))
+        // @ts-ignore
+        .then(({ response, redirect }) => {
+          setTimeout(() => {
+            setLoading(false);
+            history.push(redirect);
+          }, 2000);
+        })
+        .catch((error) => {
+          console.log(error);
+          setTimeout(() => {
+            setLoading(false);
+            // TODO TRY REFRESH TOKEN IN MIDDLEWARE?
+            storage.clearStorage();
+            history.push("/login");
+          }, 2000);
+        });
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    }
+  }, [token, history, dispatch, getRedirectRoute]);
+
+  if (loading) return <SplashScreen />;
 
   return (
     <div className="flex flex-col py-4 items-center justify-start px-8 h-full pb-20">

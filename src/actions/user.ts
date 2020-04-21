@@ -40,9 +40,7 @@ export const login = (email, password, redirect) => {
       dispatch(setUserType(response.data.type));
       dispatch(loginSuccess());
       dispatch(setUser(response.data.data));
-      if (!redirect) {
-        redirect = "/dashboard";
-      }
+      if (!redirect) redirect = "/dashboard";
       history.push(redirect);
     } catch (error) {
       console.log(error);
@@ -59,7 +57,7 @@ export const validate = (redirect) => {
       dispatch(setUserType(response.data.type));
       dispatch(setUser(response.data.data));
       dispatch(validateSuccess());
-      if (redirect === "/") redirect = "/dashboard";
+      if (!redirect) redirect = "/dashboard";
       return Promise.resolve({ response, redirect });
     } catch (error) {
       console.log("ERROR IN VALIDATING USER", error);
