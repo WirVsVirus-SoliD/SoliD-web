@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Redirect, Route, Switch, useHistory } from "react-router-dom";
-import { validate } from "~/actions/user";
-import storage from "~/lib/storage";
+import React from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
 
 import NotFoundPage from "~/pages/error/NotFound";
 import {
@@ -12,44 +9,11 @@ import {
   HelperRegister,
   Home,
   Login,
-  ProviderRegister,
-  SplashScreen
+  ProviderRegister
 } from "~/pages/public";
 import NavigationWrapper from "~/routes/NavigationWrapper";
 
 export default function AppRoutes() {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
-  const token = storage.getAccessToken();
-  useEffect(() => {
-    if (token) {
-      dispatch(validate(window.location.pathname))
-        // @ts-ignore
-        .then(({ response, redirect }) => {
-          setTimeout(() => {
-            setLoading(false);
-            history.push(redirect);
-          }, 2000);
-        })
-        .catch((error) => {
-          console.log(error);
-          setTimeout(() => {
-            setLoading(false);
-            // TODO TRY REFRESH TOKEN IN MIDDLEWARE?
-            storage.clearStorage();
-            history.push("/login");
-          }, 2000);
-        });
-    } else {
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
-    }
-  }, [token, history, dispatch]);
-
-  if (loading) return <SplashScreen />;
-
   return (
     <Switch>
       {/*Public Routes*/}
