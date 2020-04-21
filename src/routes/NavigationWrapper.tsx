@@ -91,8 +91,8 @@ const NavigationWrapper = ({ location }: RouteProps) => {
 
   return (
     <>
-      {isProvider ? renderProviderRoutes() : renderHelperRoutes()}
       <NavigationBar pathname={location.pathname} tabs={tabs} />
+      {isProvider ? renderProviderRoutes() : renderHelperRoutes()}
     </>
   );
 };

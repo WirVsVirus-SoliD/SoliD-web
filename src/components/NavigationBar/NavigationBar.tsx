@@ -9,7 +9,7 @@ const NavigationBar = ({ tabs, pathname }) => {
   const [value, setValue] = useState(pathname);
   return (
     <BottomNavigation
-      className="w-full fixed bottom-0"
+      className="w-full fixed bottom-0 shadow"
       value={value}
       onChange={(event, newValue) => {
         setValue(newValue);
