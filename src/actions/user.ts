@@ -1,6 +1,9 @@
 import { createAction } from "redux-actions";
 
 import {
+  CONFIRM_EMAIL_FAIL,
+  CONFIRM_EMAIL_REQUEST,
+  CONFIRM_EMAIL_SUCCESS,
   EDIT_USER,
   FORGOT_PASSWORD_FAIL,
   FORGOT_PASSWORD_REQUEST,
@@ -41,6 +44,9 @@ const validateSuccess = createAction(VALIDATE_SUCCESS);
 const forgotPasswordRequest = createAction(FORGOT_PASSWORD_REQUEST);
 const forgotPasswordFail = createAction(FORGOT_PASSWORD_FAIL);
 const forgotPasswordSuccess = createAction(FORGOT_PASSWORD_SUCCESS);
+const confirmEmailRequest = createAction(CONFIRM_EMAIL_REQUEST);
+const confirmEmailFail = createAction(CONFIRM_EMAIL_FAIL);
+const confirmEmailSuccess = createAction(CONFIRM_EMAIL_SUCCESS);
 const resetPasswordRequest = createAction(RESET_PASSWORD_REQUEST);
 const resetPasswordFail = createAction(RESET_PASSWORD_FAIL);
 const resetPasswordSuccess = createAction(RESET_PASSWORD_SUCCESS);
@@ -57,7 +63,6 @@ export const registerHelper = (input) => {
     dispatch(registerHelperRequest());
     try {
       const response = await axiosInstance.post(api.helpers.collection, input);
-      console.log(response);
       dispatch(registerHelperSuccess());
       return Promise.resolve(response);
     } catch (error) {
@@ -76,12 +81,26 @@ export const registerProvider = (input) => {
         api.providers.collection,
         input
       );
-      console.log(response);
       dispatch(registerProviderSuccess());
       return Promise.resolve(response);
     } catch (error) {
       console.log(error);
       dispatch(registerProviderFail());
+      return Promise.reject(error);
+    }
+  };
+};
+
+export const confirmEmail = (token) => {
+  return async (dispatch: Function) => {
+    dispatch(confirmEmailRequest());
+    try {
+      const response = await axiosInstance.get(api.auth.activate(token));
+      dispatch(confirmEmailSuccess());
+      return Promise.resolve(response);
+    } catch (error) {
+      console.log(error);
+      dispatch(confirmEmailFail());
       return Promise.reject(error);
     }
   };
