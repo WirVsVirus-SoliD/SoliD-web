@@ -7,15 +7,16 @@ import {
   BoardingFarmer,
   Credits,
   CreditsPhotoMaterial,
-  FaqOverview,
   FaqFarmer,
   FaqHelper,
+  FaqOverview,
   ForgotPassword,
   HelperRegister,
   Home,
   Login,
   ProviderRegister
 } from "~/pages/public";
+import ResetPassword from "~/pages/public/ResetPassword";
 import NavigationWrapper from "~/routes/NavigationWrapper";
 
 export default function AppRoutes() {
@@ -31,6 +32,7 @@ export default function AppRoutes() {
       <Route exact path="/boarding" component={Boarding} />
       <Route exact path="/boarding-farmer" component={BoardingFarmer} />
       <Route exact path="/forgot-password" component={ForgotPassword} />
+      <Route exact path="/reset-password" component={ResetPassword} />
 
       <Route exact path="/faq" component={FaqOverview} />
       <Route exact path="/faq/farmer" component={FaqFarmer} />

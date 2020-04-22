@@ -4,7 +4,9 @@ export default {
   auth: {
     refresh: domain + "/auth/refresh",
     login: domain + "/auth/login",
-    validate: domain + "/auth/validate"
+    validate: domain + "/auth/validate",
+    initReset: domain + "/auth/init-reset",
+    reset: domain + "/auth/reset"
   },
   providers: {
     collection: domain + "/providers"
