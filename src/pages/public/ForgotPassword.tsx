@@ -34,8 +34,8 @@ const ForgotPassword = () => {
           validationSchema={validationSchema}
           onSubmit={(values) => {
             setState({ ...state, loading: true });
-            // @ts-ignore
             dispatch(forgotPassword(values.email))
+              // @ts-ignore
               .then((response) => {
                 setState({ ...state, loading: false, success: true });
               })

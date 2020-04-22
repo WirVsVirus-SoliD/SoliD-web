@@ -40,8 +40,8 @@ const ResetPassword = ({ location }) => {
           validationSchema={validationSchema}
           onSubmit={(values) => {
             setState({ ...state, loading: true });
-            // @ts-ignore
             dispatch(resetPassword(values, urlParams["?token"]))
+              // @ts-ignore
               .then((response) => {
                 setState({ ...state, loading: false, success: true });
               })
