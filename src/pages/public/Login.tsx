@@ -1,6 +1,6 @@
 import { Form, Formik, FormikProps } from "formik";
 import * as queryString from "querystring";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { object as yupObject, string as yupString } from "yup";
@@ -27,10 +27,10 @@ const Login = ({ location }) => {
   const [loading, setLoading] = useState(true);
   const token = storage.getAccessToken();
 
-  const getRedirectRoute = () => {
-    let urlParams = queryString.parse(location && location.search);
+  const getRedirectRoute = useCallback(() => {
+    const urlParams = queryString.parse(location && location.search);
     return urlParams["?redirect"];
-  };
+  }, [location]);
 
   useEffect(() => {
     if (token) {
