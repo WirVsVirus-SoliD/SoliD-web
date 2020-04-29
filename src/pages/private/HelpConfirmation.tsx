@@ -2,7 +2,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import React, { useEffect, useState } from "react";
 import { RouteProps, useHistory } from "react-router";
 import { PrimaryButton } from "~/components/Button";
-import { InfoIcon } from "~/components/Icon";
+import { BigCheckIcon, InfoIcon } from "~/components/Icon";
 import { ProviderPreview } from "~/components/ProviderPreview";
 import { Requirements } from "~/components/Requirements";
 import { Title } from "~/components/Title";
@@ -14,6 +14,8 @@ type Props = {} & RouteProps;
 
 type State = {
   loading: boolean;
+  creating: boolean;
+  success: boolean;
   provider: any;
   error: object;
 };
@@ -25,6 +27,8 @@ const HelpConfirmation = ({ match }) => {
   const userData = user.get("data");
   const [state, setState] = useState<State>({
     loading: true,
+    creating: false,
+    success: false,
     provider: null,
     error: null
   });
@@ -45,6 +49,19 @@ const HelpConfirmation = ({ match }) => {
     })();
   }, []);
 
+  const inquireForProvider = () => {
+    setState({ ...state, creating: true });
+    axiosInstance
+      .post(api.inquiries.collection, { providerId })
+      .then(() => {
+        setState({ ...state, creating: false, success: true });
+      })
+      .catch((error) => {
+        console.log("ERROR GET PROVIDERS", error);
+        setState({ ...state, creating: false, error: error });
+      });
+  };
+
   if (state.loading)
     return (
       <div className="h-100vh w-full flex items-center justify-center">
@@ -52,7 +69,21 @@ const HelpConfirmation = ({ match }) => {
       </div>
     );
 
-  const { provider } = state;
+  if (state.success)
+    return (
+      <div className="h-100vh flex flex-col items-center p-4">
+        <BigCheckIcon />
+        <Title as="h1" className="m-8 text-2xl">
+          Der/Die Landwirt*in erhält eine Nachricht und meldet sich zeitnah bei
+          dir!
+        </Title>
+        <PrimaryButton block onClick={() => push("/map")}>
+          Zurück zur Übersicht
+        </PrimaryButton>
+      </div>
+    );
+
+  const { provider, error, creating } = state;
 
   return (
     <div className="p-4 overflow-y-scroll">
@@ -72,7 +103,14 @@ const HelpConfirmation = ({ match }) => {
           sich zeitnah bei dir!
         </p>
       </div>
-      <PrimaryButton block>Jetzt helfen</PrimaryButton>
+      {error && <p className="mb-2 text-red-500">Etwas ist schiefgelaufen</p>}
+      <PrimaryButton
+        block
+        disabled={creating}
+        onClick={() => inquireForProvider()}
+      >
+        Jetzt helfen
+      </PrimaryButton>
     </div>
   );
 };
