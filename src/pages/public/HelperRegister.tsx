@@ -10,17 +10,12 @@ import { ReactComponent as EmailSentSvg } from "~/assets/icons/EmailSent.svg";
 import { PrimaryButton } from "~/components/Button";
 import { FormTitle } from "~/components/Form";
 import { Checkbox, Radio } from "~/components/Form/components";
-import { CheckIcon } from "~/components/Icon";
+import { Requirements } from "~/components/Requirements";
 import { Step, StepContent, useSteps } from "~/components/Steps";
 import { Title } from "~/components/Title";
 
 type FormProps = FormikProps<typeof initialValues>;
 type PassedFormProps = Pick<FormProps, "setFieldValue" | "values">;
-
-const checklistTexts = [
-  "Über 18 Jahre sein",
-  "In körperlich guter Verfassung sein"
-];
 
 export const steps: Step[] = [
   {
@@ -48,25 +43,7 @@ export const steps: Step[] = [
 const contents: (StepContent | StepContent[])[] = [
   {
     stepIndex: 0,
-    Content: () => (
-      <>
-        <p className="mb-8">
-          Bevor du fortfährst: Zuverlässigkeit steht an oberster Stelle! Wenn du
-          kurzfristig keine Zeit hast, sag bitte direkt der Kontaktperson ab,
-          damit sie umplanen kann. Weiterhin musst du:
-        </p>
-        <ul className="mb-4">
-          {checklistTexts.map((text, i) => (
-            <li key={i} className="flex align-top pl-8 mb-2">
-              <div className="inline-block -ml-8 mr-2">
-                <CheckIcon />
-              </div>
-              <p className="inline-block font-medium">{text}</p>
-            </li>
-          ))}
-        </ul>
-      </>
-    )
+    Content: () => <Requirements />
   },
 
   {
@@ -289,6 +266,7 @@ const initialValues = {
   partTime: null
 };
 
+// TODO handle redirect to provider confirmHelp
 const HelperRegister = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();

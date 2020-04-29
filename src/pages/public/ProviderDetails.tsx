@@ -133,7 +133,7 @@ const ProviderDetails = ({ match }) => {
             </li>
           )}
           {provider.crops.map((crop) => (
-            <li className="inline-block mr-4">
+            <li key={crop} className="inline-block mr-4">
               <Crop type={crop} />
             </li>
           ))}
@@ -180,7 +180,11 @@ const ProviderDetails = ({ match }) => {
             längerer körperlicher Anstrengung haben.
           </p>
         </div>
-        <PrimaryButton className="my-4" block>
+        <PrimaryButton
+          className="my-4"
+          block
+          onClick={() => push(`/providers/${providerId}/confirmHelp`)}
+        >
           Ich will helfen
         </PrimaryButton>
       </div>

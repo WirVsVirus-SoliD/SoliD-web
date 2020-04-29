@@ -4,10 +4,14 @@ import ScheduleIcon from "@material-ui/icons/Schedule";
 import React from "react";
 import { Route, RouteProps, Switch } from "react-router-dom";
 import { NavigationBar } from "~/components/NavigationBar";
-import { Dashboard, Profile } from "~/pages/private";
+import { Dashboard, HelpConfirmation, Profile } from "~/pages/private";
 import { Login, Map, ProviderDetails } from "~/pages/public";
 import { useTypedSelector } from "~/reducers";
-import { providerIsAuthenticated, userIsAuthenticated } from "~/routes/auth";
+import {
+  helperIsAuthenticated,
+  providerIsAuthenticated,
+  userIsAuthenticated
+} from "~/routes/auth";
 
 const providerTabs = [
   {
@@ -70,7 +74,11 @@ const NavigationWrapper = ({ location }: RouteProps) => {
         <Route path="/map" component={Map} />
         <Route path="/dashboard" component={userIsAuthenticated(Dashboard)} />
         <Route path="/profile" component={userIsAuthenticated(Profile)} />
-        <Route path="/providers/:id" component={ProviderDetails} />
+        <Route path="/providers/:id" exact component={ProviderDetails} />
+        <Route
+          path="/providers/:id/confirmHelp"
+          component={helperIsAuthenticated(HelpConfirmation)}
+        />
         <Route path="/login" component={Login} />
       </Switch>
     );

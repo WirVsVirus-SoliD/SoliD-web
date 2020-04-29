@@ -89,7 +89,7 @@ class LeafletMap extends React.Component<Props, State> {
         {highlighted && (
           <div className="absolute bottom-0 mb-4 w-11/12 z-9999 left-1/2 transform -translate-x-1/2">
             <ProviderPreview
-              providerGeoJson={highlighted}
+              provider={highlighted.properties}
               setHighlighted={setHighlightedProvider}
             />
           </div>

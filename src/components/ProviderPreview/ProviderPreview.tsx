@@ -10,54 +10,64 @@ import { PrimaryButton } from "~/components/Button";
 import { Crop } from "~/components/Crop";
 import { Title } from "~/components/Title";
 
-const ProviderPreview = ({ providerGeoJson, setHighlighted }) => {
+type Props = {
+  provider: any;
+  setHighlighted?: Function;
+  mini?: boolean;
+};
+
+const ProviderPreview = ({ provider, mini = false, setHighlighted }: Props) => {
   const { push } = useHistory();
-  const properties = providerGeoJson.properties;
-  const { city, street, housenr, zip } = properties.address;
+  const { city, street, housenr, zip } = provider.address;
   return (
-    <div className="bg-white p-3">
+    <div className="bg-white p-3 border rounded shadow-md">
       <div className="flex flex-row pb-6">
-        <Title as="h1" className="pr-2">
-          {properties.farmName}
+        <Title as="h1" className="pr-2 text-2xl">
+          {provider.farmName}
         </Title>
         {/* FIXME: organic flag from backend */}
-        {!properties.organic && <OrganicAgriculture />}
-        <CloseIcon
-          className="ml-auto mr-2"
-          onClick={() => setHighlighted(null)}
-        />
+        {!provider.organic && <OrganicAgriculture />}
+        {setHighlighted && (
+          <CloseIcon
+            className="ml-auto mr-2"
+            onClick={() => setHighlighted(null)}
+          />
+        )}
       </div>
       <div className="flex flex-row pb-6">
         <LocationOnOutlinedIcon className="mr-2" />
         <p>{`${street} ${housenr}, ${zip} ${city}`}</p>
       </div>
-      {properties.pickupPossible && (
+      {provider.pickupPossible && (
         <div className="flex flex-row pb-6">
           <DirectionsCarIcon className="mr-2" />
-          <p>{`Abholung möglich bei max. ${properties.pickupRange}km Distanz`}</p>
+          <p>{`Abholung möglich bei max. ${provider.pickupRange}km Distanz`}</p>
         </div>
       )}
       <div className="flex flex-row pb-6">
         <ScheduleOutlinedIcon className="mr-2" />
-        <p>{`Mindestbeschäftigung: ${properties.minWorkPeriod}`}</p>
+        <p>{`Mindestbeschäftigung: ${provider.minWorkPeriod}`}</p>
       </div>
-      <div className="flex flex-row">
-        {properties.crops.slice(0, 2).map((crop) => (
-          <div key={crop} className="mr-2">
-            <Crop type={crop} />
-          </div>
-        ))}
-        {properties.crops.length > 2 && (
-          <div className="flex mr-2 items-center">
-            <MoreHorizIcon />
-          </div>
-        )}
-        <PrimaryButton
-          onClick={() => push(`/providers/${properties.providerId}`)}
-        >
-          Mehr Infos
-        </PrimaryButton>
-      </div>
+      {!mini && (
+        <div className="flex flex-row">
+          {provider.crops.slice(0, 2).map((crop) => (
+            <div key={crop} className="mr-2">
+              <Crop type={crop} />
+            </div>
+          ))}
+          {provider.crops.length > 2 && (
+            <div className="flex mr-2 items-center">
+              <MoreHorizIcon />
+            </div>
+          )}
+          <PrimaryButton
+            className="ml-auto mr-2"
+            onClick={() => push(`/providers/${provider.providerId}`)}
+          >
+            Mehr Infos
+          </PrimaryButton>
+        </div>
+      )}
     </div>
   );
 };
