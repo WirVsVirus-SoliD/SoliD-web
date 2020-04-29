@@ -58,7 +58,6 @@ const ProviderDetails = ({ match }) => {
       </div>
     );
 
-  const isOrganicFarm = true;
   const { provider } = state;
   const { city, street, housenr, zip } = provider.address;
 
@@ -100,7 +99,7 @@ const ProviderDetails = ({ match }) => {
             <LocationOnOutlinedIcon className="mr-2" />
             <p>{`${street} ${housenr}, ${zip} ${city}`}</p>
           </li>
-          {provider.pickupPossible && (
+          {provider.pickupRange && (
             <li className="flex items-center mb-2">
               <DirectionsCarIcon className="mr-2" />
               <p>{`Abholung möglich bei max. ${provider.pickupRange}km Distanz`}</p>
@@ -114,7 +113,7 @@ const ProviderDetails = ({ match }) => {
             <EuroIcon className="mr-2" />
             <p>{`${provider.hourlyRate.toFixed(2)} € / Stunde`}</p>
           </li>
-          {provider.overnightPossible && provider.overnightPrice && (
+          {provider.overnightPrice && (
             <li className="flex items-center mb-2">
               <HotelIcon className="mr-2" />
               <p>{`Übernachtungsmöglichkeit: ${provider.overnightPrice.toFixed(
@@ -125,7 +124,7 @@ const ProviderDetails = ({ match }) => {
         </ul>
 
         <ul className="flex items-center text-xs mb-4">
-          {isOrganicFarm && (
+          {provider.bio && (
             <li className="inline-block text-center border-r border-gray-400 pr-4 mr-4">
               <OrganicAgriculture className="mx-auto mb-1" />
               Biologischer <br />

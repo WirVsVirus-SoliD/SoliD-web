@@ -25,8 +25,7 @@ const ProviderPreview = ({ provider, mini = false, setHighlighted }: Props) => {
         <Title as="h1" className="pr-2 text-2xl">
           {provider.farmName}
         </Title>
-        {/* FIXME: organic flag from backend */}
-        {!provider.organic && <OrganicAgriculture />}
+        {provider.bio && <OrganicAgriculture />}
         {setHighlighted && (
           <CloseIcon
             className="ml-auto mr-2"
@@ -38,7 +37,7 @@ const ProviderPreview = ({ provider, mini = false, setHighlighted }: Props) => {
         <LocationOnOutlinedIcon className="mr-2" />
         <p>{`${street} ${housenr}, ${zip} ${city}`}</p>
       </div>
-      {provider.pickupPossible && (
+      {provider.pickupRange && (
         <div className="flex flex-row pb-6">
           <DirectionsCarIcon className="mr-2" />
           <p>{`Abholung möglich bei max. ${provider.pickupRange}km Distanz`}</p>
