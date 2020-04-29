@@ -17,9 +17,10 @@ const customMarker = new L.Icon({
 
 type Props = {
   geoJson: object;
+  setHighlighted: Function;
 };
 
-const MarkerCluster = ({ geoJson }: Props) => {
+const MarkerCluster = ({ geoJson, setHighlighted }: Props) => {
   const { map } = useLeaflet();
 
   useEffect(() => {
@@ -27,7 +28,9 @@ const MarkerCluster = ({ geoJson }: Props) => {
 
     L.geoJson(geoJson, {
       onEachFeature: function (feature, layer) {
-        layer.bindPopup(feature.properties.info);
+        layer.on("click", function (e) {
+          setHighlighted(feature);
+        });
       },
       pointToLayer: function (geoJsonPoint, latlng) {
         return L.marker(latlng, { icon: customMarker });
@@ -38,7 +41,7 @@ const MarkerCluster = ({ geoJson }: Props) => {
     // map.fitBounds(mcg.getBounds());
     // // add the marker cluster group to the map
     map.addLayer(mcg);
-  }, [geoJson, map]);
+  }, [geoJson, map, setHighlighted]);
 
   return null;
 };

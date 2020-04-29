@@ -1,4 +1,5 @@
 import React from "react";
+import { hot } from "react-hot-loader";
 import { Redirect, Route, Switch } from "react-router-dom";
 
 import NotFoundPage from "~/pages/error/NotFound";
@@ -20,7 +21,7 @@ import {
 } from "~/pages/public";
 import NavigationWrapper from "~/routes/NavigationWrapper";
 
-export default function AppRoutes() {
+function AppRoutes() {
   return (
     <Switch>
       {/*Public Routes*/}
@@ -60,3 +61,5 @@ export default function AppRoutes() {
     </Switch>
   );
 }
+
+export default hot(module)(AppRoutes);
