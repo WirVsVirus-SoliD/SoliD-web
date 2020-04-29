@@ -30,7 +30,7 @@ const CropIcon = ({ type, ...restProps }) => {
 
 const Crop = ({ type, height = 30 }) => {
   return (
-    <div className="items-center">
+    <div className="flex flex-col items-center">
       <CropIcon type={type} className="mb-1" height={height} />
       {type}
     </div>

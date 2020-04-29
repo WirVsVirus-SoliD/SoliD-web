@@ -1,11 +1,13 @@
 import CloseIcon from "@material-ui/icons/Close";
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
 import React from "react";
 import { useHistory } from "react-router";
 import { ReactComponent as OrganicAgriculture } from "~/assets/icons/OrganicAgriculture.svg";
 import { PrimaryButton } from "~/components/Button";
+import { Crop } from "~/components/Crop";
 import { Title } from "~/components/Title";
 
 const ProviderPreview = ({ providerGeoJson, setHighlighted }) => {
@@ -40,6 +42,16 @@ const ProviderPreview = ({ providerGeoJson, setHighlighted }) => {
         <p>{`Mindestbeschäftigung: ${properties.minWorkPeriod}`}</p>
       </div>
       <div className="flex flex-row">
+        {properties.crops.slice(0, 2).map((crop) => (
+          <div key={crop} className="mr-2">
+            <Crop type={crop} />
+          </div>
+        ))}
+        {properties.crops.length > 2 && (
+          <div className="flex mr-2 items-center">
+            <MoreHorizIcon />
+          </div>
+        )}
         <PrimaryButton
           onClick={() => push(`/providers/${properties.providerId}`)}
         >

@@ -114,7 +114,7 @@ const ProviderDetails = ({ match }) => {
             <EuroIcon className="mr-2" />
             <p>{`${provider.hourlyRate.toFixed(2)} € / Stunde`}</p>
           </li>
-          {provider.overnightPossible && (
+          {provider.overnightPossible && provider.overnightPrice && (
             <li className="flex items-center mb-2">
               <HotelIcon className="mr-2" />
               <p>{`Übernachtungsmöglichkeit: ${provider.overnightPrice.toFixed(
