@@ -49,7 +49,7 @@ const ProviderDetails = ({ match }) => {
         setState({ ...state, loading: false, error: error });
       }
     })();
-  }, [providerId, state]);
+  }, []);
 
   if (state.loading)
     return (
