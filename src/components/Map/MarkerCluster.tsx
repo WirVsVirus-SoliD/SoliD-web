@@ -34,6 +34,11 @@ const MarkerCluster = ({ geoJson, setHighlighted }: Props) => {
       },
       pointToLayer: function (geoJsonPoint, latlng) {
         return L.marker(latlng, { icon: customMarker });
+      },
+      coordsToLatLng: function (coords) {
+        // latitude , longitude, altitude
+        // return new L.LatLng(coords[1], coords[0], coords[2]); //Normal behavior
+        return new L.LatLng(coords[0], coords[1], coords[2]);
       }
     }).addTo(mcg);
 

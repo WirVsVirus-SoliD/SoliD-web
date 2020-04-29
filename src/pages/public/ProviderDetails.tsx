@@ -37,12 +37,10 @@ const ProviderDetails = ({ match }) => {
   useEffect(() => {
     (async () => {
       try {
-        //const response = await axiosInstance.get(api.providers.show(providerId));
-        const response = await axiosInstance.get(api.providers.collection);
-        const feature = response.data.features.find(
-          (feature) => feature.properties.providerId === providerId
+        const response = await axiosInstance.get(
+          api.providers.show(providerId)
         );
-        setState({ ...state, loading: false, provider: feature.properties });
+        setState({ ...state, loading: false, provider: response.data });
       } catch (error) {
         console.log("ERROR GET PROVIDER", error);
         setState({ ...state, loading: false, error: error });
@@ -157,7 +155,7 @@ const ProviderDetails = ({ match }) => {
         )}
         <ProviderDetailsSection
           title={"Tätigkeiten"}
-          text={provider.workActivities}
+          text={provider.workActivities.join(" ")}
         />
         <ProviderDetailsSection
           title={"Arbeitsbeginn"}
@@ -183,6 +181,7 @@ const ProviderDetails = ({ match }) => {
         >
           Ich will helfen
         </PrimaryButton>
+        <div className="h-20" />
       </div>
     </div>
   );
