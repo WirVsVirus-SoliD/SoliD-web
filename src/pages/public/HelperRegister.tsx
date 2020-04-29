@@ -238,7 +238,7 @@ const contents: (StepContent | StepContent[])[] = [
               E-Mail-Verifizierung
             </Title>
             <p>
-              Wir haben dir einen Bestätigungslink per E-Mail an
+              Wir haben dir einen Bestätigungslink per E-Mail an{" "}
               <strong>{values.account.email}</strong> geschickt. Bitte öffne
               diese.
             </p>

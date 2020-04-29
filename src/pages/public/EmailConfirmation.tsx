@@ -24,8 +24,7 @@ const EmailConfirmation = ({ location }) => {
         .then((response) => {
           setState((state) => ({ ...state, success: true, loading: false }));
           setTimeout(() => {
-            // TODO check path when confirm help is implemented
-            push(`/providers/${providerId}/confirm`);
+            push(`/providers/${providerId}/confirmHelp`);
           }, 2000);
         })
         .catch((error) => {

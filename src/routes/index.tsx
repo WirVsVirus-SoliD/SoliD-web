@@ -35,7 +35,7 @@ function AppRoutes() {
       <Route exact path="/boarding-farmer" component={BoardingFarmer} />
       <Route exact path="/forgot-password" component={ForgotPassword} />
       <Route exact path="/reset-password" component={ResetPassword} />
-      <Route exact path="/confirmation" component={EmailConfirmation} />
+      <Route exact path="/confirm" component={EmailConfirmation} />
 
       <Route exact path="/faq" component={FaqOverview} />
       <Route exact path="/faq/farmer" component={FaqFarmer} />
