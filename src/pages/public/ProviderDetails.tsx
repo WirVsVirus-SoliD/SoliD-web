@@ -11,7 +11,6 @@ import { RouteProps, useHistory } from "react-router";
 import { ReactComponent as OrganicAgriculture } from "~/assets/icons/OrganicAgriculture.svg";
 import { PrimaryButton } from "~/components/Button";
 import { Crop } from "~/components/Crop";
-import { InfoIcon } from "~/components/Icon";
 
 import { Title } from "~/components/Title";
 import api from "~/lib/api";
@@ -55,6 +54,13 @@ const ProviderDetails = ({ match }) => {
     return (
       <div className="h-100vh w-full flex items-center justify-center">
         <CircularProgress />
+      </div>
+    );
+
+  if (state.error)
+    return (
+      <div className="h-100vh w-full text-red-500 text-center my-40">
+        Ein Fehler ist aufgetreten
       </div>
     );
 
@@ -170,15 +176,6 @@ const ProviderDetails = ({ match }) => {
           title={"Sonstiges"}
           text={provider.otherInformation}
         />
-
-        <div className="pt-2">
-          <InfoIcon size={24} />
-          <p className="font-medium mt-2">
-            Bitte beachte: Feldarbeit kann unter Umständen sehr anstrengend und
-            belastend sein. Du solltest keine Probleme mit häufigem Bücken und
-            längerer körperlicher Anstrengung haben.
-          </p>
-        </div>
         <PrimaryButton
           className="my-4"
           block
