@@ -18,7 +18,6 @@ const InfoIcon = ({ size = 32, ...rest }: Props) => {
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...rest}
     >
       <path
         d="M16 29.3333C23.3638 29.3333 29.3333 23.3638 29.3333 16C29.3333 8.63616 23.3638 2.66663 16 2.66663C8.63616 2.66663 2.66663 8.63616 2.66663 16C2.66663 23.3638 8.63616 29.3333 16 29.3333Z"
@@ -41,6 +40,7 @@ const InfoIcon = ({ size = 32, ...rest }: Props) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+      <circle opacity="0.3" cx="18.6667" cy="16" r="10.6667" fill="#199057" />
     </svg>
   );
 };

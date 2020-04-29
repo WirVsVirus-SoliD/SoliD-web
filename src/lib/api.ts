@@ -10,7 +10,8 @@ export default {
     activate: (token) => domain + `/auth/activate?token=${token}`
   },
   providers: {
-    collection: domain + "/providers"
+    collection: domain + "/providers",
+    show: (id) => domain + `/providers/${id}`
   },
   helpers: {
     collection: domain + "/helpers"
