@@ -1,6 +1,6 @@
 import React from "react";
-import { useSteps } from "./useSteps";
 import { Step, StepContent } from ".";
+import { useSteps } from "./useSteps";
 
 type ChildrenProps = Omit<
   ReturnType<typeof useSteps>,
@@ -9,7 +9,7 @@ type ChildrenProps = Omit<
 
 export type Props = {
   steps: Step[];
-  contents: (StepContent | StepContent)[];
+  contents: StepContent[];
   children?: (props: ChildrenProps) => React.ReactNode;
 };
 

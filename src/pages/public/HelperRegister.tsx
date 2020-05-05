@@ -40,12 +40,11 @@ export const steps: Step[] = [
   }
 ];
 
-const contents: (StepContent | StepContent[])[] = [
+const contents: StepContent[] = [
   {
     stepIndex: 0,
     Content: () => <Requirements />
   },
-
   {
     stepIndex: 1,
     Content: ({ setFieldValue, values }: PassedFormProps) => (
@@ -238,7 +237,7 @@ const contents: (StepContent | StepContent[])[] = [
               E-Mail-Verifizierung
             </Title>
             <p>
-              Wir haben dir einen Bestätigungslink per E-Mail an{" "}
+              Wir haben dir einen Bestätigungslink per E-Mail an
               <strong>{values.account.email}</strong> geschickt. Bitte öffne
               diese.
             </p>

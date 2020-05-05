@@ -39,24 +39,24 @@ const HelpConfirmation = ({ match }) => {
         const response = await axiosInstance.get(
           api.providers.show(providerId)
         );
-        setState({ ...state, loading: false, provider: response.data });
+        setState((s) => ({ ...s, loading: false, provider: response.data }));
       } catch (error) {
         console.log("ERROR GET PROVIDER", error);
-        setState({ ...state, loading: false, error: error });
+        setState((s) => ({ ...s, loading: false, error: error }));
       }
     })();
-  }, []);
+  }, [providerId]);
 
   const inquireForProvider = () => {
-    setState({ ...state, creating: true });
+    setState((s) => ({ ...s, creating: true }));
     axiosInstance
       .post(api.inquiries.collection, { providerId })
       .then(() => {
-        setState({ ...state, creating: false, success: true });
+        setState((s) => ({ ...s, creating: false, success: true }));
       })
       .catch((error) => {
         console.log("ERROR GET PROVIDERS", error);
-        setState({ ...state, creating: false, error: error });
+        setState((s) => ({ ...s, creating: false, error: error }));
       });
   };
 

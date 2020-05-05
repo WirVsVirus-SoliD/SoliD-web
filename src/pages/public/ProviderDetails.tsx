@@ -15,7 +15,7 @@ import { Crop } from "~/components/Crop";
 import { Title } from "~/components/Title";
 import api from "~/lib/api";
 import axiosInstance from "~/lib/axiosInstance";
-import ProviderDetailsSection from "~/pages/public/components/ProviderDetailsSection";
+import { ProviderDetailsSection } from "~/pages/public/components";
 
 type Props = {} & RouteProps;
 
@@ -40,10 +40,10 @@ const ProviderDetails = ({ match }) => {
         const response = await axiosInstance.get(
           api.providers.show(providerId)
         );
-        setState({ ...state, loading: false, provider: response.data });
+        setState((s) => ({ ...s, loading: false, provider: response.data }));
       } catch (error) {
         console.log("ERROR GET PROVIDER", error);
-        setState({ ...state, loading: false, error: error });
+        setState((s) => ({ ...s, loading: false, error: error }));
       }
     })();
   }, []);

@@ -1,10 +1,15 @@
-import { TextField } from "@material-ui/core";
 import classnames from "classnames";
 import { Formik, FormikProps } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { Briefcase, CheckCircle, Info, User } from "react-feather";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import {
+  array as yupArray,
+  number as yupNumber,
+  object as yupObject,
+  string as yupString
+} from "yup";
 import { registerProvider } from "~/actions/user";
 import { ReactComponent as Asparagus } from "~/assets/icons/cultures/asparagus.svg";
 import { ReactComponent as Basket } from "~/assets/icons/cultures/basket.svg";
@@ -18,16 +23,20 @@ import { ReactComponent as Strawberry } from "~/assets/icons/cultures/strawberry
 import { ReactComponent as Vegetables } from "~/assets/icons/cultures/vegetables.svg";
 import { ReactComponent as EmailSentSvg } from "~/assets/icons/EmailSent.svg";
 import { PrimaryButton } from "~/components/Button";
-import { FormTitle } from "~/components/Form";
+import { FormTitle, InputField } from "~/components/Form";
 import { Radio } from "~/components/Form/components";
 import { CheckIcon } from "~/components/Icon";
+import SunIcon from "~/components/Icon/SunIcon";
 import { Step, StepContent, useSteps } from "~/components/Steps";
 import { Title } from "~/components/Title";
 import { updateArray } from "~/lib/immutable";
-import { StepCalculator } from "./components";
+import { MinWorkPeriod, StepCalculator } from "./components";
 
 type FormProps = FormikProps<typeof initialValues>;
-type PassedFormProps = Pick<FormProps, "setFieldValue" | "values">;
+type PassedFormProps = Pick<
+  FormProps,
+  "setFieldValue" | "validateField" | "values"
+> & { hiddenFields: State; setHiddenFields: any };
 
 const checklistTexts = [
   "Du bist für die Sicherheit der Helfer*innen verantwortlich",
@@ -47,6 +56,11 @@ const steps: Step[] = [
     okText: "Weiter"
   },
   {
+    title: "Kulturen",
+    Icon: SunIcon,
+    okText: "Weiter"
+  },
+  {
     title: "Konditionen",
     Icon: Briefcase,
     okText: "Weiter"
@@ -58,7 +72,7 @@ const steps: Step[] = [
   }
 ];
 
-const contents: (StepContent | StepContent[])[] = [
+const contents: StepContent[] = [
   {
     stepIndex: 0,
     Content: () => (
@@ -80,184 +94,293 @@ const contents: (StepContent | StepContent[])[] = [
       </>
     )
   },
-  [
-    {
-      stepIndex: 1,
-      Content: (props: PassedFormProps) => (
-        <>
-          <FormTitle as="h2" className="mb-4">
-            Ansprechpartner
-          </FormTitle>
+  {
+    stepIndex: 1,
+    Content: ({ validateField, setFieldValue }: PassedFormProps) => (
+      <>
+        <FormTitle as="h2" className="mb-4">
+          Ansprechpartner
+        </FormTitle>
+        {[
+          ["account.firstName", "Vorname"],
+          ["account.lastName", "Nachname"],
+          ["account.phone", "Telefonnummer (optional)"],
+          ["account.email", "E-Mail", "email"],
+          ["account.password", "Passwort", "password"],
+          ["account.password_confirmation", "Passwort wiederholen", "password"]
+        ].map(([key, label, type = "text"]) => (
+          <InputField
+            key={key}
+            name={key}
+            type={type}
+            label={label}
+            className="mb-4 text-brand"
+            block
+            onChange={(e) => setFieldValue(key, e.currentTarget.value)}
+            onBlur={() => {
+              validateField(key);
+            }}
+          />
+        ))}
+        <FormTitle as="h2" className="mt-10 mb-4">
+          Dein Betrieb
+        </FormTitle>
+        {[
+          ["farmName", "Betriebsname"],
+          ["address.street", "Straße"],
+          ["address.housenr", "Hausnummer"],
+          ["address.zip", "PLZ"],
+          ["address.city", "Ort"],
+          ["url", "Webseite (optional)"]
+        ].map(([key, label]) => (
+          <InputField
+            key={key}
+            name={key}
+            label={label}
+            block
+            className="mb-4 text-brand"
+            onChange={(e) => setFieldValue(key, e.currentTarget.value)}
+            onBlur={() => validateField(key)}
+          />
+        ))}
+        {/* TODO BIO TOGGLE */}
+      </>
+    ),
+    validationSchema: yupObject().shape({
+      account: yupObject().shape({
+        firstName: yupString().required("Pflichtfeld"),
+        lastName: yupString().required("Pflichtfeld"),
+        phone: yupString(),
+        email: yupString()
+          .email("Ungültige E-Mail-Addresse")
+          .required("Pflichtfeld"),
+        password: yupString().required("Pflichtfeld"),
+        password_confirmation: yupString().required("Pflichtfeld")
+      }),
+      farmName: yupString().required("Pflichtfeld"),
+      address: yupObject().shape({
+        street: yupString().required("Pflichtfeld"),
+        housenr: yupString().required("Pflichtfeld"),
+        zip: yupString().required("Pflichtfeld"),
+        city: yupString().required("Pflichtfeld")
+      }),
+      url: yupString()
+    })
+  },
+  {
+    stepIndex: 2,
+    Content: ({ setFieldValue, values }: PassedFormProps) => (
+      <>
+        <FormTitle as="h2" className="mb-2">
+          Kulturen auf deinem Betrieb
+        </FormTitle>
+        <div className="flex flex-wrap -m-1">
           {[
-            ["account.firstName", "Vorname"],
-            ["account.lastName", "Nachname"],
-            ["account.phone", "Telefonnummer (optional)"],
-            ["account.email", "E-Mail", "email"],
-            ["account.password", "Passwort", "password"],
-            [
-              "account.password_confirmation",
-              "Passwort wiederholen",
-              "password"
-            ]
-          ].map(([key, label, type = "text"]) => (
-            <TextField
-              key={key}
-              type={type}
-              label={label}
-              className="mb-4 text-brand"
-              fullWidth
-              onChange={(e) => props.setFieldValue(key, e.currentTarget.value)}
-            />
-          ))}
-        </>
-      )
-    },
-    {
-      stepIndex: 1,
-      Content: (props: PassedFormProps) => (
-        <>
-          <FormTitle as="h2" className="mb-4">
-            Dein Hof
+            ["Spargel", Asparagus],
+            ["Erdbeeren", Strawberry],
+            ["Hopfen", Hop],
+            ["Weinbau", Grape],
+            ["Obstbau", Basket],
+            ["Salate", Lettuce],
+            ["Gurken", Cucumber],
+            ["Kohl", Cabbage],
+            ["Radieschen", Radish],
+            ["Sonstige", Vegetables]
+          ].map(([type, Icon], i, array) => {
+            const isLast = i === array.length - 1;
+            const checked = values.crops.includes(type as string);
+
+            return (
+              <div
+                key={type as string}
+                className={classnames("p-1", {
+                  "w-1/3": !isLast,
+                  "w-full": isLast
+                })}
+              >
+                <label
+                  className={classnames(
+                    "block w-full border rounded-lg border-brand outline-none p-2 text-center",
+                    { "shadow-selection-brand bg-brand-light": checked }
+                  )}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setFieldValue(
+                      "crops",
+                      updateArray(type as string, values.crops.slice(0))
+                    );
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    className="input--hidden"
+                    checked={checked}
+                    readOnly
+                  />
+                  <Icon
+                    className={classnames({
+                      "mx-auto": !isLast,
+                      "inline-block mr-2": isLast
+                    })}
+                  />
+                  <span className="text-sm">{type}</span>
+                </label>
+              </div>
+            );
+          })}
+        </div>
+      </>
+    ),
+    validationSchema: yupObject().shape({
+      crops: yupArray() // TODO mindestens eine Kultur?
+    })
+  },
+  {
+    stepIndex: 3,
+    Content: ({
+      setFieldValue,
+      values,
+      hiddenFields,
+      setHiddenFields,
+      validateField
+    }: PassedFormProps) => (
+      <>
+        <div className="mb-8">
+          <FormTitle as="h2" className="mb-2">
+            Mindestbeschäftigungsdauer
           </FormTitle>
-          {[
-            ["farmName", "Hofname"],
-            ["address.street", "Straße"],
-            ["address.housenr", "Hausnummer"],
-            ["address.zip", "PLZ"],
-            ["address.city", "Ort"],
-            ["url", "Webseite (optional)"]
-          ].map(([key, label]) => (
-            <TextField
-              key={key}
-              label={label}
-              className="mb-4 text-brand"
-              fullWidth
-              onChange={(e) => props.setFieldValue(key, e.currentTarget.value)}
-            />
-          ))}
-        </>
-      )
-    }
-  ],
-  [
-    {
-      stepIndex: 2,
-      Content: ({ setFieldValue, values }: PassedFormProps) => (
-        <>
-          <div className="mb-8">
-            <FormTitle as="h2" className="mb-2">
-              Mindestbeschäftigungsdauer
-            </FormTitle>
-            <div className="flex">
-              {[
-                ["1/2 Tag", 0.5],
-                ["1 Tag", 1],
-                ["1 Woche", 7],
-                ["Länger", Infinity]
-              ].map(([label, value], i) => {
-                const checked = value === values.minWorkPeriod;
+          <MinWorkPeriod onChange={(v) => setFieldValue("minWorkPeriod", v)} />
+        </div>
+        <div className="mb-8">
+          <FormTitle as="h2" className="mb-2">
+            Stundenlohn
+          </FormTitle>
 
-                return (
-                  <label
-                    key={i}
-                    onClick={() => setFieldValue("minWorkPeriod", value)}
-                    className={classnames(
-                      "relative flex-grow border-2 border-r-0 last:border-r-2 first:rounded-l-full last:rounded-r-full border-brand text-sm py-1 px-2 first:pl-4 last:pr-4 font-medium",
-                      {
-                        "bg-brand text-white": checked,
-                        "text-brand": !checked
-                      }
-                    )}
-                  >
-                    <input
-                      type="radio"
-                      className="input--hidden"
-                      checked={checked}
-                      readOnly
-                    />
-                    {label}
-                  </label>
-                );
-              })}
-            </div>
-          </div>
-          <div className="mb-8">
-            <FormTitle as="h2" className="mb-2">
-              Stundenlohn
-            </FormTitle>
+          <StepCalculator
+            initialValue={values.hourlyRate}
+            steps={0.5}
+            min={9.35}
+            renderValue={(v) => `${v.toFixed(2)} €`}
+            onChange={(v) => setFieldValue("hourlyRate", v)}
+            /* FIXME onBlur={() => {
+             console.log("ON BLUR", validateField("hourlyRate"));
+             validateField("hourlyRate");
+             }}*/
+          />
+        </div>
 
-            <StepCalculator
-              initialValue={values.hourlyRate}
-              steps={0.5}
-              min={9.35}
-              renderValue={(v) => `${v.toFixed(2)} €`}
-              onChange={(v) => setFieldValue("hourlyRate", v)}
-            />
+        {/* TODO TÄTIGKEITEN */}
+
+        <div>
+          <FormTitle as="h2" className="mb-2">
+            Arbeitsbeginn
+          </FormTitle>
+          <textarea
+            className="border border-black rounded-lg w-full p-2 mb-8"
+            placeholder="Beschreibung eingeben"
+            rows={4}
+            onChange={(e) =>
+              setFieldValue("workingConditions", e.currentTarget.value)
+            }
+            value={values.workingConditions}
+          />
+        </div>
+        <div className="mb-8">
+          <FormTitle as="h2" className="mb-2">
+            Übernachtungsmöglichkeiten für Helfer*innen
+          </FormTitle>
+          <div>
+            <Radio
+              checked={hiddenFields.overnightPossible === true}
+              onChange={() => {
+                setHiddenFields((s) => ({ ...s, overnightPossible: true }));
+                setFieldValue("overnightPrice", 0);
+              }}
+              block
+            >
+              Ja
+            </Radio>
+            <Radio
+              checked={hiddenFields.overnightPossible === false}
+              onChange={() => {
+                setHiddenFields((s) => ({ ...s, overnightPossible: false }));
+                setFieldValue("overnightPrice", null);
+                setFieldValue("overnightInformation", "");
+              }}
+              block
+            >
+              Nein
+            </Radio>
           </div>
-          <div className="mb-2">
-            <FormTitle as="h2" className="mb-2">
-              Übernachtungsmöglichkeiten für Helfer*innen
-            </FormTitle>
-            <div>
-              <Radio
-                checked={values.overnightPossible === true}
-                onClick={() => setFieldValue("overnightPossible", true)}
-                block
-              >
-                Ja
-              </Radio>
-              <Radio
-                checked={values.overnightPossible === false}
-                onClick={() => setFieldValue("overnightPossible", false)}
-                block
-              >
-                Nein
-              </Radio>
-            </div>
-          </div>
-          {values.overnightPossible && (
-            <div>
+          {hiddenFields.overnightPossible && (
+            <div className="mt-2 mb-8">
               <FormTitle as="h2" className="mb-2">
-                Übernachtungspreis
+                Übernachtungspreis (pro Nacht)
               </FormTitle>
               <StepCalculator
                 initialValue={values.overnightPrice}
                 steps={0.5}
                 min={0}
-                renderValue={(v) => `${v.toFixed(2)} €`}
                 onChange={(v) => setFieldValue("overnightPrice", v)}
+                // onBlur={() => validateField("overnightPrice")}
+                // FIXME validation doesnt work
+              />
+              <FormTitle as="h2" className="mt-2 mb-2">
+                Weitere Infos zur Übernachtung
+              </FormTitle>
+              <textarea
+                className="border border-black rounded-lg w-full p-2"
+                placeholder="Beschreibung eingeben"
+                rows={4}
+                onChange={(e) =>
+                  setFieldValue("overnightInformation", e.currentTarget.value)
+                }
+                value={values.overnightInformation}
               />
             </div>
           )}
-        </>
-      )
-    },
-    {
-      stepIndex: 2,
-      Content: ({ setFieldValue, values }: PassedFormProps) => (
-        <>
-          <div className="mb-8">
-            <FormTitle as="h2" className="mb-2">
-              Anreise der Helfer*innen
-            </FormTitle>
-            <div>
-              <Radio
-                checked={values.pickupPossible === false}
-                onClick={() => setFieldValue("pickupPossible", false)}
-                block
-              >
-                Eigenständig (keine Abholung)
-              </Radio>
-              <Radio
-                checked={values.pickupPossible === true}
-                onClick={() => setFieldValue("pickupPossible", true)}
-                block
-              >
-                Abholung möglich
-              </Radio>
-            </div>
-            {values.pickupPossible && (
-              <div>
+        </div>
+        <div className="mb-8">
+          <FormTitle as="h2" className="mb-2">
+            Angaben zur Versorgung
+          </FormTitle>
+          <textarea
+            className="border border-black rounded-lg w-full p-2"
+            placeholder="Beschreibung eingeben"
+            rows={4}
+            onChange={(e) =>
+              setFieldValue("providingInformation", e.currentTarget.value)
+            }
+            value={values.providingInformation}
+          />
+        </div>
+        <div className="mb-8">
+          <FormTitle as="h2" className="mb-2">
+            Anreise der Helfer*innen
+          </FormTitle>
+          <div>
+            <Radio
+              checked={hiddenFields.pickupPossible === false}
+              onChange={() => {
+                setHiddenFields((s) => ({ ...s, pickupPossible: false }));
+                setFieldValue("pickupRange", null);
+              }}
+              block
+            >
+              Eigenständig (keine Abholung)
+            </Radio>
+            <Radio
+              checked={hiddenFields.pickupPossible === true}
+              onChange={() => {
+                setHiddenFields((s) => ({ ...s, pickupPossible: true }));
+                setFieldValue("pickupRange", 0);
+              }}
+              block
+            >
+              Abholung möglich
+            </Radio>
+            {hiddenFields.pickupPossible && (
+              <div className="mt-2 mb-8">
                 <FormTitle as="h2" className="mt-1 mb-2">
                   Abholung im Umkreis von ...
                 </FormTitle>
@@ -271,99 +394,41 @@ const contents: (StepContent | StepContent[])[] = [
               </div>
             )}
           </div>
-          <div>
-            <FormTitle as="h2" className="mb-2">
-              Zusätzliche Angaben
-            </FormTitle>
-            <p className="text-gray-600 text-sm mb-2">
-              Arbeitsbeginn, Übernachtungsmöglichkeit, Verpflegung, Sprache,
-              etc.
-            </p>
-            <textarea
-              className="border border-black rounded-lg w-full p-2"
-              placeholder="Beschreibung eingeben"
-              rows={4}
-              onChange={(e) =>
-                setFieldValue("additionalNotes", e.currentTarget.value)
-              }
-              value={values.additionalNotes}
-            />
-          </div>
-        </>
-      )
-    },
-    {
-      stepIndex: 2,
-      Content: ({ setFieldValue, values }: PassedFormProps) => {
-        return (
-          <>
-            <FormTitle as="h2" className="mb-2">
-              Kulturen (Allergien der Helfer*innen)/
-            </FormTitle>
-            <div className="flex flex-wrap -m-1">
-              {[
-                ["Spargel", Asparagus],
-                ["Erdbeeren", Strawberry],
-                ["Hopfen", Hop],
-                ["Weinbau", Grape],
-                ["Obstbau", Basket],
-                ["Salate", Lettuce],
-                ["Gurken", Cucumber],
-                ["Kohl", Cabbage],
-                ["Radieschen", Radish],
-                ["Sonstige", Vegetables]
-              ].map(([type, Icon], i, array) => {
-                const isLast = i === array.length - 1;
-                const checked = values.crops.includes(type as string);
-
-                return (
-                  <div
-                    key={type as string}
-                    className={classnames("p-1", {
-                      "w-1/3": !isLast,
-                      "w-full": isLast
-                    })}
-                  >
-                    <label
-                      className={classnames(
-                        "block w-full border rounded-lg border-brand outline-none p-2 text-center",
-                        {
-                          "shadow-selection-brand bg-brand-light": checked
-                        }
-                      )}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        setFieldValue(
-                          "crops",
-                          updateArray(type as string, values.crops.slice(0))
-                        );
-                      }}
-                    >
-                      <input
-                        type="checkbox"
-                        className="input--hidden"
-                        checked={checked}
-                        readOnly
-                      />
-                      <Icon
-                        className={classnames({
-                          "mx-auto": !isLast,
-                          "inline-block mr-2": isLast
-                        })}
-                      />
-                      <span className="text-sm">{type}</span>
-                    </label>
-                  </div>
-                );
-              })}
-            </div>
-          </>
-        );
-      }
-    }
-  ],
+        </div>
+        <div className="mb-8">
+          <FormTitle as="h2" className="mb-2">
+            Sprachen
+          </FormTitle>
+          <textarea
+            className="border border-black rounded-lg w-full p-2"
+            placeholder="Beschreibung eingeben"
+            rows={4}
+            onChange={(e) => setFieldValue("languages", e.currentTarget.value)}
+            value={values.languages}
+          />
+        </div>
+        <div>
+          <FormTitle as="h2" className="mb-2">
+            Sonstige Angaben
+          </FormTitle>
+          <textarea
+            className="border border-black rounded-lg w-full p-2"
+            placeholder="Beschreibung eingeben"
+            rows={4}
+            onChange={(e) =>
+              setFieldValue("otherInformation", e.currentTarget.value)
+            }
+            value={values.otherInformation}
+          />
+        </div>
+      </>
+    ),
+    validationSchema: yupObject().shape({
+      hourlyRate: yupNumber().min(9.35).positive()
+    })
+  },
   {
-    stepIndex: 3,
+    stepIndex: 4,
     Content: ({ values }: PassedFormProps) => {
       return (
         <div className="flex flex-col items-center">
@@ -392,27 +457,46 @@ const contents: (StepContent | StepContent[])[] = [
 ];
 
 const initialValues = {
-  account: { firstName: "", lastName: "", phone: "", email: "" },
+  account: {
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    password: "",
+    password_confirmation: ""
+  },
   address: {
     street: "",
     housenr: "",
-    postalCode: "",
-    city: "",
-    website: ""
+    zip: "",
+    city: ""
   },
+  url: "",
   farmName: "",
   minWorkPeriod: null,
   hourlyRate: 9.35,
-  overnightPossible: null,
-  overnightPrice: 5,
-  pickupPossible: null,
-  pickupRange: 5,
-  additionalNotes: "",
-  crops: [] as string[]
+  languages: "",
+  otherInformation: "",
+  overnightPrice: null,
+  overnightInformation: "",
+  pickupRange: null,
+  providingInformation: "",
+  crops: [] as string[],
+  workActivities: [] as string[],
+  workingConditions: ""
+};
+
+type State = {
+  overnightPossible: boolean | null;
+  pickupPossible: boolean | null;
 };
 
 const ProviderRegister = () => {
   const dispatch = useDispatch();
+  const [hiddenFields, setHiddenFields] = useState<State>({
+    overnightPossible: null,
+    pickupPossible: null
+  });
   const { push } = useHistory();
   const {
     activeStep,
@@ -425,33 +509,48 @@ const ProviderRegister = () => {
   } = useSteps(steps, contents);
   // The step before the last one has a dot-notated index of '2.2'.
   // This allows us to identify when to submit our form using the click handler on the 'next' button.
-  const shouldSubmitForm = currentDotIndex === "2.2";
-
+  const shouldSubmitForm = currentDotIndex === "4";
+  console.log(goNext);
   return (
     <div className="flex flex-col h-full px-8 py-4">
       <Formik
         initialValues={initialValues}
+        validationSchema={contents[activeStepIndex].validationSchema}
+        validateOnChange={false}
         onSubmit={(input) => {
           console.log(input);
-          // @ts-ignore
-          dispatch(registerProvider(input)).then((response) => {
-            goNext();
-          });
+          if (shouldSubmitForm) {
+            // @ts-ignore
+            dispatch(registerProvider(input)).then((response) => {
+              goNext();
+            });
+          } else goNext();
         }}
       >
-        {({ setFieldValue, values, handleSubmit }: FormProps) => (
+        {({
+          setFieldValue,
+          values,
+          handleSubmit,
+          validateField,
+          errors
+        }: FormProps) => (
           <>
+            {console.log(errors)}
+            {console.log(values)}
             <div className="flex-grow">
               <Title as="h1" className="text-2xl mb-8" bold>
                 Registrierung
               </Title>
-              <StepsBar className="mb-8 text-sm" />
+              {activeStepIndex !== 0 && <StepsBar className="mb-8 text-sm" />}
               <ActiveStepContent
                 setFieldValue={setFieldValue}
+                validateField={validateField}
+                hiddenFields={hiddenFields}
+                setHiddenFields={setHiddenFields}
                 values={values}
               />
             </div>
-            <div className="flex">
+            <div className="flex mt-8 mb-8">
               {activeStepIndex < steps.length - 1 ? (
                 <>
                   <button
@@ -465,7 +564,7 @@ const ProviderRegister = () => {
                   <PrimaryButton
                     className="flex-grow"
                     onClick={() => {
-                      shouldSubmitForm ? handleSubmit() : goNext();
+                      handleSubmit();
                     }}
                   >
                     {shouldSubmitForm ? "Account erstellen" : activeStep.okText}
