@@ -188,13 +188,12 @@ const contents: StepContent[] = [
                 ["Ja", true],
                 ["Nein", false]
               ].map(([label, value], i) => {
-                // FIXME Richtiger Attributname hinterlegen
-                const checked = value === values.driverJobs;
+                const checked = value === values.driverActivity;
 
                 return (
                   <label
                     key={i}
-                    onClick={() => setFieldValue("driverJobs", value)}
+                    onClick={() => setFieldValue("driverActivity", value)}
                     className={classnames(
                       "relative flex-grow border-2 border-r-0 last:border-r-2 first:rounded-l-full last:rounded-r-full border-brand text-sm py-1 px-2 first:pl-4 last:pr-4 font-medium",
                       {
@@ -225,7 +224,6 @@ const contents: StepContent[] = [
       return (
         <div className="flex flex-col items-center">
           <div className="mb-8">
-            {/* TODO: request svg from design team (group icon in Figma to allow svg export) */}
             <EmailSentSvg />
           </div>
           <div className="flex-grow">
@@ -257,12 +255,12 @@ const initialValues = {
     password: "",
     passwordConfirmation: ""
   },
-  employmentStatus: null,
-  pickupRequired: null,
-  driverLicense: null,
-  driverJobs: false,
-  fullTime: null,
-  partTime: null
+  employmentStatus: undefined,
+  pickupRequired: undefined,
+  driverLicense: undefined,
+  driverActivity: false,
+  fullTime: undefined,
+  partTime: undefined
 };
 
 // TODO handle redirect to provider confirmHelp

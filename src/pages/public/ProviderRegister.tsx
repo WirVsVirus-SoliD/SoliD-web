@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
   array as yupArray,
+  boolean as yupBoolean,
   number as yupNumber,
   object as yupObject,
   string as yupString
@@ -35,7 +36,7 @@ import { MinWorkPeriod, StepCalculator } from "./components";
 type FormProps = FormikProps<typeof initialValues>;
 type PassedFormProps = Pick<
   FormProps,
-  "setFieldValue" | "validateField" | "values"
+  "setFieldValue" | "validateField" | "values" | "errors"
 > & { hiddenFields: State; setHiddenFields: any };
 
 const checklistTexts = [
@@ -96,8 +97,14 @@ const contents: StepContent[] = [
   },
   {
     stepIndex: 1,
-    Content: ({ validateField, setFieldValue }: PassedFormProps) => (
+    Content: ({
+      validateField,
+      setFieldValue,
+      values,
+      errors
+    }: PassedFormProps) => (
       <>
+        {console.log(values, errors)}
         <FormTitle as="h2" className="mb-4">
           Ansprechpartner
         </FormTitle>
@@ -143,7 +150,43 @@ const contents: StepContent[] = [
             onBlur={() => validateField(key)}
           />
         ))}
-        {/* TODO BIO TOGGLE */}
+        <FormTitle as="h2" className="font-bold mt-10 mb-4">
+          Betreibst du biologische oder konventionelle Landwirtschaft?
+        </FormTitle>
+
+        <div className="flex">
+          {[
+            ["Bio", true],
+            ["Konventionell", false]
+          ].map(([label, value], i) => {
+            const checked = value === values.bio;
+
+            return (
+              <label
+                key={i}
+                onClick={() => setFieldValue("bio", value)}
+                className={classnames(
+                  "relative flex-grow border-2 border-r-0 last:border-r-2 first:rounded-l-full last:rounded-r-full border-brand text-sm py-1 px-2 first:pl-4 last:pr-4 font-medium",
+                  {
+                    "bg-brand text-white": checked,
+                    "text-brand": !checked
+                  }
+                )}
+              >
+                <input
+                  type="radio"
+                  className="input--hidden"
+                  checked={checked}
+                  readOnly
+                />
+                {label}
+              </label>
+            );
+          })}
+        </div>
+        {errors.bio && (
+          <div className="mt-1 pl-1 text-red-600">{errors.bio}</div>
+        )}
       </>
     ),
     validationSchema: yupObject().shape({
@@ -157,6 +200,7 @@ const contents: StepContent[] = [
         password: yupString().required("Pflichtfeld"),
         password_confirmation: yupString().required("Pflichtfeld")
       }),
+      bio: yupBoolean().required("Pflichtfeld"),
       farmName: yupString().required("Pflichtfeld"),
       address: yupObject().shape({
         street: yupString().required("Pflichtfeld"),
@@ -304,7 +348,7 @@ const contents: StepContent[] = [
               checked={hiddenFields.overnightPossible === false}
               onChange={() => {
                 setHiddenFields((s) => ({ ...s, overnightPossible: false }));
-                setFieldValue("overnightPrice", null);
+                setFieldValue("overnightPrice", undefined);
                 setFieldValue("overnightInformation", "");
               }}
               block
@@ -363,7 +407,7 @@ const contents: StepContent[] = [
               checked={hiddenFields.pickupPossible === false}
               onChange={() => {
                 setHiddenFields((s) => ({ ...s, pickupPossible: false }));
-                setFieldValue("pickupRange", null);
+                setFieldValue("pickupRange", undefined);
               }}
               block
             >
@@ -471,15 +515,16 @@ const initialValues = {
     zip: "",
     city: ""
   },
+  bio: undefined,
   url: "",
   farmName: "",
-  minWorkPeriod: null,
+  minWorkPeriod: undefined,
   hourlyRate: 9.35,
   languages: "",
   otherInformation: "",
-  overnightPrice: null,
+  overnightPrice: undefined,
   overnightInformation: "",
-  pickupRange: null,
+  pickupRange: undefined,
   providingInformation: "",
   crops: [] as string[],
   workActivities: [] as string[],
@@ -487,15 +532,15 @@ const initialValues = {
 };
 
 type State = {
-  overnightPossible: boolean | null;
-  pickupPossible: boolean | null;
+  overnightPossible: boolean | undefined;
+  pickupPossible: boolean | undefined;
 };
 
 const ProviderRegister = () => {
   const dispatch = useDispatch();
   const [hiddenFields, setHiddenFields] = useState<State>({
-    overnightPossible: null,
-    pickupPossible: null
+    overnightPossible: undefined,
+    pickupPossible: undefined
   });
   const { push } = useHistory();
   const {
@@ -535,8 +580,6 @@ const ProviderRegister = () => {
           errors
         }: FormProps) => (
           <>
-            {console.log(errors)}
-            {console.log(values)}
             <div className="flex-grow">
               <Title as="h1" className="text-2xl mb-8" bold>
                 Registrierung
@@ -548,6 +591,7 @@ const ProviderRegister = () => {
                 hiddenFields={hiddenFields}
                 setHiddenFields={setHiddenFields}
                 values={values}
+                errors={errors}
               />
             </div>
             <div className="flex mt-8 mb-8">
