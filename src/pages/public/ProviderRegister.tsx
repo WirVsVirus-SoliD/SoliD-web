@@ -164,7 +164,10 @@ const contents: StepContent[] = [
             return (
               <label
                 key={i}
-                onClick={() => setFieldValue("bio", value)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFieldValue("bio", value);
+                }}
                 className={classnames(
                   "relative flex-grow border-2 border-r-0 last:border-r-2 first:rounded-l-full last:rounded-r-full border-brand text-sm py-1 px-2 first:pl-4 last:pr-4 font-medium",
                   {
@@ -286,7 +289,7 @@ const contents: StepContent[] = [
       values,
       hiddenFields,
       setHiddenFields,
-      validateField
+      errors
     }: PassedFormProps) => (
       <>
         <div className="mb-8">
@@ -491,7 +494,7 @@ const contents: StepContent[] = [
             value={values.languages}
           />
         </div>
-        <div>
+        <div className="mb-6">
           <FormTitle as="h2" className="mb-2">
             Sonstige Angaben
           </FormTitle>
@@ -505,10 +508,54 @@ const contents: StepContent[] = [
             value={values.otherInformation}
           />
         </div>
+        <div>
+          <div className="flex flex-row mb-1 w-full">
+            <div className="pr-3">
+              <label
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFieldValue("agbAccepted", !values.agbAccepted);
+                }}
+                className={classnames(
+                  "rounded border-2 border-brand block w-6 h-6 text-center text-sm",
+                  {
+                    "bg-brand text-white": values.agbAccepted
+                  }
+                )}
+              >
+                <span>{values.agbAccepted ? "✓" : " "}</span>
+                <input
+                  type="checkbox"
+                  className="input--hidden"
+                  readOnly
+                  checked={values.agbAccepted}
+                />
+              </label>
+            </div>
+            {/* FIXME AGB und Datenschutz */}
+            <div>
+              Ich akzeptiere die{" "}
+              <a className="text-brand" href="" target="_blank">
+                AGB
+              </a>{" "}
+              und{" "}
+              <a className="text-brand" href="" target="_blank">
+                Datenschutzbestimmungen
+              </a>
+            </div>
+          </div>
+          {errors.agbAccepted && (
+            <div className="text-red-500">{errors.agbAccepted}</div>
+          )}
+        </div>
       </>
     ),
     validationSchema: yupObject().shape({
-      hourlyRate: yupNumber().min(9.35).positive()
+      hourlyRate: yupNumber().min(9.35).positive(),
+      agbAccepted: yupBoolean().oneOf(
+        [true],
+        "Die AGB und Datenschutzbestimmungen müssen akzeptiert werden"
+      )
     })
   },
   {
@@ -555,6 +602,7 @@ const initialValues = {
     zip: "",
     city: ""
   },
+  agbAccepted: false,
   bio: undefined,
   url: "",
   farmName: "",
