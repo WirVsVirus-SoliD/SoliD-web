@@ -1,7 +1,7 @@
 import React from "react";
 import { useArrayManager } from "~/lib/hooks";
-import { StepsBar } from "./components";
 import { Step, StepContent } from ".";
+import { StepsBar } from "./components";
 
 type StepsBarRestProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLUListElement>,
@@ -10,10 +10,7 @@ type StepsBarRestProps = React.DetailedHTMLProps<
 
 const EmptyRender = () => null;
 
-export function useSteps(
-  steps: Step[],
-  contents: (StepContent | StepContent[])[]
-) {
+export function useSteps(steps: Step[], contents: StepContent[]) {
   const { goPrevious, goNext, currentDotIndex, ...rest } = useArrayManager(
     contents
   );

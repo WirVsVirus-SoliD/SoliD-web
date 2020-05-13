@@ -16,4 +16,5 @@ export type Step = {
 export type StepContent = {
   stepIndex: number;
   Content: React.ComponentType<any>;
+  validationSchema?: any | undefined; // TODO FIX
 };

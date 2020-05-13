@@ -1,6 +1,6 @@
-import React, { useState } from "react";
 import classnames from "classnames";
-import { Plus, Minus } from "react-feather";
+import React, { useState } from "react";
+import { Minus, Plus } from "react-feather";
 
 type Props = {
   min?: number;
@@ -10,6 +10,7 @@ type Props = {
   renderValue?: (value: number) => React.ReactNode;
   className?: string;
   onChange?: (value: number) => void;
+  onBlur?: () => void;
 };
 
 const StepCalculator = ({
@@ -19,7 +20,8 @@ const StepCalculator = ({
   initialValue,
   className,
   renderValue,
-  onChange
+  onChange,
+  onBlur
 }: Props) => {
   const css = classnames("flex items-stretch text-center", className);
   const [value, setValue] = useState(initialValue);
@@ -52,9 +54,20 @@ const StepCalculator = ({
         <Minus size={16} className="mx-auto" />
       </button>
       <div className="flex flex-grow items-center border border-brand py-1 text-sm font-medium">
-        <span className="w-full text-center">
-          {renderValue?.(value) ?? value}
-        </span>
+        <input
+          className="w-full text-center"
+          value={value}
+          onChange={(e) => {
+            const val = e.currentTarget.value.replace(",", ".");
+            const float = parseFloat(val);
+            setValue(float);
+            onChange?.(float);
+          }}
+          onBlur={onBlur}
+          type="number"
+          step="0.01"
+          min={min}
+        />
       </div>
       <button
         className={classnames(
