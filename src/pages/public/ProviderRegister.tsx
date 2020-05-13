@@ -9,6 +9,7 @@ import {
   boolean as yupBoolean,
   number as yupNumber,
   object as yupObject,
+  ref as yupRef,
   string as yupString
 } from "yup";
 import { registerProvider } from "~/actions/user";
@@ -64,7 +65,7 @@ const steps: Step[] = [
   {
     title: "Konditionen",
     Icon: Briefcase,
-    okText: "Weiter"
+    okText: "Registrieren"
   },
   {
     title: "Fertig!",
@@ -201,7 +202,9 @@ const contents: StepContent[] = [
           .email("Ungültige E-Mail-Addresse")
           .required("Pflichtfeld"),
         password: yupString().required("Pflichtfeld"),
-        password_confirmation: yupString().required("Pflichtfeld")
+        password_confirmation: yupString()
+          .required("Pflichtfeld")
+          .oneOf([yupRef("password"), null], "Passwörter müssen übereinstimmen")
       }),
       bio: yupBoolean().required("Pflichtfeld"),
       farmName: yupString().required("Pflichtfeld"),
@@ -630,7 +633,7 @@ const ProviderRegister = () => {
     overnightPossible: undefined,
     pickupPossible: undefined
   });
-  const { push } = useHistory();
+  const { goBack } = useHistory();
   const {
     activeStep,
     ActiveStepContent,
@@ -686,9 +689,7 @@ const ProviderRegister = () => {
               {activeStepIndex < steps.length - 1 ? (
                 <>
                   <button
-                    onClick={
-                      activeStepIndex < 1 ? () => push("/signin") : goPrevious
-                    }
+                    onClick={activeStepIndex < 1 ? () => goBack : goPrevious}
                     className="flex-grow mr-4 text-gray-500 hover:bg-gray-200 hover:text-gray-700 rounded-full px-4 py-1 cursor-pointer"
                   >
                     Zurück

@@ -1,21 +1,29 @@
-import { TextField } from "@material-ui/core";
 import classnames from "classnames";
 import { Formik, FormikProps } from "formik";
 import React from "react";
 import { Briefcase, CheckCircle, Info, User } from "react-feather";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import {
+  boolean as yupBoolean,
+  object as yupObject,
+  ref as yupRef,
+  string as yupString
+} from "yup";
 import { registerHelper } from "~/actions/user";
 import { ReactComponent as EmailSentSvg } from "~/assets/icons/EmailSent.svg";
 import { PrimaryButton } from "~/components/Button";
-import { FormTitle } from "~/components/Form";
+import { FormTitle, InputField } from "~/components/Form";
 import { Checkbox, Radio } from "~/components/Form/components";
 import { Requirements } from "~/components/Requirements";
 import { Step, StepContent, useSteps } from "~/components/Steps";
 import { Title } from "~/components/Title";
 
 type FormProps = FormikProps<typeof initialValues>;
-type PassedFormProps = Pick<FormProps, "setFieldValue" | "values">;
+type PassedFormProps = Pick<
+  FormProps,
+  "setFieldValue" | "validateField" | "values" | "errors"
+>;
 
 export const steps: Step[] = [
   {
@@ -31,7 +39,7 @@ export const steps: Step[] = [
   {
     title: "Konditionen",
     Icon: Briefcase,
-    okText: "Weiter"
+    okText: "Registrieren"
   },
   {
     title: "Fertig!",
@@ -47,7 +55,12 @@ const contents: StepContent[] = [
   },
   {
     stepIndex: 1,
-    Content: ({ setFieldValue, values }: PassedFormProps) => (
+    Content: ({
+      setFieldValue,
+      values,
+      validateField,
+      errors
+    }: PassedFormProps) => (
       <>
         {[
           ["account.firstName", "Vorname"],
@@ -57,13 +70,15 @@ const contents: StepContent[] = [
           ["account.password", "Passwort", "password"],
           ["account.password_confirmation", "Passwort wiederholen", "password"]
         ].map(([key, label, type = "text"]) => (
-          <TextField
+          <InputField
             key={key}
+            name={key}
             type={type}
             label={label}
             className="mb-4 text-brand"
-            fullWidth
+            block
             onChange={(e) => setFieldValue(key, e.currentTarget.value)}
+            onBlur={() => validateField(key)}
           />
         ))}
         <div className="mb-2">
@@ -90,16 +105,34 @@ const contents: StepContent[] = [
                 </Radio>
               );
             })}
+            {errors.employmentStatus && (
+              <div className="text-red-500">{errors.employmentStatus}</div>
+            )}
           </div>
         </div>
       </>
-    )
+    ),
+    validationSchema: yupObject().shape({
+      account: yupObject().shape({
+        firstName: yupString().required("Pflichtfeld"),
+        lastName: yupString().required("Pflichtfeld"),
+        phone: yupString().required("Pflichtfeld"),
+        email: yupString()
+          .email("Ungültige E-Mail-Addresse")
+          .required("Pflichtfeld"),
+        password: yupString().required("Pflichtfeld"),
+        password_confirmation: yupString()
+          .required("Pflichtfeld")
+          .oneOf([yupRef("password"), null], "Passwörter müssen übereinstimmen")
+      }),
+      employmentStatus: yupString().required("Pflichtfeld")
+    })
   },
   {
     stepIndex: 2,
-    Content: ({ setFieldValue, values }: PassedFormProps) => (
+    Content: ({ setFieldValue, values, errors }: PassedFormProps) => (
       <>
-        <div className="mb-2">
+        <div className="mb-6">
           <FormTitle as="h2" className="mb-2">
             Du suchst etwas für
           </FormTitle>
@@ -121,7 +154,7 @@ const contents: StepContent[] = [
             </Checkbox>
           </div>
         </div>
-        <div className="mb-2">
+        <div className="mb-6">
           <FormTitle as="h2" className="mb-2">
             Für die Anreise bist du
           </FormTitle>
@@ -215,8 +248,54 @@ const contents: StepContent[] = [
             </div>
           </div>
         )}
+        <div>
+          <div className="flex flex-row mb-1 w-full">
+            <div className="pr-3">
+              <label
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFieldValue("agbAccepted", !values.agbAccepted);
+                }}
+                className={classnames(
+                  "rounded border-2 border-brand block w-6 h-6 text-center text-sm",
+                  {
+                    "bg-brand text-white": values.agbAccepted
+                  }
+                )}
+              >
+                <span>{values.agbAccepted ? "✓" : " "}</span>
+                <input
+                  type="checkbox"
+                  className="input--hidden"
+                  readOnly
+                  checked={values.agbAccepted}
+                />
+              </label>
+            </div>
+            {/* FIXME AGB und Datenschutz */}
+            <div>
+              Ich akzeptiere die{" "}
+              <a className="text-brand" href="" target="_blank">
+                AGB
+              </a>{" "}
+              und{" "}
+              <a className="text-brand" href="" target="_blank">
+                Datenschutzbestimmungen
+              </a>
+            </div>
+          </div>
+          {errors.agbAccepted && (
+            <div className="text-red-500">{errors.agbAccepted}</div>
+          )}
+        </div>
       </>
-    )
+    ),
+    validationSchema: yupObject().shape({
+      agbAccepted: yupBoolean().oneOf(
+        [true],
+        "Die AGB und Datenschutzbestimmungen müssen akzeptiert werden"
+      )
+    })
   },
   {
     stepIndex: 3,
@@ -255,10 +334,11 @@ const initialValues = {
     password: "",
     passwordConfirmation: ""
   },
+  agbAccepted: false,
   employmentStatus: undefined,
   pickupRequired: undefined,
   driverLicense: undefined,
-  driverActivity: false,
+  driverActivity: undefined,
   fullTime: undefined,
   partTime: undefined
 };
@@ -266,7 +346,7 @@ const initialValues = {
 // TODO handle redirect to provider confirmHelp
 const HelperRegister = () => {
   const dispatch = useDispatch();
-  const { push } = useHistory();
+  const { goBack } = useHistory();
   const {
     activeStep,
     ActiveStepContent,
@@ -284,15 +364,25 @@ const HelperRegister = () => {
     <div className="flex flex-col h-full px-8 py-4">
       <Formik
         initialValues={initialValues}
+        validateOnChange={false}
+        validationSchema={contents[activeStepIndex].validationSchema}
         onSubmit={(input) => {
           console.log(input);
-          // @ts-ignore
-          dispatch(registerHelper(input)).then((response) => {
-            goNext();
-          });
+          if (shouldSubmitForm) {
+            // @ts-ignore
+            dispatch(registerHelper(input)).then((response) => {
+              goNext();
+            });
+          } else goNext();
         }}
       >
-        {({ setFieldValue, values, handleSubmit }: FormProps) => (
+        {({
+          setFieldValue,
+          values,
+          handleSubmit,
+          validateField,
+          errors
+        }: FormProps) => (
           <>
             <div className="flex-grow">
               <Title as="h1" className="text-2xl mb-8" bold>
@@ -301,25 +391,23 @@ const HelperRegister = () => {
               <StepsBar className="mb-8 text-sm" />
               <ActiveStepContent
                 setFieldValue={setFieldValue}
+                validateField={validateField}
                 values={values}
+                errors={errors}
               />
             </div>
             <div className="flex">
               {activeStepIndex < steps.length - 1 ? (
                 <>
                   <button
-                    onClick={
-                      activeStepIndex < 1 ? () => push("/signin") : goPrevious
-                    }
+                    onClick={activeStepIndex < 1 ? () => goBack : goPrevious}
                     className="flex-grow mr-4 text-gray-500 hover:bg-gray-200 hover:text-gray-700 rounded-full px-4 py-1 cursor-pointer"
                   >
                     Zurück
                   </button>
                   <PrimaryButton
                     className="flex-grow"
-                    onClick={() => {
-                      shouldSubmitForm ? handleSubmit() : goNext();
-                    }}
+                    onClick={() => handleSubmit()}
                   >
                     {activeStep.okText}
                   </PrimaryButton>
