@@ -17,10 +17,12 @@ export default {
     collection: domain + "/helpers"
   },
   inquiries: {
-    collection: domain + "/inquiries"
+    collection: domain + "/inquiries",
+    show: (id) => domain + `/inquiries/${id}`
   },
   favorites: {
-    collection: domain + "/favorites"
+    collection: domain + "/favorites",
+    show: (id) => domain + `/favorites/${id}`
   },
   media: {
     downloadPicture: (id) => domain + `/media/${id}/download-picture`

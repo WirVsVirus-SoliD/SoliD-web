@@ -2,14 +2,16 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
 import LocalPhoneIcon from "@material-ui/icons/LocalPhone";
 import MailIcon from "@material-ui/icons/Mail";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { User } from "react-feather";
+import { useDispatch } from "react-redux";
+import { getInquiries } from "~/actions/inquiries";
 import { FallbackImage } from "~/components/FallbackImage";
 import TeaIcon from "~/components/Icon/TeaIcon";
 import { Title } from "~/components/Title";
 import api from "~/lib/api";
-import axiosInstance from "~/lib/axiosInstance";
 import momentInstance from "~/lib/momentInstance";
+import { useTypedSelector } from "~/reducers";
 
 const HelperCard = ({ data }) => {
   const helper = data.helper;
@@ -69,17 +71,14 @@ const EmptyState = () => {
 };
 
 const ProviderDashboard = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const inquiries = useTypedSelector((state) => state.get("inquiries"));
+
   useEffect(() => {
-    (async () => {
-      const result = await axiosInstance.get(api.inquiries.collection);
-      setData(result.data);
-      setLoading(false);
-    })();
+    dispatch(getInquiries());
   }, []);
 
-  if (loading)
+  if (inquiries.get("loading"))
     return (
       <div className="h-full w-full mt-64 text-center">
         <CircularProgress />
@@ -91,10 +90,10 @@ const ProviderDashboard = () => {
       <Title as="h2" className="text-2xl pt-6 mb-2">
         Meine Anfragen
       </Title>
-      {data.map((helper) => (
+      {inquiries.get("items")?.map((helper) => (
         <HelperCard key={helper.inquiryId} data={helper} />
       ))}
-      {data.length === 0 && <EmptyState />}
+      {inquiries.get("items")?.length === 0 && <EmptyState />}
     </Container>
   );
 };

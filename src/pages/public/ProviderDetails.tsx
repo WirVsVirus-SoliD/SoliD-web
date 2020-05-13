@@ -1,21 +1,28 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
 import EuroIcon from "@material-ui/icons/Euro";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import HotelIcon from "@material-ui/icons/Hotel";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import ScheduleOutlinedIcon from "@material-ui/icons/ScheduleOutlined";
 import React, { useEffect, useState } from "react";
 
-import { ArrowLeft, Globe, Heart, Share2 } from "react-feather";
+import { ArrowLeft, Globe, Share2 } from "react-feather";
+import { useDispatch } from "react-redux";
 import { RouteProps, useHistory } from "react-router";
+import { getFavorites } from "~/actions/favorites";
+import { getInquiries } from "~/actions/inquiries";
 import { ReactComponent as OrganicAgriculture } from "~/assets/icons/OrganicAgriculture.svg";
 import { PrimaryButton } from "~/components/Button";
 import { Crop } from "~/components/Crop";
+import { FallbackImage } from "~/components/FallbackImage";
 
 import { Title } from "~/components/Title";
 import api from "~/lib/api";
 import axiosInstance from "~/lib/axiosInstance";
 import { ProviderDetailsSection } from "~/pages/public/components";
+import { useTypedSelector } from "~/reducers";
 
 type Props = {} & RouteProps;
 
@@ -26,15 +33,27 @@ type State = {
 };
 
 const ProviderDetails = ({ match }) => {
+  const dispatch = useDispatch();
   const [state, setState] = useState<State>({
     loading: true,
     provider: null,
     error: null
   });
-  const { push } = useHistory();
+  const { push, goBack } = useHistory();
   const providerId = parseInt(match.params.id);
+  const isLoggedIn = useTypedSelector((state) =>
+    state.getIn(["user", "login"])
+  );
+  const favorites = useTypedSelector((state) => state.get("favorites"));
+  // TODO handle already inquired
+  const inquiries = useTypedSelector((state) => state.get("inquiries"));
+  const isFavorite = favorites
+    .get("items")
+    ?.find((item) => item.provider.providerId === providerId);
 
   useEffect(() => {
+    dispatch(getFavorites());
+    dispatch(getInquiries());
     (async () => {
       try {
         const response = await axiosInstance.get(
@@ -47,6 +66,20 @@ const ProviderDetails = ({ match }) => {
       }
     })();
   }, []);
+
+  const clickFavorite = () => {
+    if (isFavorite) {
+      axiosInstance
+        .delete(api.favorites.show(isFavorite.favoriteId))
+        .then(() => {
+          dispatch(getFavorites());
+        });
+    } else {
+      axiosInstance.post(api.favorites.collection, { providerId }).then(() => {
+        dispatch(getFavorites());
+      });
+    }
+  };
 
   if (state.loading)
     return (
@@ -71,30 +104,40 @@ const ProviderDetails = ({ match }) => {
         <div className="flex justify-between absolute top-0 left-0 right-0 p-2 text-brand">
           <button
             className="rounded-full bg-white-primary p-2"
-            onClick={() => push("/map")}
+            onClick={goBack}
           >
             <ArrowLeft size={20} />
           </button>
-          {false && (
-            <div>
-              <button className="rounded-full bg-white-primary p-2 mr-2">
-                <Heart size={20} />
-              </button>
 
+          <div>
+            {isLoggedIn && (
+              <button
+                onClick={clickFavorite}
+                className="rounded-full bg-white-primary p-2 mr-2"
+              >
+                {isFavorite ? (
+                  <FavoriteIcon className="text-red-500" />
+                ) : (
+                  <FavoriteBorderIcon className="text-red-500" />
+                )}
+              </button>
+            )}
+
+            {false && (
               <button className="rounded-full bg-white-primary p-2">
                 <Share2 size={20} />
               </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
         {/* TODO Platzhalterbild einfügen */}
-        <img
-          className="w-full"
-          alt="Platzhalterbild"
+        <FallbackImage
+          width={100}
+          height={100}
           src={api.media.downloadPicture(providerId)}
         />
       </div>
-      <div className="px-4 pt-4">
+      <div className="px-4 pt-10">
         <Title as="h2" className="text-2xl mb-2">
           {provider.farmName}
         </Title>

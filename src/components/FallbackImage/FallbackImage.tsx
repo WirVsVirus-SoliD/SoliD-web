@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 
-const FallbackImage = ({ src, width, height, ErrorComponent }) => {
+type Props = {
+  ErrorComponent?: any | undefined;
+  src: any;
+  width: any;
+  height: any;
+};
+const FallbackImage = ({ src, width, height, ErrorComponent }: Props) => {
   const [error, setError] = useState(false);
 
   return (
     <>
       {error ? (
-        <ErrorComponent width={width} height={height} />
+        ErrorComponent && <ErrorComponent width={width} height={height} />
       ) : (
         <img
           src={src}
