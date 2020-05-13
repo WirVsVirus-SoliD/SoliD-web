@@ -313,7 +313,47 @@ const contents: StepContent[] = [
           />
         </div>
 
-        {/* TODO TÄTIGKEITEN */}
+        <div className="mb-8">
+          <FormTitle as="h2" className="mb-2">
+            Tätigkeiten
+          </FormTitle>
+          <div className="flex flex-row justify-between ">
+            {["Ernten", "Jäten", "Fahren"].map((value, i, array) => {
+              const checked = values.workActivities.includes(value as string);
+              return (
+                <div className="flex-1 px-1" key={value as string}>
+                  <label
+                    className={classnames(
+                      "block w-full border rounded-lg border-brand outline-none p-2 text-center",
+                      { "bg-brand-light": checked }
+                    )}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setFieldValue(
+                        "workActivities",
+                        updateArray(
+                          value as string,
+                          values.workActivities.slice(0)
+                        )
+                      );
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      className="input--hidden"
+                      checked={checked}
+                      readOnly
+                    />
+                    <span className="text-brand pr-1">
+                      {checked ? "✓" : "+"}
+                    </span>
+                    <span className="text-brand">{value}</span>
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+        </div>
 
         <div>
           <FormTitle as="h2" className="mb-2">
@@ -426,7 +466,7 @@ const contents: StepContent[] = [
             {hiddenFields.pickupPossible && (
               <div className="mt-2 mb-8">
                 <FormTitle as="h2" className="mt-1 mb-2">
-                  Abholung im Umkreis von ...
+                  Abholung im Umkreis von ... km
                 </FormTitle>
                 <StepCalculator
                   initialValue={values.pickupRange}
