@@ -3,6 +3,7 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import classnames from "classnames";
 import { Formik } from "formik";
 import React, { useState } from "react";
+import { ArrowLeft } from "react-feather";
 import { useDispatch } from "react-redux";
 import { object as yupObject, string as yupString } from "yup";
 import { deleteHelper, logOut, updateHelper } from "~/actions/user";
@@ -37,7 +38,7 @@ const HelperProfileEdit = ({ data, setEditMode }: any) => {
           className="mb-5"
           onClick={() => {
             // @ts-ignore
-            dispatch(deleteHelper(data.helperId)).then((response) => {
+            dispatch(deleteHelper()).then((response) => {
               dispatch(logOut());
             });
           }}
@@ -52,6 +53,12 @@ const HelperProfileEdit = ({ data, setEditMode }: any) => {
 
   return (
     <div className="mx-4 pt-8">
+      <button
+        className="rounded-full bg-white-primary p-2"
+        onClick={() => setEditMode(false)}
+      >
+        <ArrowLeft size={20} />
+      </button>
       <div className="mb-5">
         <Title as="h1" className="text-2xl mb-6" bold>
           Profil bearbeiten
@@ -62,9 +69,8 @@ const HelperProfileEdit = ({ data, setEditMode }: any) => {
         validateOnChange={false}
         validationSchema={validationSchema}
         onSubmit={(input) => {
-          console.log(input);
           // @ts-ignore
-          dispatch(updateHelper(input, data.helperId)).then((response) => {
+          dispatch(updateHelper(input)).then((response) => {
             setEditMode(false);
           });
         }}
@@ -202,7 +208,7 @@ const HelperProfileEdit = ({ data, setEditMode }: any) => {
                           key={i}
                           onClick={() => setFieldValue("driverLicense", value)}
                           className={classnames(
-                            "relative flex-grow border-2 border-r-0 last:border-r-2 first:rounded-l-full last:rounded-r-full border-brand text-sm py-1 px-2 first:pl-4 last:pr-4 font-medium",
+                            "flex-grow border-2 border-r-0 last:border-r-2 first:rounded-l-full last:rounded-r-full border-brand text-sm py-1 px-2 first:pl-4 last:pr-4 font-medium",
                             {
                               "bg-brand text-white": checked,
                               "text-brand": !checked
@@ -240,7 +246,7 @@ const HelperProfileEdit = ({ data, setEditMode }: any) => {
                               setFieldValue("driverActivity", value)
                             }
                             className={classnames(
-                              "relative flex-grow border-2 border-r-0 last:border-r-2 first:rounded-l-full last:rounded-r-full border-brand text-sm py-1 px-2 first:pl-4 last:pr-4 font-medium",
+                              "flex-grow border-2 border-r-0 last:border-r-2 first:rounded-l-full last:rounded-r-full border-brand text-sm py-1 px-2 first:pl-4 last:pr-4 font-medium",
                               {
                                 "bg-brand text-white": checked,
                                 "text-brand": !checked

@@ -163,14 +163,11 @@ export const resetPassword = (values, token) => {
   };
 };
 
-export const updateProvider = (input, providerId) => {
+export const updateProvider = (input) => {
   return async (dispatch: Function) => {
     dispatch(updateProviderRequest());
     try {
-      const response = await axiosInstance.put(
-        api.providers.show(providerId),
-        input
-      );
+      const response = await axiosInstance.put(api.providers.collection, input);
       dispatch(editUser(response.data));
       dispatch(updateProviderSuccess());
       return Promise.resolve(response);
@@ -182,14 +179,11 @@ export const updateProvider = (input, providerId) => {
   };
 };
 
-export const updateHelper = (input, helperId) => {
+export const updateHelper = (input) => {
   return async (dispatch: Function) => {
     dispatch(updateHelperRequest());
     try {
-      const response = await axiosInstance.put(
-        api.helpers.show(helperId),
-        input
-      );
+      const response = await axiosInstance.put(api.helpers.collection, input);
       dispatch(editUser(response.data));
       dispatch(updateHelperSuccess());
       return Promise.resolve(response);
@@ -201,13 +195,11 @@ export const updateHelper = (input, helperId) => {
   };
 };
 
-export const deleteProvider = (providerId) => {
+export const deleteProvider = () => {
   return async (dispatch: Function) => {
     dispatch(deleteProviderRequest());
     try {
-      const response = await axiosInstance.delete(
-        api.providers.show(providerId)
-      );
+      const response = await axiosInstance.delete(api.providers.collection);
       dispatch(deleteProviderSuccess());
       return Promise.resolve(response);
     } catch (error) {
@@ -218,11 +210,11 @@ export const deleteProvider = (providerId) => {
   };
 };
 
-export const deleteHelper = (helperId) => {
+export const deleteHelper = () => {
   return async (dispatch: Function) => {
     dispatch(deleteHelperRequest());
     try {
-      const response = await axiosInstance.delete(api.helpers.show(helperId));
+      const response = await axiosInstance.delete(api.helpers.collection);
       dispatch(deleteHelperSuccess());
       return Promise.resolve(response);
     } catch (error) {

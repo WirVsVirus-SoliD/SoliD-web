@@ -21,12 +21,6 @@ const HelperProfile = ({ data }: any) => {
         <Title as="h1" className="text-2xl mb-6" bold>
           Profil
         </Title>
-        {/*
-         <div className="flex">
-         <EditIcon className="mr-3"/>
-         <p>Bearbeiten</p>
-         </div>
-         */}
       </div>
       <div className="flex justify-between">
         <div>
@@ -44,37 +38,37 @@ const HelperProfile = ({ data }: any) => {
       </div>
 
       <div className="mb-5">
-        <p className="mb-1 text-xs opacity-50">Vorname</p>
+        <p className="mb-1 text-xs">Vorname</p>
         <p>{account.get("firstName")}</p>
       </div>
 
       <div className="mb-5">
-        <p className="mb-1 text-xs opacity-50">Nachname</p>
+        <p className="mb-1 text-xs">Nachname</p>
         <p>{account.get("lastName")}</p>
       </div>
 
       <div className="mb-5">
-        <p className="mb-1 text-xs opacity-50">Handynummer</p>
+        <p className="mb-1 text-xs">Handynummer</p>
         <p>{account.get("phone")}</p>
       </div>
 
       <div className="mb-5">
-        <p className="mb-1 text-xs opacity-50">E-Mail</p>
+        <p className="mb-1 text-xs">E-Mail</p>
         <p>{account.get("email")}</p>
       </div>
 
       <div className="mb-5">
-        <p className="mb-1 text-xs opacity-50">Ich bin</p>
+        <p className="mb-1 text-xs">Ich bin</p>
         <p>{data.get("employmentStatus")}</p>
       </div>
 
       <div className="mb-5">
-        <p className="mb-1 text-xs opacity-50">Gesuchte Beschäftigung</p>
+        <p className="mb-1 text-xs">Gesuchte Beschäftigung</p>
         <p>{data.get("partTime") ? "Teilzeit" : "Vollzeit"}</p>
       </div>
 
       <div className="mb-5">
-        <p className="mb-1 text-xs opacity-50">Anreise</p>
+        <p className="mb-1 text-xs">Anreise</p>
         <p>
           {data.get("pickupRequired")
             ? "Auf Abholung angewiesen"
@@ -83,15 +77,13 @@ const HelperProfile = ({ data }: any) => {
       </div>
 
       <div className="mb-5">
-        <p className="mb-1 text-xs opacity-50">Führerschein</p>
+        <p className="mb-1 text-xs">Führerschein</p>
         <p>{data.get("driverLicense") ? "Ja" : "Nein"}</p>
       </div>
 
       {data.get("driverLicense") && (
         <div className="mb-5">
-          <p className="mb-1 text-xs opacity-50">
-            Bereitschaft für Fahrertätigkeiten
-          </p>
+          <p className="mb-1 text-xs">Bereitschaft für Fahrertätigkeiten</p>
           <p>{data.get("driverActivity") ? "Ja" : "Nein"}</p>
         </div>
       )}
