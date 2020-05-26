@@ -4,6 +4,12 @@ import {
   CONFIRM_EMAIL_FAIL,
   CONFIRM_EMAIL_REQUEST,
   CONFIRM_EMAIL_SUCCESS,
+  DELETE_HELPER_FAIL,
+  DELETE_HELPER_REQUEST,
+  DELETE_HELPER_SUCCESS,
+  DELETE_PROVIDER_FAIL,
+  DELETE_PROVIDER_REQUEST,
+  DELETE_PROVIDER_SUCCESS,
   EDIT_USER,
   FORGOT_PASSWORD_FAIL,
   FORGOT_PASSWORD_REQUEST,
@@ -23,6 +29,12 @@ import {
   RESET_PASSWORD_SUCCESS,
   SET_USER,
   SET_USER_TYPE,
+  UPDATE_HELPER_FAIL,
+  UPDATE_HELPER_REQUEST,
+  UPDATE_HELPER_SUCCESS,
+  UPDATE_PROVIDER_FAIL,
+  UPDATE_PROVIDER_REQUEST,
+  UPDATE_PROVIDER_SUCCESS,
   VALIDATE_FAIL,
   VALIDATE_REQUEST,
   VALIDATE_SUCCESS
@@ -56,6 +68,18 @@ const registerProviderSuccess = createAction(REGISTER_PROVIDER_SUCCESS);
 const registerHelperRequest = createAction(REGISTER_HELPER_REQUEST);
 const registerHelperFail = createAction(REGISTER_HELPER_FAIL);
 const registerHelperSuccess = createAction(REGISTER_HELPER_SUCCESS);
+const updateProviderRequest = createAction(UPDATE_PROVIDER_REQUEST);
+const updateProviderFail = createAction(UPDATE_PROVIDER_FAIL);
+const updateProviderSuccess = createAction(UPDATE_PROVIDER_SUCCESS);
+const updateHelperRequest = createAction(UPDATE_HELPER_REQUEST);
+const updateHelperFail = createAction(UPDATE_HELPER_FAIL);
+const updateHelperSuccess = createAction(UPDATE_HELPER_SUCCESS);
+const deleteProviderRequest = createAction(DELETE_PROVIDER_REQUEST);
+const deleteProviderFail = createAction(DELETE_PROVIDER_FAIL);
+const deleteProviderSuccess = createAction(DELETE_PROVIDER_SUCCESS);
+const deleteHelperRequest = createAction(DELETE_HELPER_REQUEST);
+const deleteHelperFail = createAction(DELETE_HELPER_FAIL);
+const deleteHelperSuccess = createAction(DELETE_HELPER_SUCCESS);
 const logout = createAction(LOGOUT);
 
 export const registerHelper = (input) => {
@@ -134,6 +158,76 @@ export const resetPassword = (values, token) => {
     } catch (error) {
       console.log(error);
       dispatch(resetPasswordFail(error));
+      return Promise.reject(error);
+    }
+  };
+};
+
+export const updateProvider = (input, providerId) => {
+  return async (dispatch: Function) => {
+    dispatch(updateProviderRequest());
+    try {
+      const response = await axiosInstance.put(
+        api.providers.show(providerId),
+        input
+      );
+      dispatch(editUser(response.data));
+      dispatch(updateProviderSuccess());
+      return Promise.resolve(response);
+    } catch (error) {
+      console.log(error);
+      dispatch(updateProviderFail());
+      return Promise.reject(error);
+    }
+  };
+};
+
+export const updateHelper = (input, helperId) => {
+  return async (dispatch: Function) => {
+    dispatch(updateHelperRequest());
+    try {
+      const response = await axiosInstance.put(
+        api.helpers.show(helperId),
+        input
+      );
+      dispatch(editUser(response.data));
+      dispatch(updateHelperSuccess());
+      return Promise.resolve(response);
+    } catch (error) {
+      console.log(error);
+      dispatch(updateHelperFail());
+      return Promise.reject(error);
+    }
+  };
+};
+
+export const deleteProvider = (providerId) => {
+  return async (dispatch: Function) => {
+    dispatch(deleteProviderRequest());
+    try {
+      const response = await axiosInstance.delete(
+        api.providers.show(providerId)
+      );
+      dispatch(deleteProviderSuccess());
+      return Promise.resolve(response);
+    } catch (error) {
+      console.log(error);
+      dispatch(deleteProviderFail());
+      return Promise.reject(error);
+    }
+  };
+};
+
+export const deleteHelper = (helperId) => {
+  return async (dispatch: Function) => {
+    dispatch(deleteHelperRequest());
+    try {
+      const response = await axiosInstance.delete(api.helpers.show(helperId));
+      dispatch(deleteHelperSuccess());
+      return Promise.resolve(response);
+    } catch (error) {
+      console.log(error);
+      dispatch(deleteHelperFail());
       return Promise.reject(error);
     }
   };

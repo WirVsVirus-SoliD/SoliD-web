@@ -14,7 +14,8 @@ export default {
     show: (id) => domain + `/providers/${id}`
   },
   helpers: {
-    collection: domain + "/helpers"
+    collection: domain + "/helpers",
+    show: (id) => domain + `/helpers/${id}`
   },
   inquiries: {
     collection: domain + "/inquiries",

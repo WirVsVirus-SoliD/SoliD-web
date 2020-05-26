@@ -20,10 +20,11 @@ const HelperCard = ({ data }) => {
       <div className="flex flex-col">
         <FallbackImage
           src={api.media.downloadPicture(helper.account.accountId)}
-          ErrorComponent={User}
           width={70}
           height={70}
-        />
+        >
+          <User width={70} height={70} />
+        </FallbackImage>
       </div>
       <div className="flex flex-col pl-2 pr-2  w-full">
         <div className="mb-2">

@@ -6,7 +6,7 @@ type Props = {
   theme?: "flat" | "border";
 } & Omit<BaseButtonProps, "pill">;
 
-const PrimaryButton = ({ theme = "flat", className, ...rest }: Props) => {
+const DangerButton = ({ theme = "flat", className, ...rest }: Props) => {
   const css = classnames(
     "border-red-600",
     {
@@ -19,4 +19,4 @@ const PrimaryButton = ({ theme = "flat", className, ...rest }: Props) => {
   return <BaseButton className={css} pill {...rest} />;
 };
 
-export default PrimaryButton;
+export default DangerButton;
