@@ -75,7 +75,7 @@ const contents: StepContent[] = [
             name={key}
             type={type}
             label={label}
-            className="mb-4 text-brand"
+            className="mb-4"
             block
             onChange={(e) => setFieldValue(key, e.currentTarget.value)}
             onBlur={() => validateField(key)}

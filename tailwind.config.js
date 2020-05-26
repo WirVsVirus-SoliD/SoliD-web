@@ -1,3 +1,5 @@
+const { colors } = require("tailwindcss/defaultTheme");
+
 module.exports = {
   important: true,
   theme: {
@@ -20,6 +22,10 @@ module.exports = {
         "accent-light": "#DCB38E",
         accent: "#7C4B36",
         grey: "#C4C4C4",
+        gray: {
+          ...colors.gray,
+          "50": "#FAFAFA"
+        },
         lightGrey: "#EBEBEB",
         "white-primary": `rgba(255, 255, 255, 0.87)`,
         "white-secondary": `rgba(255, 255, 255, 0.54)`,

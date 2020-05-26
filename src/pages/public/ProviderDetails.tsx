@@ -130,12 +130,16 @@ const ProviderDetails = ({ match }) => {
             )}
           </div>
         </div>
-        {/* TODO Platzhalterbild einfügen */}
         <FallbackImage
           width={100}
           height={100}
           src={api.media.downloadPicture(providerId)}
-        />
+        >
+          <img
+            className="w-full"
+            src={require("../../assets/images/ProviderPlaceholder.png")}
+          />
+        </FallbackImage>
       </div>
       <div className="px-4 pt-10">
         <Title as="h2" className="text-2xl mb-2">

@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 
 type Props = {
-  ErrorComponent?: any | undefined;
+  children?: any | undefined;
   src: any;
   width: any;
   height: any;
 };
-const FallbackImage = ({ src, width, height, ErrorComponent }: Props) => {
+const FallbackImage = ({ src, width, height, children }: Props) => {
   const [error, setError] = useState(false);
 
   return (
     <>
       {error ? (
-        ErrorComponent && <ErrorComponent width={width} height={height} />
+        <div>{children}</div>
       ) : (
         <img
           src={src}

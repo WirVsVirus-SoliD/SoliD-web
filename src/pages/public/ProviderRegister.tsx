@@ -105,7 +105,6 @@ const contents: StepContent[] = [
       errors
     }: PassedFormProps) => (
       <>
-        {console.log(values, errors)}
         <FormTitle as="h2" className="mb-4">
           Ansprechpartner
         </FormTitle>
@@ -646,7 +645,6 @@ const ProviderRegister = () => {
   // The step before the last one has a dot-notated index of '2.2'.
   // This allows us to identify when to submit our form using the click handler on the 'next' button.
   const shouldSubmitForm = currentDotIndex === "4";
-  console.log(goNext);
   return (
     <div className="flex flex-col h-full px-8 py-4">
       <Formik
@@ -654,7 +652,6 @@ const ProviderRegister = () => {
         validationSchema={contents[activeStepIndex].validationSchema}
         validateOnChange={false}
         onSubmit={(input) => {
-          console.log(input);
           if (shouldSubmitForm) {
             // @ts-ignore
             dispatch(registerProvider(input)).then((response) => {

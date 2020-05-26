@@ -70,12 +70,13 @@ const HelpConfirmation = ({ match }) => {
   if (state.success)
     return (
       <div className="h-100vh flex flex-col items-center p-4">
+        <div className="h-20 w-full" />
         <BigCheckIcon />
         <Title as="h1" className="m-8 text-2xl">
           Der/Die Landwirt*in erhält eine Nachricht und meldet sich zeitnah bei
           dir!
         </Title>
-        <PrimaryButton block onClick={() => push("/map")}>
+        <PrimaryButton className="mt-20" block onClick={() => push("/map")}>
           Zurück zur Übersicht
         </PrimaryButton>
       </div>
@@ -101,6 +102,7 @@ const HelpConfirmation = ({ match }) => {
           sich zeitnah bei dir!
         </p>
       </div>
+      {/* TODO bei 409 Anzeigen dass man bereits angefragt hat? 409 richtig? */}
       {error && <p className="mb-2 text-red-500">Etwas ist schiefgelaufen</p>}
       <PrimaryButton
         block
