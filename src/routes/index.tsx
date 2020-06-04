@@ -6,12 +6,7 @@ import NotFoundPage from "~/pages/error/NotFound";
 import {
   Boarding,
   BoardingFarmer,
-  Credits,
-  CreditsPhotoMaterial,
   EmailConfirmation,
-  FaqFarmer,
-  FaqHelper,
-  FaqOverview,
   ForgotPassword,
   HelperRegister,
   Home,
@@ -36,21 +31,6 @@ function AppRoutes() {
       <Route exact path="/forgot-password" component={ForgotPassword} />
       <Route exact path="/reset-password" component={ResetPassword} />
       <Route exact path="/confirm" component={EmailConfirmation} />
-
-      <Route exact path="/faq" component={FaqOverview} />
-      <Route exact path="/faq/farmer" component={FaqFarmer} />
-      <Route exact path="/faq/helper" component={FaqHelper} />
-
-      <Route exact path="/credits" component={Credits} />
-      <Route
-        exact
-        path="/credits/photo-material"
-        component={CreditsPhotoMaterial}
-      />
-
-      {/*
-       <Route path="/profile" component={userIsAuthenticated(Profile)}/>
-       */}
 
       <NavigationWrapper />
 

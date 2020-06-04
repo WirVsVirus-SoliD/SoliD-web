@@ -1,13 +1,12 @@
 import Avatar from "@material-ui/core/Avatar";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import classnames from "classnames";
 import { Formik } from "formik";
-import React, { useState } from "react";
+import React from "react";
 import { ArrowLeft } from "react-feather";
 import { useDispatch } from "react-redux";
 import { object as yupObject, string as yupString } from "yup";
-import { deleteHelper, logOut, updateHelper } from "~/actions/user";
-import { DangerButton, PrimaryButton } from "~/components/Button";
+import { updateHelper } from "~/actions/user";
+import { PrimaryButton } from "~/components/Button";
 import { FormTitle, InputField } from "~/components/Form";
 import { Checkbox, Radio } from "~/components/Form/components";
 import { Title } from "~/components/Title";
@@ -22,34 +21,7 @@ const validationSchema = yupObject().shape({
 });
 
 const HelperProfileEdit = ({ data, setEditMode }: any) => {
-  const [confirmMode, setConfirmMode] = useState(false);
   const dispatch = useDispatch();
-
-  if (confirmMode)
-    return (
-      <div className="flex flex-col items-center h-full">
-        <p className="text-red-500 mt-64">
-          Soll der Account wirklich gelöscht werden?
-        </p>
-        <p className="mb-10 text-red-500">
-          Dies kann nicht rückgängig gemacht werden!
-        </p>
-        <DangerButton
-          className="mb-5"
-          onClick={() => {
-            // @ts-ignore
-            dispatch(deleteHelper()).then((response) => {
-              dispatch(logOut());
-            });
-          }}
-        >
-          LÖSCHEN
-        </DangerButton>
-        <PrimaryButton onClick={() => setConfirmMode(false)}>
-          Abbrechen
-        </PrimaryButton>
-      </div>
-    );
 
   return (
     <div className="mx-4 pt-8">
@@ -272,15 +244,6 @@ const HelperProfileEdit = ({ data, setEditMode }: any) => {
                 >
                   <Title as="h6">Übernehmen</Title>
                 </PrimaryButton>
-                <DangerButton
-                  className="w-full mb-20"
-                  onClick={() => setConfirmMode(true)}
-                >
-                  <div className="flex flex-row items-center justify-center">
-                    <DeleteForeverIcon className="mr-2" />
-                    <Title as="h6">Profil löschen</Title>
-                  </div>
-                </DangerButton>
               </div>
             </div>
           </div>

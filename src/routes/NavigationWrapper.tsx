@@ -1,3 +1,4 @@
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import PersonIcon from "@material-ui/icons/Person";
 import RoomIcon from "@material-ui/icons/Room";
 import ScheduleIcon from "@material-ui/icons/Schedule";
@@ -5,7 +6,16 @@ import React from "react";
 import { Route, RouteProps, Switch } from "react-router-dom";
 import { NavigationBar } from "~/components/NavigationBar";
 import { Dashboard, HelpConfirmation, Profile } from "~/pages/private";
-import { Login, Map, ProviderDetails } from "~/pages/public";
+import {
+  Credits,
+  CreditsPhotoMaterial,
+  FaqFarmer,
+  FaqHelper,
+  FaqOverview,
+  Login,
+  Map,
+  ProviderDetails
+} from "~/pages/public";
 import { useTypedSelector } from "~/reducers";
 import {
   helperIsAuthenticated,
@@ -18,13 +28,19 @@ const providerTabs = [
     route: "/dashboard",
     icon: <ScheduleIcon />,
     value: "/dashboard",
-    label: "Meine Helfer"
+    label: "Helfer"
   },
   {
     route: "/profile",
     icon: <PersonIcon />,
     value: "/profile",
     label: "Meine Daten"
+  },
+  {
+    route: "/faq",
+    icon: <MoreHorizIcon />,
+    value: "/faq",
+    label: "Mehr"
   }
 ];
 
@@ -56,15 +72,29 @@ const NavigationWrapper = ({ location }: RouteProps) => {
           icon: <PersonIcon />,
           value: "/profile",
           label: "Profil"
+        },
+        {
+          route: "/faq",
+          icon: <MoreHorizIcon />,
+          value: "/faq",
+          label: "Mehr"
         }
       ]);
     } else {
-      tabs.push({
-        route: "/login",
-        icon: <PersonIcon />,
-        value: "/login",
-        label: "Login"
-      });
+      tabs = tabs.concat([
+        {
+          route: "/login",
+          icon: <PersonIcon />,
+          value: "/login",
+          label: "Login"
+        },
+        {
+          route: "/faq",
+          icon: <MoreHorizIcon />,
+          value: "/faq",
+          label: "Mehr"
+        }
+      ]);
     }
   }
 
@@ -80,6 +110,16 @@ const NavigationWrapper = ({ location }: RouteProps) => {
           component={helperIsAuthenticated(HelpConfirmation)}
         />
         <Route path="/login" component={Login} />
+        <Route exact path="/faq" component={FaqOverview} />
+        <Route exact path="/faq/farmer" component={FaqFarmer} />
+        <Route exact path="/faq/helper" component={FaqHelper} />
+
+        <Route exact path="/credits" component={Credits} />
+        <Route
+          exact
+          path="/credits/photo-material"
+          component={CreditsPhotoMaterial}
+        />
       </Switch>
     );
   };
@@ -93,6 +133,16 @@ const NavigationWrapper = ({ location }: RouteProps) => {
           component={providerIsAuthenticated(Dashboard)}
         />
         <Route path={"/profile"} component={providerIsAuthenticated(Profile)} />
+        <Route exact path="/faq" component={FaqOverview} />
+        <Route exact path="/faq/farmer" component={FaqFarmer} />
+        <Route exact path="/faq/helper" component={FaqHelper} />
+
+        <Route exact path="/credits" component={Credits} />
+        <Route
+          exact
+          path="/credits/photo-material"
+          component={CreditsPhotoMaterial}
+        />
       </Switch>
     );
   };
