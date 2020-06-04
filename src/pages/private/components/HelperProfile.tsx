@@ -1,14 +1,10 @@
 import Avatar from "@material-ui/core/Avatar";
 import EditIcon from "@material-ui/icons/Edit";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { logOut } from "~/actions/user";
-import { PrimaryButton } from "~/components/Button";
 import { Title } from "~/components/Title";
 import { HelperProfileEdit } from "~/pages/private/components/index";
 
 const HelperProfile = ({ data }: any) => {
-  const dispatch = useDispatch();
   const account = data.get("account");
   const [editMode, setEditMode] = useState(false);
 
@@ -87,13 +83,6 @@ const HelperProfile = ({ data }: any) => {
           <p>{data.get("driverActivity") ? "Ja" : "Nein"}</p>
         </div>
       )}
-
-      <PrimaryButton
-        className="w-full mt-auto mb-20"
-        onClick={() => dispatch(logOut())}
-      >
-        <Title as="h6">Ausloggen</Title>
-      </PrimaryButton>
     </div>
   );
 };

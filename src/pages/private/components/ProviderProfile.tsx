@@ -1,15 +1,13 @@
 import EditIcon from "@material-ui/icons/Edit";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { logOut } from "~/actions/user";
-import { DangerButton } from "~/components/Button";
+import { Crop } from "~/components/Crop";
 import { FallbackImage } from "~/components/FallbackImage";
 import { Title } from "~/components/Title";
 import api from "~/lib/api";
 import { ProviderProfileEdit } from "~/pages/private/components/index";
+import { ProviderDetailsSection } from "~/pages/public/components";
 
 const ProviderProfile = ({ data }) => {
-  const dispatch = useDispatch();
   const [editSection, setEditSection] = useState(null);
   const account = data.get("account");
   const address = data.get("address");
@@ -63,7 +61,7 @@ const ProviderProfile = ({ data }) => {
 
         <div className="flex flex-row justify-between">
           <Title as="h2" className="text-xl mb-6" bold>
-            Dein Betrieb
+            Betrieb
           </Title>
           <div className="text-brand mb-6" onClick={() => setEditSection(1)}>
             <EditIcon className="mr-2" />
@@ -101,12 +99,69 @@ const ProviderProfile = ({ data }) => {
           <p>{data.get("url")}</p>
         </div>
 
-        <DangerButton
-          className="w-full mt-auto mb-20"
-          onClick={() => dispatch(logOut())}
-        >
-          <Title as="h6">Ausloggen</Title>
-        </DangerButton>
+        <div className="mb-5">
+          <p className="mb-1 text-xs">Landwirtschafts-Typ</p>
+          <p>{data.get("bio") ? "Biologisch" : "Konventionell"}</p>
+        </div>
+
+        <div className="flex flex-row justify-between mb-2">
+          <Title as="h2" className="text-xl" bold>
+            Kulturen
+          </Title>
+          <div className="text-brand mb-6" onClick={() => setEditSection(2)}>
+            <EditIcon className="mr-2" />
+            Bearbeiten
+          </div>
+        </div>
+        <div className="mb-5">
+          {data.get("crops").map((crop) => (
+            <li key={crop} className="inline-block mr-4">
+              <Crop type={crop} />
+            </li>
+          ))}
+        </div>
+
+        <div className="flex flex-row justify-between mb-2">
+          <Title as="h2" className="text-xl" bold>
+            Konditionen
+          </Title>
+          <div className="text-brand mb-6" onClick={() => setEditSection(3)}>
+            <EditIcon className="mr-2" />
+            Bearbeiten
+          </div>
+        </div>
+
+        <ProviderDetailsSection
+          title={"Tätigkeiten"}
+          titleStyle={"mb-2"}
+          text={data.get("workActivities").join(" ")}
+        />
+        <ProviderDetailsSection
+          title={"Arbeitsbeginn"}
+          titleStyle={"mb-2"}
+          text={data.get("workingConditions")}
+        />
+        <ProviderDetailsSection
+          title={"Übernachtungsmöglichkeiten"}
+          titleStyle={"mb-2"}
+          text={data.get("overnightInformation")}
+        />
+        <ProviderDetailsSection
+          title={"Versorgung"}
+          titleStyle={"mb-2"}
+          text={data.get("providingInformation")}
+        />
+        <ProviderDetailsSection
+          title={"Sprachen"}
+          titleStyle={"mb-2"}
+          text={data.get("languages")}
+        />
+        <ProviderDetailsSection
+          title={"Sonstiges"}
+          titleStyle={"mb-2"}
+          text={data.get("otherInformation")}
+        />
+        <div className="h-20" />
       </div>
     </div>
   );

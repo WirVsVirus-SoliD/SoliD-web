@@ -17,7 +17,7 @@ type State = {
   creating: boolean;
   success: boolean;
   provider: any;
-  error: object;
+  error: any;
 };
 
 const HelpConfirmation = ({ match }) => {
@@ -102,8 +102,14 @@ const HelpConfirmation = ({ match }) => {
           sich zeitnah bei dir!
         </p>
       </div>
-      {/* TODO bei 409 Anzeigen dass man bereits angefragt hat? 409 richtig? */}
-      {error && <p className="mb-2 text-red-500">Etwas ist schiefgelaufen</p>}
+      {error && (
+        <div className="mb-2 text-red-500 text-center">
+          <p className="mb-2">Etwas ist schiefgelaufen</p>
+          {error.response.status === 409 && (
+            <p>Du hast hier bereits angefragt</p>
+          )}
+        </div>
+      )}
       <PrimaryButton
         block
         disabled={creating}
