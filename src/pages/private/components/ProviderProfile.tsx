@@ -1,8 +1,5 @@
 import EditIcon from "@material-ui/icons/Edit";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { logOut } from "~/actions/user";
-import { DangerButton } from "~/components/Button";
 import { Crop } from "~/components/Crop";
 import { FallbackImage } from "~/components/FallbackImage";
 import { Title } from "~/components/Title";
@@ -11,7 +8,6 @@ import { ProviderProfileEdit } from "~/pages/private/components/index";
 import { ProviderDetailsSection } from "~/pages/public/components";
 
 const ProviderProfile = ({ data }) => {
-  const dispatch = useDispatch();
   const [editSection, setEditSection] = useState(null);
   const account = data.get("account");
   const address = data.get("address");
@@ -165,13 +161,7 @@ const ProviderProfile = ({ data }) => {
           titleStyle={"mb-2"}
           text={data.get("otherInformation")}
         />
-
-        <DangerButton
-          className="w-full mt-auto mb-20"
-          onClick={() => dispatch(logOut())}
-        >
-          <Title as="h6">Ausloggen</Title>
-        </DangerButton>
+        <div className="h-20" />
       </div>
     </div>
   );

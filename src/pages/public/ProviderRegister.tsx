@@ -566,7 +566,6 @@ const contents: StepContent[] = [
       return (
         <div className="flex flex-col items-center">
           <div className="mb-8">
-            {/* TODO: request svg from design team (group icon in Figma to allow svg export) */}
             <EmailSentSvg />
           </div>
           <div className="flex-grow">

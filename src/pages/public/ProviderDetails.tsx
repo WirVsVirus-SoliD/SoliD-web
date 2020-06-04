@@ -45,15 +45,19 @@ const ProviderDetails = ({ match }) => {
     state.getIn(["user", "login"])
   );
   const favorites = useTypedSelector((state) => state.get("favorites"));
-  // TODO handle already inquired
   const inquiries = useTypedSelector((state) => state.get("inquiries"));
   const isFavorite = favorites
     .get("items")
     ?.find((item) => item.provider.providerId === providerId);
+  const alreadyInquired = inquiries
+    .get("items")
+    ?.find((item) => item.provider.providerId === providerId);
 
   useEffect(() => {
-    dispatch(getFavorites());
-    dispatch(getInquiries());
+    if (isLoggedIn) {
+      dispatch(getFavorites());
+      dispatch(getInquiries());
+    }
     (async () => {
       try {
         const response = await axiosInstance.get(
@@ -221,14 +225,20 @@ const ProviderDetails = ({ match }) => {
           title={"Sonstiges"}
           text={provider.otherInformation}
         />
-        <PrimaryButton
-          className="my-4"
-          block
-          onClick={() => push(`/providers/${providerId}/confirmHelp`)}
-        >
-          Ich will helfen
-        </PrimaryButton>
-        <div className="h-20" />
+
+        {alreadyInquired ? (
+          <div className="mt-4 mb-20 text-center text-green-500 font-bold">
+            Bereits angefragt
+          </div>
+        ) : (
+          <PrimaryButton
+            className="mt-4 mb-20"
+            block
+            onClick={() => push(`/providers/${providerId}/confirmHelp`)}
+          >
+            Ich will helfen
+          </PrimaryButton>
+        )}
       </div>
     </div>
   );

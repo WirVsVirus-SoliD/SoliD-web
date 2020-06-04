@@ -60,17 +60,27 @@ const FaqOverview = () => {
         <LinkList links={specificFaqs} />
       </div>
       {user && (
-        <div className="w-full block">
-          <DangerButton
-            className="w-full mb-20"
-            onClick={() => setConfirmMode(true)}
-          >
-            <div className="flex flex-row items-center justify-center">
-              <DeleteForeverIcon className="mr-2" />
-              <Title as="h6">Profil löschen</Title>
-            </div>
-          </DangerButton>
-        </div>
+        <>
+          <div className="w-full block mb-5">
+            <PrimaryButton
+              className="w-full mt-auto"
+              onClick={() => dispatch(logOut())}
+            >
+              <Title as="h6">Ausloggen</Title>
+            </PrimaryButton>
+          </div>
+          <div className="w-full block">
+            <DangerButton
+              className="w-full mb-20"
+              onClick={() => setConfirmMode(true)}
+            >
+              <div className="flex flex-row items-center justify-center">
+                <DeleteForeverIcon className="mr-2" />
+                <Title as="h6">Profil löschen</Title>
+              </div>
+            </DangerButton>
+          </div>
+        </>
       )}
       <div className="absolute bottom-0 left-0 mb-20 w-full px-8 block object-bottom">
         <Link to="/credits">
