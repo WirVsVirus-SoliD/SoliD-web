@@ -83,6 +83,7 @@ const HelperProfile = ({ data }: any) => {
           <p>{data.get("driverActivity") ? "Ja" : "Nein"}</p>
         </div>
       )}
+      <div className="h-20" />
     </div>
   );
 };

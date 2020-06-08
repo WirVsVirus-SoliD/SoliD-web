@@ -114,6 +114,7 @@ const ProviderDashboard = () => {
         <HelperCard key={helper.inquiryId} data={helper} />
       ))}
       {inquiries.get("items")?.length === 0 && <EmptyState />}
+      <div className="h-20" />
     </Container>
   );
 };

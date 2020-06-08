@@ -153,6 +153,7 @@ const HelperDashboard = () => {
           Meine Merkliste
         </Title>
         {favorites.get("loading") ? renderLoading() : renderFavorites()}
+        <div className="h-20" />
       </div>
     </div>
   );

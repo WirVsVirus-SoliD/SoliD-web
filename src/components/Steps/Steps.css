@@ -1,25 +1,19 @@
-.steps__bar-icon {
-  @apply relative;
-}
-
-.steps__bar-list-item:not(:last-child) .steps__bar-icon:after {
+.steps__bar-list-item:not(:last-child) .steps__bar-list-item-icon:after {
   @apply absolute;
-  display: block;
-  width: 9999px;
   height: 1px;
-  content: "";
   top: 50%;
-  left: 100%;
+  width: 100%;
+  padding: 0 5px;
+  content: "";
   background-image: linear-gradient(
     to right,
     #c4c4c4 25%,
     rgba(255, 255, 255, 0) 0%
   );
-  background-position: bottom;
   background-size: 6px 1px;
   background-repeat: repeat-x;
 }
 
-.steps__bar-list-item--active:not(:last-child) .steps__bar-icon:after {
+.steps__bar-list-item--active:not(:last-child):after {
   background-image: linear-gradient(to right, #199057 0%, #199057 100%);
 }

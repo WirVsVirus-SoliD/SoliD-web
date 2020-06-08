@@ -11,7 +11,7 @@ type Props = {
 >;
 const StepsBar = ({ activeStepIndex, steps, className, ...rest }: Props) => {
   return (
-    <ul className={classnames("flex", className)} {...rest}>
+    <ul className={classnames("flex justify-between", className)} {...rest}>
       {steps.map(({ Icon, title }, i) => {
         if (i === 0) return null;
 
@@ -19,7 +19,7 @@ const StepsBar = ({ activeStepIndex, steps, className, ...rest }: Props) => {
           <li
             key={title}
             className={classnames(
-              "steps__bar-list-item flex-grow overflow-hidden",
+              "steps__bar-list-item flex flex-grow flex-row relative overflow-hidden",
               {
                 "steps__bar-list-item--active": i < activeStepIndex,
                 "text-grey": i > activeStepIndex,
@@ -27,16 +27,18 @@ const StepsBar = ({ activeStepIndex, steps, className, ...rest }: Props) => {
               }
             )}
           >
-            <div className="steps__bar-icon inline-block px-2">
-              <Icon />
+            <div className="flex flex-col items-center">
+              <div className="relative inline-block px-2">
+                <Icon />
+              </div>
+              <span
+                className={classnames("steps__bar-list-item-icon", {
+                  "font-medium": i === activeStepIndex
+                })}
+              >
+                {title}
+              </span>
             </div>
-            <span
-              className={classnames("block", {
-                "font-medium": i === activeStepIndex
-              })}
-            >
-              {title}
-            </span>
           </li>
         );
       })}
