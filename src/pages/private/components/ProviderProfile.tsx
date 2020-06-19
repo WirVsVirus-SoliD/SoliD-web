@@ -1,5 +1,9 @@
 import EditIcon from "@material-ui/icons/Edit";
+import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import React, { useState } from "react";
+import { ArrowLeft } from "react-feather";
+import { AvatarUpload } from "~/components/AvatarUpload";
+import { PrimaryButton } from "~/components/Button";
 import { Crop } from "~/components/Crop";
 import { FallbackImage } from "~/components/FallbackImage";
 import { Title } from "~/components/Title";
@@ -21,18 +25,51 @@ const ProviderProfile = ({ data }) => {
       />
     );
 
+  if (editSection === "uploadProfilePicture")
+    return (
+      <div>
+        <div className="flex flex-row items-center mb-6">
+          <button
+            className="rounded-full bg-white-primary p-2"
+            onClick={() => setEditSection(null)}
+          >
+            <ArrowLeft size={20} />
+          </button>
+        </div>
+        <AvatarUpload aspectRatio={2} close={() => setEditSection(null)} />
+      </div>
+    );
+
   return (
     <div className="h-full w-full">
-      <FallbackImage
-        width={100}
-        height={100}
-        src={api.media.downloadPicture(data.get("providerId"))}
-      >
-        <img
-          className="w-full"
-          src={require("../../../assets/images/ProviderPlaceholder.png")}
-        />
-      </FallbackImage>
+      <div className="relative">
+        <FallbackImage
+          width="100%"
+          height={100}
+          src={api.media.downloadPicture(data.getIn(["account", "accountId"]))}
+        >
+          <div className="relative">
+            <img
+              className="w-full"
+              src={require("../../../assets/images/ProviderPlaceholder.png")}
+            />
+            <PrimaryButton
+              onClick={() => setEditSection("uploadProfilePicture")}
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2"
+            >
+              <PhotoCameraIcon />
+              Foto hochladen
+            </PrimaryButton>
+          </div>
+        </FallbackImage>
+        <PrimaryButton
+          onClick={() => setEditSection("uploadProfilePicture")}
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2"
+        >
+          <PhotoCameraIcon />
+          Foto hochladen
+        </PrimaryButton>
+      </div>
       <div className="mx-4 pt-8">
         <div className="flex flex-row justify-between">
           <Title as="h2" className="text-xl mb-6" bold>

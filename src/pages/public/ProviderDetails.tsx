@@ -101,7 +101,6 @@ const ProviderDetails = ({ match }) => {
 
   const { provider } = state;
   const { city, street, housenr, zip } = provider.address;
-
   return (
     <div className="h-full">
       <div className="relative">
@@ -135,7 +134,7 @@ const ProviderDetails = ({ match }) => {
           </div>
         </div>
         <FallbackImage
-          width={100}
+          width="100%"
           height={100}
           src={api.media.downloadPicture(providerId)}
         >

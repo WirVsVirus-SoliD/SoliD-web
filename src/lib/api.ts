@@ -26,6 +26,7 @@ export default {
     show: (id) => domain + `/favorites/${id}`
   },
   media: {
-    downloadPicture: (id) => domain + `/media/${id}/download-picture`
+    downloadPicture: (id) => domain + `/media/${id}/download-picture`,
+    upload: domain + "/media/upload-picture"
   }
 };

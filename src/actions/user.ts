@@ -163,6 +163,19 @@ export const resetPassword = (values, token) => {
   };
 };
 
+export const uploadAvatar = (formData) => {
+  return async (dispatch: Function) => {
+    try {
+      const response = await axiosInstance.post(api.media.upload, formData);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      dispatch(updateProviderFail());
+      return Promise.reject(error);
+    }
+  };
+};
+
 export const updateProvider = (input) => {
   return async (dispatch: Function) => {
     dispatch(updateProviderRequest());

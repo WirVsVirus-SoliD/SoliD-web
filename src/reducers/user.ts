@@ -27,7 +27,7 @@ export function user(state = initialState, action) {
       return state.set("data", fromJS(action.payload));
 
     case EDIT_USER:
-      return state.mergeIn(["data"], action.payload);
+      return state.mergeIn(["data"], fromJS(action.payload));
 
     case SET_USER_TYPE:
       return state.set("type", action.payload);

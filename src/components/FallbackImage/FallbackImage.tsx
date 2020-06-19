@@ -6,7 +6,7 @@ type Props = {
   width: any;
   height: any;
 };
-const FallbackImage = ({ src, width, height, children }: Props) => {
+const FallbackImage = ({ src, width, height, children, ...rest }: Props) => {
   const [error, setError] = useState(false);
 
   return (
@@ -19,6 +19,7 @@ const FallbackImage = ({ src, width, height, children }: Props) => {
           width={width}
           height={height}
           onError={() => setError(true)}
+          {...rest}
         />
       )}
     </>

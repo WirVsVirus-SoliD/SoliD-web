@@ -59,7 +59,7 @@ const FaqOverview = () => {
       <div className="w-full block mb-10">
         <LinkList links={specificFaqs} />
       </div>
-      {user && (
+      {user.get("login") && (
         <>
           <div className="w-full block mb-5">
             <PrimaryButton

@@ -1,7 +1,9 @@
 import Avatar from "@material-ui/core/Avatar";
 import EditIcon from "@material-ui/icons/Edit";
 import React, { useState } from "react";
+import { FallbackImage } from "~/components/FallbackImage";
 import { Title } from "~/components/Title";
+import api from "~/lib/api";
 import { HelperProfileEdit } from "~/pages/private/components/index";
 
 const HelperProfile = ({ data }: any) => {
@@ -29,7 +31,15 @@ const HelperProfile = ({ data }: any) => {
           </Title>
         </div>
         <div>
-          <Avatar className="w-32 h-32" />
+          <FallbackImage
+            src={api.media.downloadPicture(
+              data.getIn(["account", "accountId"])
+            )}
+            width={32}
+            height={32}
+          >
+            <Avatar className="w-32 h-32" />
+          </FallbackImage>
         </div>
       </div>
 

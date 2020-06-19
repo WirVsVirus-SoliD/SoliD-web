@@ -1,15 +1,20 @@
 import Avatar from "@material-ui/core/Avatar";
+import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import classnames from "classnames";
 import { Formik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { ArrowLeft } from "react-feather";
 import { useDispatch } from "react-redux";
 import { object as yupObject, string as yupString } from "yup";
 import { updateHelper } from "~/actions/user";
+import { AvatarUpload } from "~/components/AvatarUpload";
 import { PrimaryButton } from "~/components/Button";
+import BaseButton from "~/components/Button/BaseButton";
+import { FallbackImage } from "~/components/FallbackImage";
 import { FormTitle, InputField } from "~/components/Form";
 import { Checkbox, Radio } from "~/components/Form/components";
 import { Title } from "~/components/Title";
+import api from "~/lib/api";
 
 const validationSchema = yupObject().shape({
   account: yupObject().shape({
@@ -22,6 +27,22 @@ const validationSchema = yupObject().shape({
 
 const HelperProfileEdit = ({ data, setEditMode }: any) => {
   const dispatch = useDispatch();
+  const [avatarMode, setAvatarMode] = useState(false);
+
+  if (avatarMode)
+    return (
+      <div>
+        <div className="flex flex-row items-center mb-6">
+          <button
+            className="rounded-full bg-white-primary p-2"
+            onClick={() => setAvatarMode(false)}
+          >
+            <ArrowLeft size={20} />
+          </button>
+        </div>
+        <AvatarUpload aspectRatio={1} close={() => setAvatarMode(false)} />
+      </div>
+    );
 
   return (
     <div className="mx-4 pt-8">
@@ -73,7 +94,21 @@ const HelperProfileEdit = ({ data, setEditMode }: any) => {
                   />
                 ))}
               </div>
-              <Avatar className="w-32 h-32" />
+              <div className="relative">
+                <FallbackImage
+                  src={api.media.downloadPicture(data.account.accountId)}
+                  width={32}
+                  height={32}
+                >
+                  <Avatar className="w-32 h-32" />
+                </FallbackImage>
+                <BaseButton
+                  className="absolute bottom-0 right-0"
+                  onClick={() => setAvatarMode(true)}
+                >
+                  <PhotoCameraIcon />
+                </BaseButton>
+              </div>
             </div>
             {[["account.phone", "Telefonnummer"]].map(
               ([key, label, type = "text"]) => (
@@ -238,10 +273,7 @@ const HelperProfileEdit = ({ data, setEditMode }: any) => {
                     </div>
                   </div>
                 )}
-                <PrimaryButton
-                  className="w-full mb-10"
-                  onClick={() => handleSubmit()}
-                >
+                <PrimaryButton className="w-full mb-20" onClick={handleSubmit}>
                   <Title as="h6">Übernehmen</Title>
                 </PrimaryButton>
               </div>
