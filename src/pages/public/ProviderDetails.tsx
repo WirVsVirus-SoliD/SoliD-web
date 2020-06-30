@@ -136,7 +136,7 @@ const ProviderDetails = ({ match }) => {
         <FallbackImage
           width="full"
           height="100%"
-          src={api.media.downloadPicture(providerId)}
+          src={api.media.downloadPicture(provider.accountId)}
         >
           <img
             className="w-full"

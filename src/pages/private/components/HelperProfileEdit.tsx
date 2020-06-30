@@ -28,6 +28,9 @@ const validationSchema = yupObject().shape({
 const HelperProfileEdit = ({ data, setEditMode }: any) => {
   const dispatch = useDispatch();
   const [avatarMode, setAvatarMode] = useState(false);
+  delete data.account.accountId;
+  delete data.account.email;
+  delete data.helperId;
 
   if (avatarMode)
     return (

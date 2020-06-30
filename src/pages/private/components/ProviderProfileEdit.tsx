@@ -304,7 +304,7 @@ const sections = {
               checked={hiddenFields.overnightPossible === false}
               onChange={() => {
                 setHiddenFields((s) => ({ ...s, overnightPossible: false }));
-                setFieldValue("overnightPrice", undefined);
+                setFieldValue("overnightPrice", null);
                 setFieldValue("overnightInformation", "");
               }}
               block
@@ -363,7 +363,7 @@ const sections = {
               checked={hiddenFields.pickupPossible === false}
               onChange={() => {
                 setHiddenFields((s) => ({ ...s, pickupPossible: false }));
-                setFieldValue("pickupRange", undefined);
+                setFieldValue("pickupRange", null);
               }}
               block
             >
@@ -437,6 +437,14 @@ const ProviderProfileEdit = ({ data, editSection, setEditSection }) => {
     overnightPossible: !!data.overnightPrice,
     pickupPossible: !!data.pickupRange
   });
+  delete data.account.accountId;
+  delete data.accountId;
+  delete data.account.email;
+  delete data.address.addressId;
+  delete data.providerId;
+  delete data.distance;
+  delete data.latitude;
+  delete data.longitude;
   return (
     <div className="flex flex-col h-full px-8 py-4">
       <Formik
