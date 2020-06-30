@@ -51,7 +51,6 @@ const AvatarUpload = ({ aspectRatio, close }: Props) => {
       x,
       y
     };
-    console.log(crop);
     setState((s) => ({ ...s, crop: crop }));
 
     makeClientCrop(crop);
@@ -117,8 +116,9 @@ const AvatarUpload = ({ aspectRatio, close }: Props) => {
   const handleUpload = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("image", state.croppedImageUrl);
-    console.log(state.croppedImageUrl);
+    const response = await fetch(state.croppedImageUrl);
+    const blob = await response.blob();
+    formData.append("image", blob);
     // @ts-ignore
     dispatch(uploadAvatar(formData)).then((response) => close());
   };

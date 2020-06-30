@@ -15,9 +15,8 @@ const FallbackImage = ({ src, width, height, children, ...rest }: Props) => {
         <div>{children}</div>
       ) : (
         <img
+          className={`w-${width} h-${height}`}
           src={src}
-          width={width}
-          height={height}
           onError={() => setError(true)}
           {...rest}
         />

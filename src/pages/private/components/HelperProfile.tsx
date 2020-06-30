@@ -35,8 +35,8 @@ const HelperProfile = ({ data }: any) => {
             src={api.media.downloadPicture(
               data.getIn(["account", "accountId"])
             )}
-            width={32}
-            height={32}
+            width="32"
+            height="32"
           >
             <Avatar className="w-32 h-32" />
           </FallbackImage>
